@@ -1,5 +1,8 @@
 
 window.onload = function(){
+    if(localStorage.getItem("username")==null){
+        window.location.href="../html/login.html";
+    }
     document.getElementById("email-field").value = localStorage.getItem("email");
     document.getElementById("username-field").value = localStorage.getItem("username");
     let count = parseInt(localStorage.getItem("password_length"));
@@ -7,7 +10,7 @@ window.onload = function(){
     for(let i =0;i<count;i++){
         ans+="* ";
     }
-    document.getElementById("password-field").value = ans;
+    document.getElementById("password1").value = ans;
 }
 
 document.getElementById("crest").addEventListener(("click"),()=>{
@@ -149,3 +152,7 @@ function checkEmpty(value){
     }
     return true;
 }
+
+document.getElementById("reset-password").addEventListener(("click"),()=>{
+    window.location.href = "../html/confirm_password.html";
+})

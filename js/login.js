@@ -7,11 +7,11 @@ document.querySelector(".signup").addEventListener(("click"),()=>{
 })
 
 document.querySelector(".forgot").addEventListener(("click"),()=>{
-    window.location.href = '../html/forgot_user.html';
+    window.location.href = '../html/forgot_username.html';
 })
 
 document.querySelector(".forgotpass").addEventListener(("click"),()=>{
-    window.location.href = '../html/forgot_pass.html';
+    window.location.href = '../html/forgot_password.html';
 })
 
 document.getElementById("crest").addEventListener(("click"),()=>{

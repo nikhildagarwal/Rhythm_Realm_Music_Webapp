@@ -31,7 +31,7 @@ document.getElementById("submit-btn").addEventListener(("click"),()=>{
         anyEmpty = true;
         document.getElementById("email-error-invalid").className = "error";
     }
-    if(password1.length<6 || password2.length<6){
+    if(password1.length<6){
         anyEmpty = true;
         document.getElementById("password-error-short").className = "error";
     }
