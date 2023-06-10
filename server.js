@@ -14,6 +14,9 @@ const server = http.createServer((req,res) => {
     let splited = path.split("/");
     if(splited[0] == "api"){
         switch(splited[1]){
+            case "changePassword":
+                handleChangePassword(req,res,splited[2],splited[3]);
+                break;
             case "changeUsername":
                 handleChangeUsername(req,res,splited[2],splited[3]);
                 break;
@@ -72,6 +75,24 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleChangePassword(req,res,username,newPassword){
+    try{
+        await changePassword(username,newPassword);
+        res.writeHead(200);
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function changePassword(username,newPassword){
+    path = db.ref(`/users/${username}/`);
+    path.update({
+        password:newPassword
+    })
+    return "done";
+}
 
 async function handleChangeUsername(req,res,newUsername, oldUsername){
     try{

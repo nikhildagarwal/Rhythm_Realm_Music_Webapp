@@ -75,7 +75,20 @@ document.getElementById("change-password-button").addEventListener(("click"),()=
         document.getElementById("mismatch1").className = "error";
         return;
     }
-    
+    fetch(`/api/changePassword/${localStorage.getItem("username")}/${password1}`,{
+        method:"POST",
+        cache:"no-cache"
+    }).then((response)=>{
+        if(response.status==200){
+            localStorage.setItem("password_length",password1.length.toString());
+            console.log(localStorage);
+            document.getElementById("changed1").className = "success";
+            setTimeout(function(){
+                document.getElementById("changed1").className = "success1";
+                window.location.href="../html/profile.html";
+            },1500)
+        }
+    })
 })
 
 function resetSecondErrors(){
