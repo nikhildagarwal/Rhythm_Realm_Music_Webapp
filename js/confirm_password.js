@@ -91,6 +91,12 @@ document.getElementById("change-password-button").addEventListener(("click"),()=
     })
 })
 
+document.getElementById("to-container-one").addEventListener(("click"),()=>{
+    document.getElementById("container-two").className = "container2";
+    document.getElementById("container-one").className = "container";
+    document.getElementById("password-field").value = "";
+})
+
 function resetSecondErrors(){
     document.getElementById("empty1").className = "error1";
     document.getElementById("length1").className = "error1";
