@@ -1,0 +1,281 @@
+const http = require("http");
+const url = require("url");
+const fs = require("fs");
+const admin = require('./js/firebase.js').admin;
+const db = admin.database();
+
+const server = http.createServer((req,res) => {
+    let parsedURL = url.parse(req.url,true);
+    let path = parsedURL.path.replace(/^\/+|\/+$/g,"");
+    if(path==""){
+        path = "html/home.html";
+    }
+    console.log(`Requested path ${path} `);
+    let splited = path.split("/");
+    if(splited[0] == "api"){
+        switch(splited[1]){
+            case "changeUsername":
+                handleChangeUsername(req,res,splited[2],splited[3]);
+                break;
+            case "checkUsernameMatchFound":
+                handleCheckUsernameMatchFound(req,res,splited[2]);
+                break;
+            case "changeEmail":
+                handleChangeEmail(req,res,splited[2],splited[3]);
+                break;
+            case "checkEmailMatchFound":
+                handleCheckEmailMatchFound(req,res,splited[2]);
+                break;
+            case "checkLogIn":
+                handleCheckLogIn(req,res,splited[2],splited[3]);
+                break;
+            case "createUser":
+                handleCreateUser(req,res,splited[2],splited[3],splited[4]);
+                break;
+            case "getUserList":
+                handleGetUserList(req,res,splited[2],splited[3]);
+        }
+        return;
+    }
+    let file =  __dirname +"/"+path;
+    fs.readFile(file,function(err,content){
+        if(err){
+            console.log(`file not found  ${file}`);
+            res.writeHead(404);
+            res.end();
+        }else{
+            console.log(`Returning ${path}`);
+            res.setHeader("X-Content-Type-Options","nosniff"); //tells the browser to strictly honor the given content-type (security concerns);
+            const array = path.split("/");
+            switch(array[0]){
+                case "html":
+                    res.writeHead(200,{'Content-type':'text/html'});
+                    res.end(content);
+                    break;
+                case "css":
+                    res.writeHead(200,{'Content-type':'text/css'});
+                    res.end(content);
+                    break;
+                case "img":
+                    res.writeHead(200,{'Content-type':'image/jpeg'});
+                    res.end(content);
+                    break;
+                case "js":
+                    res.writeHead(200,{'Content-type':'application/javascript'});
+                    res.end(content);
+            }
+            
+        }
+    });
+});
+
+server.listen(3000, "localhost", () => {
+    console.log("Listening on port 3000");
+});
+
+async function handleChangeUsername(req,res,newUsername, oldUsername){
+    try{
+        await changeUsername(newUsername,oldUsername);
+        res.writeHead(200);
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function changeUsername(newUsername,oldUsername){
+    let pathToRemove = db.ref(`/users/${oldUsername}/`);
+    let userinfo = await new Promise((resolve,reject)=>{
+        pathToRemove.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    let pathToSet = db.ref(`/users/${newUsername}/`);
+    pathToRemove.remove();
+    pathToSet.set({
+        email:userinfo.email,
+        password:userinfo.password
+    })
+    return "done";
+}
+
+async function handleCheckUsernameMatchFound(req,res,username){
+    try{
+        let code = await checkUsernameMatchFound(username);
+        if(code=="found"){
+            res.writeHead(400);
+            res.end();
+        }else{
+            res.writeHead(200);
+            res.end();
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function checkUsernameMatchFound(username){
+    let path = db.ref(`/users/`);
+    let list = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    let usernames = Object.keys(list);
+    for(let i = 0;i<usernames.length;i++){
+        if(usernames[i]==username){
+            return "found";
+        }
+    }
+    return "notfound";
+}
+
+async function handleChangeEmail(req,res,email,username){
+    try{
+        await changeEmail(email,username);
+        res.writeHead(200);
+        res.end();
+    }catch(err){
+        console.log(err);
+    }
+}
+
+async function changeEmail(email,username){
+    let path = db.ref(`/users/${username}/`);
+    path.update({
+        email:email
+    })
+    return "done";
+}
+
+async function handleCheckEmailMatchFound(req,res,email){
+    try{
+        let code = await checkEmailMatch(email);
+        if(code == 1){
+            res.writeHead(400);
+            res.end();
+        }else{
+            res.writeHead(200);
+            res.end();
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function checkEmailMatch(email){
+    let path = db.ref(`/users/`);
+    let list = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    let userInfoArray = Object.values(list);
+    for(let i = 0;i<userInfoArray.length;i++){
+        let item = userInfoArray[i];
+        if(item.email == email){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+async function handleCheckLogIn(req,res,username,password){
+    try{
+        let code = await checkLogIn(username,password);
+        code = code.split(",");
+        switch(code[0]){
+            case "-1":
+                res.writeHead(400);
+                res.end();
+                break;
+            case "1":
+                res.writeHead(200,{'Content-type':'text/plain'});
+                res.end(JSON.stringify(code[1]));
+                break;
+            case "0":
+                res.writeHead(401);
+                res.end();
+        }
+    }catch(err){
+        console.log(err);
+    }
+}
+
+async function checkLogIn(username,password){
+    let path = db.ref(`/users/${username}/`);
+    const userinfo = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    if(userinfo==null){
+        return "-1";
+    }
+    if(userinfo.password == password){
+        return "1,"+userinfo.email;
+    }else{
+        return "0";
+    }
+}
+
+async function handleCreateUser(req,res,email,username,password){
+    try{
+        await createUser(email,username,password);
+        res.writeHead(200);
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function createUser(email,username,password){
+    let path = db.ref(`/users/${username}/`);
+    path.set({
+        "email":email,
+        "password":password,
+    })
+}
+
+async function handleGetUserList(req,res,username,email){
+    try{
+        let build = await retreiveUsers(username,email);
+        res.writeHead(200,{'Content-type':'text/plain'});
+        res.end(JSON.stringify(build));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function retreiveUsers(username,email){
+    let path = db.ref('/users/');
+    const list = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    });
+    let userNames = Object.keys(list);
+    let build = "";
+    userNames.forEach((item)=>{
+        if(item==username){
+            build = "1,";
+        }
+    })
+    if(build==""){
+        build = "0,";
+    }
+    let subObject = Object.values(list);
+    subObject.forEach((item)=>{
+        let k = Object.keys(item);
+        let v = Object.values(item);
+        if(k[0]=="email"){
+            if(v[0]==email){
+                build+="1";
+            }
+        }
+    })
+    if(build.length==2){
+        build+="0";
+    }
+    return build;
+}

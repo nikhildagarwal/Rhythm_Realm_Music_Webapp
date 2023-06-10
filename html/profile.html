@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="../img/logo.png" class="logo" id="crest">
+    <div class="container">
+        <div class = "back">
+            <i class="fa-solid fa-square-caret-left"></i><span class="backtext">Back</span>
+        </div>
+        <div class = "title">
+            <text>Profile Info</text>
+        </div>
+        <div class ="loginItem" id="email">
+            <label class="label">Email</label>
+            <input type="text" id="email-field" class="input" disabled="true">
+            <label class="after" ><i class="fa-solid fa-square-caret-left" id="email-left-arrow"></i>&nbsp;<span class="aftertext" id="change-email">change</span></label>
+        </div>
+        <div class="error1" id="email-empty">
+            *Email field empty&nbsp;<i class="fa-solid fa-xmark fa-beat"></i>
+        </div>
+        <div class="error1" id="email-invalid">
+            *Email provided is invalid&nbsp;<i class="fa-solid fa-xmark fa-beat"></i>
+        </div>
+        <div class="error1" id="email-taken">
+            *Email provided is already linked to another account&nbsp;<i class="fa-solid fa-xmark fa-beat"></i>
+        </div>
+        <div class ="success1" id="email-updated">
+            *Updated successfully&nbsp;<i class="fa-solid fa-square-check fa-beat"></i>
+        </div>
+        <div class="button" id="new-email-button">
+            Submit
+        </div>
+        <div class ="loginItem" id="username">
+            <label class="label">Username</label>
+            <input type="text" id="username-field" class="input" disabled="true">
+            <label class="after"><i class="fa-solid fa-square-caret-left" id="username-left-arrow"></i>&nbsp;<span class="aftertext" id="change-username">change</span></label>
+        </div>
+        <div class="error1" id="username-empty">
+            *Username field empty&nbsp;<i class="fa-solid fa-xmark fa-beat"></i>
+        </div>
+        <div class = "error1" id="username-taken">
+            *Username is currently taken&nbsp;<i class="fa-solid fa-xmark fa-beat"></i>
+        </div>
+        <div class="success1" id="username-updated">
+            *Updated successfully&nbsp;<i class="fa-solid fa-square-check fa-beat"></i>
+        </div>
+        <div class="button" id="new-username-button">
+            Submit
+        </div>
+        <div class ="loginItem" id="password">
+            <label class="label">Password</label>
+            <input type="text" id="password-field" class="input" disabled="true">
+            <label class="after"><i class="fa-solid fa-square-caret-left"></i>&nbsp;<span class="aftertext" id="reset-password">reset</span></label>
+        </div>
+
+    </div>
+    <script src="../js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+body {
+    background-image: url('../img/login_background.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+  }
+
+  .error1{
+    display: none;
+  }
+
+  .error{
+    margin-top: 2px;
+    font-family: monospace;
+    font-size: 12px;
+    color:rgb(223, 26, 26);
+  }
+
+  .logo{
+    width:100;
+  height:76px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.281);
+    cursor: pointer;
+  }
+
+.container {
+  margin-top: 30px;
+    width: 350px;
+    height: auto;
+    background-color: #b111e228;
+    border: 2px solid rgba(0, 0, 0, 0.582);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.title{
+    width:100%;
+    margin-top: 3%;
+    display: flex;
+    font-size: 20px;
+    color: #ccc;
+    font-family: monospace;   
+}
+
+.needAccount{
+    margin-left:24px;
+    font-size: 10px;
+}
+
+.signup{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.loginItem {
+    margin-top: 8%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+  }
+
+  .label {
+    display: block;
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 5px;
+    font-family:monospace;
+  }
+
+  .input {
+    width: 75%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #ccccccbe;
+    border: 0px solid #ccccccbe;
+    border-radius: 5px;
+    margin-left: 2rem;
+    font-family: monospace;
+  }
+
+  .button{
+    margin-top: 10%;
+    display: flex;
+    font-size: 20px;
+    color: #ccc;
+    font-family: monospace;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.582);
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .forgot{
+    margin-left: 35%;
+    width:28%;
+    font-size: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 4%;
+    display: flex;
+    color: #ccc;
+    font-family: monospace; 
+    justify-content: center;
+    align-items: center;
+  }
+
+  .forgotpass{
+    margin-left: 35%;
+    width:28%;
+    font-size: 10px;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 2%;
+    display: flex;
+    color: #ccc;
+    font-family: monospace; 
+    justify-content: center;
+    align-items: center;
+  }

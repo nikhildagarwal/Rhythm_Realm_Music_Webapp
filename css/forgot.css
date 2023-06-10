@@ -1,0 +1,97 @@
+body {
+    background-image: url('../img/login_background.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+  }
+
+  .logo{
+    width:100;
+  height:76px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.281);
+    cursor: pointer;
+  }
+
+.back{
+  color:#ccc;
+  width:17%;
+  padding:5px;
+  border-radius: 5px;
+  border: 0px solid rgba(0, 0, 0, 0.582);
+  cursor: pointer;
+}
+
+.backtext{
+  margin-left:10px;
+  font-family: monospace;
+  align-items: center;
+  font-size: 16px;
+}
+
+.container {
+  margin-top: 30px;
+    width: 350px;
+    height: auto;
+    background-color: #b111e228;
+    border: 2px solid rgba(0, 0, 0, 0.582);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.message{
+    font-size: 12px;
+}
+
+.title{
+    width:100%;
+    margin-top: 5%;
+    display: flex;
+    font-size: 20px;
+    color: #ccc;
+    font-family: monospace;   
+}
+
+.loginItem {
+    margin-top: 8%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+  }
+
+  .label {
+    display: block;
+    font-size: 16px;
+    color: #ccc;
+    margin-bottom: 5px;
+    font-family:monospace;
+  }
+
+  .input {
+    width: 75%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #ccccccbe;
+    border: 0px solid #ccccccbe;
+    border-radius: 5px;
+    margin-left: 2rem;
+  }
+
+  .button{
+    margin-top: 10%;
+    display: flex;
+    font-size: 20px;
+    color: #ccc;
+    font-family: monospace;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.582);
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
