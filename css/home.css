@@ -1,4 +1,4 @@
-body {
+body{
     background-image: url('../img/login_background.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -10,41 +10,143 @@ body {
       flex-direction: column;
   }
 
+  .logo_backdrop{
+    position:absolute;
+    margin-top: 20px;
+      width: 105px;
+      height: 200px;
+      padding: 10px;
+      border-radius: 15px;
+      margin-right:10px;
+      margin-left: 35px;
+      background-color: #423f3fcb;
+      z-index: -1;
+  }
+
   .container {
     margin-top: 0px;
       width: 95px;
-      height: 85px;
-      background-color: rgba(0, 0, 0, 0);
+      height: auto;
+      background-color: rgba(226, 226, 226, 0);
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 15px;
+      margin-right:10px;
+      z-index: 1;
   }
 
-  .logo{
-    margin-left: 40px;
-    margin-top: 40px;
-    width:115px;
-    height:86px;
-    border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.336);
-    cursor: pointer;
-  }
-
-  .logItem{
-    margin-left:30%;
+  .menuItem{
+    margin-left:10px;
+    margin-right:10px;
     align-self: center;
     justify-self: center;
-    margin-top: 30px;
     cursor: pointer;
     font-family: monospace;
     color: #e4e4e4;
     border-radius: 15px;
     font-size: 30px;
-    margin-right:15px;
+    display:flex;
+    flex-direction: row;
+    transition: 0.2s ease-in-out;
+  }
+
+  .menuItem-description{
+    align-self: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: monospace;
+    color: #e4e4e4;
+    border-radius: 15px;
+    font-size: 20px;
+    display:flex;
+    transition: 0.2s ease-in-out;
+  }
+
+  .menuItem-description1{
+    display: none;
+  }
+
+  .slide-out{
+    font-size: 17px;
+    margin-left:-5px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    display:flex;
+    margin-right:5px;
+  }
+  
+  .menuItem-description:hover{
+    transition:0.2s ease-in-out;
+    color: #18d496;
+  }
+
+  .menu{
+    display: flex;
+    position:absolute;
+    border-radius: 15px;
+    justify-content: center;
+    align-self: center;
+    background-color: #423f3fcb;
+    margin-top: 20px;
+    width:auto;
+    padding: 10px;
+    height:auto;
+  }
+  
+  .logo{
+    margin-left: 40px;
+    margin-top: 25px;
+    width:115px;
+    height:86px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #ffffff52;
+    transition:0.2s ease-in-out;
+    z-index: 1;
+  }
+
+  .logo:hover{
+    transition:0.2s ease-in-out;
+    background-color: rgba(235, 11, 197, 0.747);
+  }
+
+  .logItem{
+    margin-left:35%;
+    align-self: center;
+    justify-self: center;
+    margin-top: 10px;
+    cursor: pointer;
+    font-family: monospace;
+    color: #e4e4e4;
+    border-radius: 15px;
+    font-size: 22px;
+    transition: 0.2s ease-in-out;
+  }
+  .logItem1{
+    margin-left:38%;
+    align-self: center;
+    justify-self: center;
+    margin-top: 10px;
+    cursor: pointer;
+    font-family: monospace;
+    color: #e4e4e4;
+    border-radius: 15px;
+    font-size: 22px;
+    transition: 0.2s ease-in-out;
+  }
+
+  .logItem:hover{
+    color: #18d496;
+    transition: 0.2s ease-in-out;
+  }
+  .logItem1:hover{
+    color: #18d496;
+    transition: 0.2s ease-in-out;
   }
 
 
   .signtext{
-    margin-left:-16px;
+    margin-left:-17px;
     align-self: center;
     justify-self: center;
     margin-top: 1px;
@@ -55,9 +157,10 @@ body {
     margin-right:10px;
     font-size: 15px;
     font-weight: bold;
+    transition: 0.2s ease-in-out;
   }
   .signtext1{
-    margin-left:-17px;
+    margin-left:-14px;
     align-self: center;
     justify-self: center;
     margin-top: 1px;
@@ -68,9 +171,10 @@ body {
     margin-right:10px;
     font-size: 15px;
     font-weight: bold;
+    transition: 0.2s ease-in-out;
   }
   .signtext2{
-    margin-left:-17px;
+    margin-left:-15px;
     align-self: center;
     justify-self: center;
     margin-top: 1px;
@@ -81,9 +185,10 @@ body {
     margin-right:10px;
     font-size: 15px;
     font-weight: bold;
+    transition: 0.2s ease-in-out;
   }
   .signtext3{
-    margin-left:-10px;
+    margin-left:-11px;
     align-self: center;
     justify-self: center;
     margin-top: 1px;
@@ -94,4 +199,5 @@ body {
     margin-right:10px;
     font-size: 15px;
     font-weight: bold;
+    transition: 0.2s ease-in-out;
   }

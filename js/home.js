@@ -1,6 +1,6 @@
 window.onload = function(){
     if(localStorage.getItem("username") != null){
-        document.querySelector(".container").innerHTML = `<div class = "logItem" id="profile" title="View Profile">
+        document.querySelector(".container").innerHTML = `<div class = "logItem1" id="profile" title="View Profile">
         <span class="logText"></span><i class="fa-solid fa-user"></i></span><div class="signtext">Profile</div>
     </div>
     <div class="logItem" id="logout" title="Log Out">
@@ -33,3 +33,50 @@ document.getElementById("crest").addEventListener(("click"),()=>{
     window.location.href = "../html/home.html";
 })
 
+document.getElementById("songs").addEventListener(("mouseenter"),()=>{
+    document.getElementById("song-description").className = "menuItem-description";
+})
+
+document.getElementById("songs").addEventListener(("mouseleave"),()=>{
+    document.getElementById("song-description").className = "menuItem-description1";
+})
+
+document.getElementById("song-description").addEventListener(("mouseenter"),()=>{
+    document.getElementById("song-description").className = "menuItem-description";
+})
+
+document.getElementById("song-description").addEventListener(("mouseleave"),()=>{
+    document.getElementById("song-description").className = "menuItem-description1";
+})
+
+document.getElementById("playlists").addEventListener(("mouseenter"),()=>{
+    document.getElementById("playlist-description").className = "menuItem-description";
+})
+
+document.getElementById("playlists").addEventListener(("mouseleave"),()=>{
+    document.getElementById("playlist-description").className = "menuItem-description1";
+})
+
+document.getElementById("playlist-description").addEventListener(("mouseenter"),()=>{
+    document.getElementById("playlist-description").className = "menuItem-description";
+})
+
+document.getElementById("playlist-description").addEventListener(("mouseleave"),()=>{
+    document.getElementById("playlist-description").className = "menuItem-description1";
+})
+
+document.getElementById("listen").addEventListener(("mouseenter"),()=>{
+    document.getElementById("listen-description").className = "menuItem-description";
+})
+
+document.getElementById("listen").addEventListener(("mouseleave"),()=>{
+    document.getElementById("listen-description").className = "menuItem-description1";
+})
+
+document.getElementById("listen-description").addEventListener(("mouseenter"),()=>{
+    document.getElementById("listen-description").className = "menuItem-description";
+})
+
+document.getElementById("listen-description").addEventListener(("mouseleave"),()=>{
+    document.getElementById("listen-description").className = "menuItem-description1";
+})
