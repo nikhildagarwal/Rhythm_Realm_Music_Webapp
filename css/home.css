@@ -34,9 +34,13 @@ body{
       z-index: 1;
   }
 
+  .menuItem1{
+    display: none;
+  }
+
   .menuItem{
-    margin-left:10px;
-    margin-right:10px;
+    margin-left:20px;
+    margin-right:20px;
     align-self: center;
     justify-self: center;
     cursor: pointer;
@@ -50,18 +54,20 @@ body{
   }
 
   .menuItem-description{
+    margin-right: 20px;
     align-self: center;
     justify-content: center;
     cursor: pointer;
     font-family: monospace;
-    color: #e4e4e4;
+    color: #18d496;
     border-radius: 15px;
     font-size: 20px;
     display:flex;
-    transition: 0.2s ease-in-out;
+    transition: left 0.5s ease-in-out;
   }
 
   .menuItem-description1{
+    transition: right 0.5s ease-in-out;
     display: none;
   }
 
@@ -73,11 +79,6 @@ body{
     align-items: center;
     display:flex;
     margin-right:5px;
-  }
-  
-  .menuItem-description:hover{
-    transition:0.2s ease-in-out;
-    color: #18d496;
   }
 
   .menu{
@@ -94,10 +95,10 @@ body{
   }
   
   .logo{
-    margin-left: 40px;
-    margin-top: 25px;
-    width:115px;
-    height:86px;
+    margin-left: 44px;
+    margin-top: 30px;
+    width:105px;
+    height:79px;
     border-radius: 15px;
     cursor: pointer;
     background-color: #ffffff52;
@@ -111,7 +112,7 @@ body{
   }
 
   .logItem{
-    margin-left:35%;
+    margin-left:31%;
     align-self: center;
     justify-self: center;
     margin-top: 10px;
@@ -123,7 +124,7 @@ body{
     transition: 0.2s ease-in-out;
   }
   .logItem1{
-    margin-left:38%;
+    margin-left:34%;
     align-self: center;
     justify-self: center;
     margin-top: 10px;
