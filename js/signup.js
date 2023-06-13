@@ -1,7 +1,17 @@
+function generateUserID() {
+    const timestamp = Date.now().toString(); // Get the current timestamp as a string
+    const randomNum = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
+  
+    return timestamp + randomNum.toString();
+  }
+  
+const userId = generateUserID();
 
 document.querySelector(".login").addEventListener(("click"),()=>{
     window.location.href = '../html/login.html';
 })
+
+
 
 document.getElementById("crest").addEventListener(("click"),()=>{
     window.location.href = "../html/home.html";
@@ -61,7 +71,7 @@ document.getElementById("submit-btn").addEventListener(("click"),()=>{
             if(beenError){
                 return;
             }
-            fetch(`/api/createUser/${email}/${username}/${password1}`,{
+            fetch(`/api/createUser/${email}/${username}/${password1}/${userId}`,{
                 method:"POST",
                 cache:"no-cache"
             }).then((response)=>{
@@ -69,6 +79,7 @@ document.getElementById("submit-btn").addEventListener(("click"),()=>{
                     localStorage.setItem("username",username);
                     localStorage.setItem("email",email);
                     localStorage.setItem("password_length",password1.length.toString());
+                    localStorage.setItem("userid",userId);
                     window.location.href = "../html/home.html";
                 }
             })

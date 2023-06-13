@@ -48,7 +48,9 @@ document.querySelector(".button").addEventListener(("click"),()=>{
             case 200:
                 localStorage.setItem("username",username);
                 response.json().then((result)=>{
-                    localStorage.setItem("email",result);
+                    let twoParts = result.split(",");
+                    localStorage.setItem("email",twoParts[0]);
+                    localStorage.setItem("userid",twoParts[1]);
                 })
                 localStorage.setItem("password_length",password.length.toString());
                 window.location.href = "../html/home.html";

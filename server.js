@@ -2,7 +2,12 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const admin = require('./js/firebase.js').admin;
+const Song = require('./js/song.js');
 const db = admin.database();
+
+const song1 = new Song.Song("Last Night","Morgan Wallen",`<iframe width="727" height="409" src="https://www.youtube.com/embed/CTJouuXxL68?list=PLBP-QpS4vtY1YShK05SJtdJTV8ecq8L-e" title="Morgan Wallen - Last Night (Summer House Remix)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,"yay song");
+console.log(song1);
+console.log(song1.artist);
 
 const server = http.createServer((req,res) => {
     let parsedURL = url.parse(req.url,true);
@@ -33,7 +38,7 @@ const server = http.createServer((req,res) => {
                 handleCheckLogIn(req,res,splited[2],splited[3]);
                 break;
             case "createUser":
-                handleCreateUser(req,res,splited[2],splited[3],splited[4]);
+                handleCreateUser(req,res,splited[2],splited[3],splited[4],splited[5]);
                 break;
             case "getUserList":
                 handleGetUserList(req,res,splited[2],splited[3]);
@@ -212,7 +217,7 @@ async function handleCheckLogIn(req,res,username,password){
                 break;
             case "1":
                 res.writeHead(200,{'Content-type':'text/plain'});
-                res.end(JSON.stringify(code[1]));
+                res.end(JSON.stringify(code[1]+","+code[2]));
                 break;
             case "0":
                 res.writeHead(401);
@@ -234,15 +239,15 @@ async function checkLogIn(username,password){
         return "-1";
     }
     if(userinfo.password == password){
-        return "1,"+userinfo.email;
+        return "1,"+userinfo.email+","+userinfo.userid;
     }else{
         return "0";
     }
 }
 
-async function handleCreateUser(req,res,email,username,password){
+async function handleCreateUser(req,res,email,username,password,userid){
     try{
-        await createUser(email,username,password);
+        await createUser(email,username,password,userid);
         res.writeHead(200);
         res.end();
     }catch (err){
@@ -250,11 +255,12 @@ async function handleCreateUser(req,res,email,username,password){
     }
 }
 
-async function createUser(email,username,password){
+async function createUser(email,username,password,userid){
     let path = db.ref(`/users/${username}/`);
     path.set({
         "email":email,
         "password":password,
+        "userid":userid
     })
 }
 
