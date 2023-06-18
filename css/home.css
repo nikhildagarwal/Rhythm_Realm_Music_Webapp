@@ -50,6 +50,7 @@ body{
     font-size: 30px;
     display:flex;
     flex-direction: row;
+    padding:10px;
     transition: 0.2s ease-in-out;
   }
 
