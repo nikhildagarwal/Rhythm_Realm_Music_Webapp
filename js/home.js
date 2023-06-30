@@ -50,9 +50,29 @@ function loadSongs(){
                 const sub = [song,artist,filename,image];
                 masterArray.push(sub);
             }
-            masterArray.sort((a,b)=>a[1].localeCompare(b[1]));
-            console.log(masterArray);
+            let message = ``;
+            masterArray.forEach((item)=>{
+                let subMessage = `<option value="${item[2]}">${item[0]} - ${item[1]}</option>`;
+                message+=subMessage;
+            })
+            document.getElementById("mySelect").innerHTML += message;
         })
     })
 }
 
+function filterOptions() {
+    const input = document.getElementById('myInput').value.toLowerCase();
+    const select = document.getElementById('mySelect');
+
+    // Show/hide options based on the typed input
+    for (let i = 0; i < select.options.length; i++) {
+      const option = select.options[i];
+      const optionText = option.text.toLowerCase();
+
+      if (optionText.includes(input)) {
+        option.style.display = '';
+      } else {
+        option.style.display = 'none';
+      }
+    }
+  }

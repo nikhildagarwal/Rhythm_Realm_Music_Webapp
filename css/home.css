@@ -254,3 +254,29 @@ body{
 .audio{
   margin-top:55%;
 }
+
+.add_btn{
+  display: flex;
+  justify-content: center;
+  margin-left:-40%;
+  color: #e4e4e4;
+  font-size: 35px;
+  font-family: monospace;
+  height:10%;
+}
+
+.search_bar{
+  margin-left:10px;
+  width: 120px;
+  font-family: monospace;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.select_bar{
+  margin-left:5px;
+  width:200px;
+  font-family: monospace;
+  padding: 10px;
+  border-radius: 15px;
+}
