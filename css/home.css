@@ -54,6 +54,11 @@ body{
     transition: 0.2s ease-in-out;
   }
 
+  .menuItem:hover{
+    color: #18d496;
+    transition: 0.2s ease-in-out;
+  }
+
   .menuItem-description{
     margin-right: 20px;
     align-self: center;
