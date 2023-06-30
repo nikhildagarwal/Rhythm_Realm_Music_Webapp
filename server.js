@@ -5,10 +5,6 @@ const admin = require('./js/firebase.js').admin;
 const Song = require('./js/song.js');
 const db = admin.database();
 
-const song1 = new Song.Song("Last Night","Morgan Wallen",`<iframe width="727" height="409" src="https://www.youtube.com/embed/CTJouuXxL68?list=PLBP-QpS4vtY1YShK05SJtdJTV8ecq8L-e" title="Morgan Wallen - Last Night (Summer House Remix)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`,"yay song");
-console.log(song1);
-console.log(song1.artist);
-
 const server = http.createServer((req,res) => {
     let parsedURL = url.parse(req.url,true);
     let path = parsedURL.path.replace(/^\/+|\/+$/g,"");
