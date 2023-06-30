@@ -67,6 +67,10 @@ const server = http.createServer((req,res) => {
                 case "js":
                     res.writeHead(200,{'Content-type':'application/javascript'});
                     res.end(content);
+                    break;
+                case "audio":
+                    res.writeHead(200,{'Content-type':'audio/mpeg'});
+                    res.end(content);
             }
             
         }
