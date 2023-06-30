@@ -34,13 +34,22 @@ document.getElementById("crest").addEventListener(("click"),()=>{
     window.location.href = "../html/home.html";
 })
 
+document.getElementById("plus").addEventListener(("click"),()=>{
+    document.querySelector(".search_bar").classList.toggle("off");
+    document.querySelector(".select_bar").classList.toggle("off");
+    document.querySelector(".filter_bar").classList.toggle("off");
+    document.querySelector("search_bar").setAttribute("disabled","disabled");
+})
+
+var masterArray = [];
+
 function loadSongs(){
     fetch(`/api/load_songs`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
         response.json().then((result)=>{
-            var masterArray = [];
+            
             for(let i = 0;i<result.length;i++){
                 let filename = result[i];
                 let array = filename.split("-");
@@ -50,12 +59,12 @@ function loadSongs(){
                 const sub = [song,artist,filename,image];
                 masterArray.push(sub);
             }
-            let message = ``;
+            let message = `<option value="Select">Select</option>`;
             masterArray.forEach((item)=>{
                 let subMessage = `<option value="${item[2]}">${item[0]} - ${item[1]}</option>`;
                 message+=subMessage;
             })
-            document.getElementById("mySelect").innerHTML += message;
+            document.getElementById("mySelect").innerHTML = message;
         })
     })
 }
@@ -76,3 +85,24 @@ function filterOptions() {
       }
     }
   }
+
+function changeList(){
+    let val = document.getElementById("filterSelect").value;
+    if(val=="artist"){
+        let message = `<option value="Select">Select</option>`;
+        masterArray.sort((a,b)=>a[1].localeCompare(b[1]));
+            masterArray.forEach((item)=>{
+                let subMessage = `<option value="${item[2]}">${item[1]} - ${item[0]}</option>`;
+                message+=subMessage;
+            })
+            document.getElementById("mySelect").innerHTML = message;
+    }else{
+        let message = `<option value="Select">Select</option>`;
+        masterArray.sort((a,b)=>a[0].localeCompare(b[0]));
+            masterArray.forEach((item)=>{
+                let subMessage = `<option value="${item[2]}">${item[0]} - ${item[1]}</option>`;
+                message+=subMessage;
+            })
+            document.getElementById("mySelect").innerHTML = message;
+    }
+}

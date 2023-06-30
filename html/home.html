@@ -38,16 +38,20 @@
 
     <div class = "test">
         <div class = "add_btn">
-            <i class="fa-solid fa-plus"></i>
+            <i class="fa-solid fa-plus" id="plus"></i>
             <input class="search_bar" type="text" id="myInput" oninput="filterOptions()" placeholder="Search">
             <select id="mySelect" class ="select_bar">
-                <option value="Select">Select</option>
+                
+            </select>
+            <select id="filterSelect" class ="filter_bar" onchange="changeList()">
+                <option value="song">By song</option>
+                <option value="artist">By Artist</option>
             </select>
         </div>
     </div>
     <div class = "dashboard">
         <audio controls id="media_player" class="audio">
-            <source src="../audio/Chasin'_You-Morgan_Wallen_x_Jordan_Davis_x_Two_Friends_&_Deerock_&_VAANCE.mp3" type="audio/mpeg">
+            <source src="../audio/In_Your_Time-Lee_Suhyun.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
           </audio>
     </div>

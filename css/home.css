@@ -258,7 +258,7 @@ body{
 .add_btn{
   display: flex;
   justify-content: center;
-  margin-left:-40%;
+  margin-left:-23%;
   color: #e4e4e4;
   font-size: 35px;
   font-family: monospace;
@@ -280,3 +280,21 @@ body{
   padding: 10px;
   border-radius: 15px;
 }
+
+.filter_bar{
+  margin-left:5px;
+  width:120px;
+  font-family: monospace;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.filter_bar.off{
+  background-color: #5c5b5b;
+}
+
+.search_bar.off{
+  background-color: #5c5b5b;}
+
+.select_bar.off{
+  background-color: #5c5b5b;}
