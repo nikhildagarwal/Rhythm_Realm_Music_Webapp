@@ -27,9 +27,32 @@ window.onload = function(){
     })
     }
     
+    loadSongs();
 }
 
 document.getElementById("crest").addEventListener(("click"),()=>{
     window.location.href = "../html/home.html";
 })
+
+function loadSongs(){
+    fetch(`/api/load_songs`,{
+        method:"GET",
+        cache:"no-cache"
+    }).then((response)=>{
+        response.json().then((result)=>{
+            var masterArray = [];
+            for(let i = 0;i<result.length;i++){
+                let filename = result[i];
+                let array = filename.split("-");
+                let song = array[0].replace(/_/g,' ');
+                let image = "dfs";
+                let artist = array[1].substring(0,array[1].length-4).replace(/_/g,' ');
+                const sub = [song,artist,filename,image];
+                masterArray.push(sub);
+            }
+            masterArray.sort((a,b)=>a[1].localeCompare(b[1]));
+            console.log(masterArray);
+        })
+    })
+}
 

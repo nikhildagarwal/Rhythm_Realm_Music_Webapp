@@ -38,6 +38,9 @@ const server = http.createServer((req,res) => {
                 break;
             case "getUserList":
                 handleGetUserList(req,res,splited[2],splited[3]);
+                break;
+            case "load_songs":
+                handleLoadSongs(req,res);
         }
         return;
     }
@@ -80,6 +83,27 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleLoadSongs(req,res){
+    try{
+        const folderPath = __dirname+"/audio";
+    let array = [];
+    fs.readdir(folderPath,(err,files)=>{
+        if(err){
+            console.log('Error reading folder'+err);
+            return;
+        }
+        files.forEach((file)=>{
+            array.push(file);
+        })
+        res.writeHead(200,{'Content-type':'application/json'});
+        res.end(JSON.stringify(array));
+    })
+        
+    }catch (err){
+        console.log(err);
+    }
+}
 
 async function handleChangePassword(req,res,username,newPassword){
     try{
