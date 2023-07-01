@@ -38,12 +38,12 @@
 
     <div class = "test">
         <div class = "add_btn">
-            <i class="fa-solid fa-plus" id="plus"></i>
+            <i class="fa-regular fa-square-plus fa-fade" id="plus" title="Add Songs"></i>
             <input class="search_bar" type="text" id="myInput" oninput="filterOptions()" placeholder="Search">
             <select id="mySelect" class ="select_bar">
                 
             </select>
-            <select id="filterSelect" class ="filter_bar" onchange="changeList()">
+            <select id="filterSelect" class ="filter_bar" onchange="changeList()" >
                 <option value="song">By song</option>
                 <option value="artist">By Artist</option>
             </select>

@@ -1,4 +1,10 @@
 window.onload = function(){
+    document.querySelector(".search_bar").classList.toggle("off");
+    document.querySelector(".select_bar").classList.toggle("off");
+    document.querySelector(".filter_bar").classList.toggle("off");
+    document.querySelector(".search_bar").disabled = true;
+        document.querySelector(".select_bar").disabled = true;
+        document.querySelector(".filter_bar").disabled = true;
     if(localStorage.getItem("username") != null){
         document.querySelector(".container").innerHTML = `<div class = "logItem1" id="profile" title="View Profile">
         <span class="logText"></span><i class="fa-solid fa-user"></i></span><div class="signtext">Profile</div>
@@ -34,11 +40,22 @@ document.getElementById("crest").addEventListener(("click"),()=>{
     window.location.href = "../html/home.html";
 })
 
+let mutex = 1;
 document.getElementById("plus").addEventListener(("click"),()=>{
     document.querySelector(".search_bar").classList.toggle("off");
     document.querySelector(".select_bar").classList.toggle("off");
     document.querySelector(".filter_bar").classList.toggle("off");
-    document.querySelector("search_bar").setAttribute("disabled","disabled");
+    if(mutex == 0){
+        document.querySelector(".search_bar").disabled = true;
+        document.querySelector(".select_bar").disabled = true;
+        document.querySelector(".filter_bar").disabled = true;
+        mutex = 1;
+    }else{
+        document.querySelector(".search_bar").disabled = false;
+        document.querySelector(".select_bar").disabled = false;
+        document.querySelector(".filter_bar").disabled = false;
+        mutex = 0;
+    }
 })
 
 var masterArray = [];

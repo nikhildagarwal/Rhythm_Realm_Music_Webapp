@@ -298,3 +298,7 @@ body{
 
 .select_bar.off{
   background-color: #5c5b5b;}
+
+.fa-regular.fa-square-plus.fa-fade{
+  cursor: pointer;
+}
