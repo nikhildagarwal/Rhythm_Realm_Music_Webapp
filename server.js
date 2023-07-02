@@ -46,6 +46,9 @@ const server = http.createServer((req,res) => {
                 break;
             case "get_song_list":
                 handleGetSongList(req,res,splited[2]);
+                break;
+            case "change_liked":
+                handleChangeLiked(req,res,splited[2],splited[3],splited[4]);
         }
         return;
     }
@@ -89,6 +92,31 @@ server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
 
+async function handleChangeLiked(req,res,username,index,value){
+    try{
+        await changeLiked(username,index,value);
+        res.writeHead(200);
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function changeLiked(username,index,value){
+    let path = db.ref(`/users/${username}/songs`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    let code = Object.keys(promise)[index];
+    path = db.ref(`/users/${username}/songs/${code}`);
+    path.update({
+        liked:value
+    })
+    return 0;
+}
+
 async function handleGetSongList(req,res,username){
     try{
         let set = await getSongList(username);
@@ -131,8 +159,7 @@ async function addSongToUser(username,filename){
     path = db.ref(`/users/${username}/songs/`);
     path.push({
         filename:filename,
-        liked:false,
-        
+        liked:false
     })
 }
 

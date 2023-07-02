@@ -1,4 +1,5 @@
 let scrollable = new Map();
+let numberOfSongs = 0;
 
 window.onload = function(){
     document.querySelector(".search_bar").classList.toggle("off");
@@ -48,6 +49,27 @@ window.onload = function(){
                                     <i class="fa-regular fa-heart" id="heart-${i}"></i>
                                     <i class="fa-solid fa-ellipsis"></i>
                                 </div>`;
+                            numberOfSongs++;
+                        }
+                        let arrayMutex = [];
+                        for(let i = 0;i<numberOfSongs;i++){
+                            arrayMutex.push(0);
+                            document.getElementById(`heart-${i}`).addEventListener('click',()=>{
+                                document.getElementById(`heart-${i}`).classList.toggle("hit");
+                                if(arrayMutex[i] ==0){
+                                    fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${true}`,{
+                                        method:"POST",
+                                        cache:"no-cache"
+                                    })
+                                    arrayMutex[i] = 1;
+                                }else{
+                                    fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${false}`,{
+                                        method:"POST",
+                                        cache:"no-cache"
+                                    })
+                                    arrayMutex[i] = 0;
+                                }
+                            })
                         }
                     })
                 })

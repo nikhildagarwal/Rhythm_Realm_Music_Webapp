@@ -374,6 +374,14 @@ body{
   transition: 0.2s ease-in-out;
 }
 
+.fa-regular.fa-heart.hit{
+  color:#e049a1;
+  margin-left:20px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
 .fa-regular.fa-heart:hover{
   transition: 0.2s ease-in-out;
   color: #e049a1;
