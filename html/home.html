@@ -38,23 +38,27 @@
 
     <div class = "test">
         <div class = "add_btn">
-            <i class="fa-regular fa-square-plus fa-fade" id="plus" title="Add Songs"></i>
+            <i class="fa-regular fa-square-plus fa-fade" style="color: #1ca8ba;" id="plus" title="Add Songs"></i>
             <input class="search_bar" type="text" id="myInput" oninput="filterOptions()" placeholder="Search">
-            <select id="mySelect" class ="select_bar">
+            <select id="mySelect" class ="select_bar" onchange="spoof_btn()">
                 
             </select>
+            <button class = "user_add_song">
+                Add
+            </button>
             <select id="filterSelect" class ="filter_bar" onchange="changeList()" >
-                <option value="song">By song</option>
+                <option value="song">By Song</option>
                 <option value="artist">By Artist</option>
             </select>
         </div>
+        <!--<div class = "dashboard">
+            <audio controls id="media_player" class="audio">
+                <source src="../audio/In_Your_Time-Lee_Suhyun.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+        </div>-->
     </div>
-    <div class = "dashboard">
-        <audio controls id="media_player" class="audio">
-            <source src="../audio/In_Your_Time-Lee_Suhyun.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-    </div>
+    
     
     <script src = "../js/home.js"></script>
 </body>

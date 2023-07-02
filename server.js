@@ -41,6 +41,12 @@ const server = http.createServer((req,res) => {
                 break;
             case "load_songs":
                 handleLoadSongs(req,res);
+                break;
+            case "add_song_to_user":
+                handleAddSongToUser(req,res,splited[2],splited[3]);
+                break;
+            case "get_song_list":
+                handleGetSongList(req,res,splited[2]);
         }
         return;
     }
@@ -83,6 +89,51 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleGetSongList(req,res,username){
+    try{
+        let set = await getSongList(username);
+        res.writeHead(200,{'Content-type':'application/json'});
+        res.end(JSON.stringify(set));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getSongList(username){
+    let path = db.ref(`/users/${username}/songs/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    if(promise == null){
+        return [];
+    }
+    let array = Object.values(promise);
+    let setArray = [];
+    array.forEach((item)=>{
+        setArray.push(item.filename);
+    });
+    return setArray;
+}
+
+async function handleAddSongToUser(req,res,username,filename){
+    try{
+        let hi = await addSongToUser(username,filename);
+        res.writeHead(200,{'Content-Type':'text/plain'});
+        res.end(JSON.stringify(hi));
+    }catch(err){
+        console.log(err);
+    }
+}
+
+async function addSongToUser(username,filename){
+    path = db.ref(`/users/${username}/songs/`);
+    path.push({
+        filename
+    })
+}
 
 async function handleLoadSongs(req,res){
     try{
