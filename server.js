@@ -2,7 +2,6 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const admin = require('./js/firebase.js').admin;
-const Song = require('./js/song.js');
 const db = admin.database();
 
 const server = http.createServer((req,res) => {
@@ -43,7 +42,7 @@ const server = http.createServer((req,res) => {
                 handleLoadSongs(req,res);
                 break;
             case "add_song_to_user":
-                handleAddSongToUser(req,res,splited[2],splited[3]);
+                handleAddSongToUser(req,res,splited[2],splited[3],splited[4]);
                 break;
             case "get_song_list":
                 handleGetSongList(req,res,splited[2]);
@@ -113,7 +112,7 @@ async function getSongList(username){
     let array = Object.values(promise);
     let setArray = [];
     array.forEach((item)=>{
-        setArray.push(item.filename);
+        setArray.push([item.filename,item.liked]);
     });
     return setArray;
 }
@@ -131,7 +130,9 @@ async function handleAddSongToUser(req,res,username,filename){
 async function addSongToUser(username,filename){
     path = db.ref(`/users/${username}/songs/`);
     path.push({
-        filename
+        filename:filename,
+        liked:false,
+        
     })
 }
 

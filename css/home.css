@@ -102,6 +102,7 @@ body{
 
   .test{
     display: flex;
+    flex-direction: column;
     position:absolute;
     border-radius: 15px;
     justify-content: center;
@@ -312,4 +313,75 @@ body{
 
 .user_add_song.off{
   background-color: #5c5b5b;
+}
+
+.song_container{
+  background-color: #000000;
+  margin-top:4%;
+  width:100%;
+  height:80%;
+  border-radius: 15px;
+  overflow: auto;
+}
+
+.list_item{
+  margin-left:1.5%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top:10px;
+  background-color: #5c5b5b;
+  border-radius: 15px;
+  padding: 10px;
+  width: 90%;
+}
+
+.list_item_img{
+  margin-left: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+.list_item_title{
+  color:#e4e4e4;
+  font-size: 18px;
+  font-family: monospace;
+  font-weight: bold;
+  margin-left:15px;
+  width:35%;
+}
+
+.list_item_artist{
+  color:#e4e4e4;
+  font-size: 14px;
+  font-family: monospace;
+  margin-left:30px;
+  width:25%
+}
+
+.fa-regular.fa-circle-play{
+  color:#e4e4e4;
+  margin-left:20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.fa-regular.fa-heart{
+  color:#e4e4e4;
+  margin-left:20px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.fa-regular.fa-heart:hover{
+  transition: 0.2s ease-in-out;
+  color: #e049a1;
+}
+
+.fa-solid.fa-ellipsis{
+  color:#e4e4e4;
+  margin-left:32px;
+  font-size: 24px;
+  cursor: pointer;
 }
