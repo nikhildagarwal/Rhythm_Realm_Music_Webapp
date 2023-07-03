@@ -38,7 +38,7 @@ window.onload = function(){
                             let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
-                            document.getElementById("song-container").innerHTML += `<div class = "list_item" value=${filename}>
+                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list" data-file="${filename}">
                                     <img src=${image} class = "list_item_img">
                                     <div class="list_item_title">
                                         ${song}
@@ -58,6 +58,7 @@ window.onload = function(){
                         }).then((response)=>{
                             response.json().then((result)=>{
                                 let arrayMutex = [];
+                                let indexOfPlay = -1;
                                 for(let j = 0;j<result.length;j++){
                                     if(result[j]=="true"){
                                         document.getElementById(`heart-${j}`).classList.toggle("hit");
@@ -84,6 +85,16 @@ window.onload = function(){
                                             arrayMutex[i] = 0;
                                         }
                                     });
+                                    document.getElementById(`play-${i}`).addEventListener('click',()=>{
+                                        document.getElementById(`play-${i}`).classList.toggle("hit");
+                                        if(indexOfPlay!=-1){
+                                            document.getElementById(`play-${indexOfPlay}`).classList.toggle("hit");
+                                        }
+                                        indexOfPlay = i;
+                                        let ourfile = document.querySelectorAll(".item_in_list")[indexOfPlay].dataset.file;
+                                        console.log(ourfile);
+                                        
+                                    })
                                 }
                             })
                         })
@@ -237,7 +248,7 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                             let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
-                            document.getElementById("song-container").innerHTML += `<div class = "list_item" value=${filename}>
+                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list" data-file="${filename}">
                                     <img src=${image} class = "list_item_img">
                                     <div class="list_item_title">
                                         ${song}
