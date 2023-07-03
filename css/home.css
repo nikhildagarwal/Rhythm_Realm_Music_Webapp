@@ -364,6 +364,23 @@ body{
   margin-left:20px;
   font-size: 24px;
   cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.fa-regular.fa-circle-play:hover{
+  color:#30f789;
+  margin-left:20px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.fa-regular.fa-circle-play.hit{
+  color:#30f789;
+  margin-left:20px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
 }
 
 .fa-regular.fa-heart{

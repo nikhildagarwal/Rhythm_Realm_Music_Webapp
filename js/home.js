@@ -33,7 +33,8 @@ window.onload = function(){
                             let filename = array[i][0];
                             let yo = filename.split("-");
                             let song = yo[0].replace(/_/g,' ');
-                            let image = "../img/test_banner.jpeg";
+                            let imgName = filename.split(".")[0];
+                            let image = `../img/${imgName+".jpeg"}`;
                             let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
@@ -45,9 +46,9 @@ window.onload = function(){
                                     <div class ="list_item_artist">
                                         ${artist}
                                     </div>
-                                    <i class="fa-regular fa-circle-play"></i>
+                                    <i class="fa-regular fa-circle-play" id="play-${i}"></i>
                                     <i class="fa-regular fa-heart" id="heart-${i}"></i>
-                                    <i class="fa-solid fa-ellipsis"></i>
+                                    <i class="fa-solid fa-ellipsis" id="dots-${i}"></i>
                                 </div>`;
                             numberOfSongs++;
                         }
@@ -56,33 +57,36 @@ window.onload = function(){
                             cache:"no-cache"
                         }).then((response)=>{
                             response.json().then((result)=>{
+                                let arrayMutex = [];
                                 for(let j = 0;j<result.length;j++){
                                     if(result[j]=="true"){
                                         document.getElementById(`heart-${j}`).classList.toggle("hit");
+                                        arrayMutex.push(1);
+                                    }else{
+                                        arrayMutex.push(0);
                                     }
+                                }
+                                /**Start here */
+                                for(let i = 0;i<numberOfSongs;i++){
+                                    document.getElementById(`heart-${i}`).addEventListener('click',()=>{
+                                        document.getElementById(`heart-${i}`).classList.toggle("hit");
+                                        if(arrayMutex[i] ==0){
+                                            fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${true}`,{
+                                                method:"POST",
+                                                cache:"no-cache"
+                                            })
+                                            arrayMutex[i] = 1;
+                                        }else{
+                                            fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${false}`,{
+                                                method:"POST",
+                                                cache:"no-cache"
+                                            })
+                                            arrayMutex[i] = 0;
+                                        }
+                                    });
                                 }
                             })
                         })
-                        let arrayMutex = [];
-                        for(let i = 0;i<numberOfSongs;i++){
-                            arrayMutex.push(0);
-                            document.getElementById(`heart-${i}`).addEventListener('click',()=>{
-                                document.getElementById(`heart-${i}`).classList.toggle("hit");
-                                if(arrayMutex[i] ==0){
-                                    fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${true}`,{
-                                        method:"POST",
-                                        cache:"no-cache"
-                                    })
-                                    arrayMutex[i] = 1;
-                                }else{
-                                    fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${false}`,{
-                                        method:"POST",
-                                        cache:"no-cache"
-                                    })
-                                    arrayMutex[i] = 0;
-                                }
-                            })
-                        }
                     })
                 })
     }else{
@@ -165,7 +169,8 @@ function loadSongs(){
                         if(!songSet.has(filename)){
                             let array = filename.split("-");
                             let song = array[0].replace(/_/g,' ');
-                            let image = "../img/test_banner.jpeg";
+                            let imgName = filename.split(".")[0];
+                            let image = `../img/${imgName+".jpeg"}`;
                             let artist = array[1].substring(0,array[1].length-4).replace(/_/g,' ');
                             const sub = [song,artist,filename,image];
                             masterArray.set(filename,sub);
@@ -216,7 +221,7 @@ function spoof_btn(){
 document.querySelector(".user_add_song").addEventListener(("click"),()=>{
     document.getElementById("myInput").value = "";
     let filename = document.getElementById("mySelect").value;
-    fetch(`/api/add_song_to_user/${localStorage.getItem("username")}/${filename}/test_banner.jpeg`,{
+    fetch(`/api/add_song_to_user/${localStorage.getItem("username")}/${filename}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
@@ -227,7 +232,8 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
             populate(masterArray,document.getElementById("filterSelect").value);
             let yo = filename.split("-");
                             let song = yo[0].replace(/_/g,' ');
-                            let image = "../img/test_banner.jpeg";
+                            let imgName = filename.split(".")[0];
+                            let image = `../img/${imgName+".jpeg"}`;
                             let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
@@ -239,10 +245,32 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                     <div class ="list_item_artist">
                                         ${artist}
                                     </div>
-                                    <i class="fa-regular fa-circle-play"></i>
-                                    <i class="fa-regular fa-heart"></i>
-                                    <i class="fa-solid fa-ellipsis"></i>
+                                    <i class="fa-regular fa-circle-play" id="play-${numberOfSongs}"></i>
+                                    <i class="fa-regular fa-heart" id="heart-${numberOfSongs}"></i>
+                                    <i class="fa-solid fa-ellipsis" id="dots-${numberOfSongs}"></i>
                                 </div>`;
+                            numberOfSongs++;
+                            let arrayMutex = [];
+                            for(let i = 0;i<numberOfSongs;i++){
+                                arrayMutex.push(0);
+                                document.getElementById(`heart-${i}`).addEventListener('click',()=>{
+                                    document.getElementById(`heart-${i}`).classList.toggle("hit");
+                                    if(arrayMutex[i] ==0){
+                                        fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${true}`,{
+                                            method:"POST",
+                                            cache:"no-cache"
+                                        })
+                                        arrayMutex[i] = 1;
+                                    }else{
+                                        fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${false}`,{
+                                            method:"POST",
+                                            cache:"no-cache"
+                                        })
+                                        arrayMutex[i] = 0;
+                                    }
+                                });
+                            }
+
         }
     })
 })
