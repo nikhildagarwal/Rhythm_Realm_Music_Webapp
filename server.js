@@ -49,6 +49,9 @@ const server = http.createServer((req,res) => {
                 break;
             case "change_liked":
                 handleChangeLiked(req,res,splited[2],splited[3],splited[4]);
+                break;
+            case "check_liked":
+                handleCheckLiked(req,res,splited[2]);
         }
         return;
     }
@@ -91,6 +94,40 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleCheckLiked(req,res,username){
+    try{
+        let array = await checkLiked(username);
+        res.writeHead(200,{'Content-type':'application/json'});
+        res.end(JSON.stringify(array));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function checkLiked(username){
+    let path = db.ref(`/users/${username}/songs`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    if(promise == null){
+        return [];
+    }
+    let code = Object.keys(promise);
+    let booleanArray = [];
+    for(let i = 0;i<code.length;i++){
+        let newPath = db.ref(`/users/${username}/songs/${code[i]}/`);
+        let songData = await new Promise((resolve,reject)=>{
+            newPath.get().then((snapshot)=>{
+                resolve(snapshot.val());
+            })
+        })
+        booleanArray.push(songData.liked);
+    }
+    return booleanArray;
+}
 
 async function handleChangeLiked(req,res,username,index,value){
     try{

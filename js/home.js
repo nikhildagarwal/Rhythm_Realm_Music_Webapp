@@ -51,6 +51,18 @@ window.onload = function(){
                                 </div>`;
                             numberOfSongs++;
                         }
+                        fetch(`/api/check_liked/${localStorage.getItem("username")}`,{
+                            method:"GET",
+                            cache:"no-cache"
+                        }).then((response)=>{
+                            response.json().then((result)=>{
+                                for(let j = 0;j<result.length;j++){
+                                    if(result[j]=="true"){
+                                        document.getElementById(`heart-${j}`).classList.toggle("hit");
+                                    }
+                                }
+                            })
+                        })
                         let arrayMutex = [];
                         for(let i = 0;i<numberOfSongs;i++){
                             arrayMutex.push(0);
