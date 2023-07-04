@@ -1,5 +1,8 @@
 let scrollable = new Map();
 let numberOfSongs = 0;
+let indexOfPlay = -1;
+
+let audioArray = [];
 
 window.onload = function(){
     document.querySelector(".search_bar").classList.toggle("off");
@@ -38,6 +41,7 @@ window.onload = function(){
                             let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
+                            audioArray.push(new Audio(`../audio/${filename}`));
                             document.getElementById("song-container").innerHTML += `<div class = "item_in_list" data-file="${filename}">
                                     <img src=${image} class = "list_item_img">
                                     <div class="list_item_title">
@@ -58,7 +62,7 @@ window.onload = function(){
                         }).then((response)=>{
                             response.json().then((result)=>{
                                 let arrayMutex = [];
-                                let indexOfPlay = -1;
+                                
                                 for(let j = 0;j<result.length;j++){
                                     if(result[j]=="true"){
                                         document.getElementById(`heart-${j}`).classList.toggle("hit");
@@ -89,11 +93,19 @@ window.onload = function(){
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
                                         if(indexOfPlay!=-1){
                                             document.getElementById(`play-${indexOfPlay}`).classList.toggle("hit");
+                                            audioArray[indexOfPlay].pause();
+                                            audioArray[indexOfPlay].currentTime = 0;
                                         }
                                         indexOfPlay = i;
-                                        let ourfile = document.querySelectorAll(".item_in_list")[indexOfPlay].dataset.file;
-                                        console.log(ourfile);
-                                        
+                                        audioArray[indexOfPlay].play();
+                                        let audio = audioArray[indexOfPlay];
+                                        const checkAudioStopped = setInterval(function() {
+                                            if (audio.currentTime >= audio.duration) {
+                                              console.log('Audio has stopped playing');
+                                              document.getElementById(`play-${indexOfPlay}`).classList.toggle("off");
+                                              clearInterval(checkAudioStopped);
+                                            }
+                                          }, 1000);
                                     })
                                 }
                             })
@@ -126,7 +138,7 @@ document.getElementById("plus").addEventListener(("click"),()=>{
         iconMutex = 1;
     }else{
         ref.className = "fa-regular fa-square-plus fa-fade";
-        ref.style = "color: #1ca8ba;";
+        ref.style = "color: #e4e4e4;";
         ref.title = "Add Songs";
         iconMutex =0;
     }
@@ -248,6 +260,7 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                             let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
+                            audioArray.push(new Audio(`../audio/${filename}`));
                             document.getElementById("song-container").innerHTML += `<div class = "item_in_list" data-file="${filename}">
                                     <img src=${image} class = "list_item_img">
                                     <div class="list_item_title">
@@ -280,6 +293,24 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                         arrayMutex[i] = 0;
                                     }
                                 });
+                                document.getElementById(`play-${i}`).addEventListener('click',()=>{
+                                        document.getElementById(`play-${i}`).classList.toggle("hit");
+                                        if(indexOfPlay!=-1){
+                                            document.getElementById(`play-${indexOfPlay}`).classList.toggle("hit");
+                                            audioArray[indexOfPlay].pause();
+                                            audioArray[indexOfPlay].currentTime = 0;
+                                        }
+                                        indexOfPlay = i;
+                                        audioArray[indexOfPlay].play();
+                                        let audio = audioArray[indexOfPlay];
+                                        const checkAudioStopped = setInterval(function() {
+                                            if (audio.currentTime >= audio.duration) {
+                                              console.log('Audio has stopped playing');
+                                              document.getElementById(`play-${indexOfPlay}`).classList.toggle("off");
+                                              clearInterval(checkAudioStopped);
+                                            }
+                                          }, 1000);
+                                    })
                             }
 
         }
