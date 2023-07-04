@@ -453,4 +453,14 @@ body{
   margin-left:32px;
   font-size: 24px;
   cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.fa-solid.fa-ellipsis:hover{
+  color: #ffa600;
+  transition: 0.2s ease-in-out;
+}
+
+.fa-solid.fa-ellipsis.hit{
+  color: #ffa600;
 }

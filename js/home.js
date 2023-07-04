@@ -5,7 +5,9 @@ let tabIndex = 0;
 let audioArray = [];
 
 window.onload = function(){
-    document.querySelector(".search_bar").classList.toggle("off");
+    
+    if(localStorage.getItem("username") != null){
+        document.querySelector(".search_bar").classList.toggle("off");
     document.querySelector(".select_bar").classList.toggle("off");
     document.querySelector(".filter_bar").classList.toggle("off");
     document.querySelector(".user_add_song").classList.toggle("off");
@@ -14,10 +16,10 @@ window.onload = function(){
         document.querySelector(".filter_bar").disabled = true;
     document.querySelector(".user_add_song").disabled = true;
     loadSongs();
-    if(localStorage.getItem("username") != null){
                 let tabArray = [document.getElementById("songs"),document.getElementById("playlists"),document.getElementById("listen")];
                 let tabContainer = [document.querySelector(".test"),document.querySelector(".playlist_tab"),document.querySelector(".listen_tab")];
                 tabArray[0].classList.toggle("hit");
+                tabContainer[0].className = "test";
                 tabArray[0].addEventListener('click',()=>{
                     if(tabIndex != 0){
                         tabArray[0].classList.toggle("hit");
@@ -132,6 +134,9 @@ window.onload = function(){
                                             arrayMutex[i] = 0;
                                         }
                                     });
+                                    document.getElementById(`dots-${i}`).addEventListener('click',()=>{
+                                        
+                                    })
                                     document.getElementById(`play-${i}`).addEventListener('click',()=>{
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
                                         if(indexOfPlay!=-1){
@@ -148,6 +153,16 @@ window.onload = function(){
                     })
                 })
     }else{
+        let tabArray = [document.getElementById("songs"),document.getElementById("playlists"),document.getElementById("listen")];
+        tabArray[0].addEventListener('click',()=>{
+            alert("You must (Log In) / (Create An Account) before you can access MY SONGS");
+        })
+        tabArray[1].addEventListener('click',()=>{
+            alert("You must (Log In) / (Create An Account) before you can access MY PLAYLISTS");
+        })
+        tabArray[2].addEventListener('click',()=>{
+            alert("You must (Log In) / (Create An Account) before you can access LISTEN NOW");
+        })
                     document.querySelector(".container").innerHTML = `<div class = "logItem" id="signup" title="Sign Up">
                     <span class="logText"></span><i class="fa-solid fa-user-plus" ></i></span><div class="signtext2">Sign Up</div>
                 </div>
