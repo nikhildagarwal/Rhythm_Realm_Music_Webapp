@@ -1,7 +1,7 @@
 let scrollable = new Map();
 let numberOfSongs = 0;
 let indexOfPlay = -1;
-
+let tabIndex = 0;
 let audioArray = [];
 
 window.onload = function(){
@@ -15,6 +15,49 @@ window.onload = function(){
     document.querySelector(".user_add_song").disabled = true;
     loadSongs();
     if(localStorage.getItem("username") != null){
+                let tabArray = [document.getElementById("songs"),document.getElementById("playlists"),document.getElementById("listen")];
+                let tabContainer = [document.querySelector(".test"),document.querySelector(".playlist_tab"),document.querySelector(".listen_tab")];
+                tabArray[0].classList.toggle("hit");
+                tabArray[0].addEventListener('click',()=>{
+                    if(tabIndex != 0){
+                        tabArray[0].classList.toggle("hit");
+                        tabArray[tabIndex].classList.toggle("hit");
+                        tabContainer[0].className = "test";
+                        tabContainer[1].className = "playlist_tab off";
+                        tabContainer[2].className = "listen_tab off";
+                        tabIndex = 0;
+                    }
+                })
+                tabArray[1].addEventListener('click',()=>{
+                    if(tabIndex != 1){
+                        tabArray[1].classList.toggle("hit");
+                        tabArray[tabIndex].classList.toggle("hit");
+                        tabIndex = 1;
+                        if(indexOfPlay!=-1){
+                            audioArray[indexOfPlay].pause();
+                            audioArray[indexOfPlay].currentTime = 0;
+                            indexOfPlay = -1;
+                        }
+                        tabContainer[0].className = "test off";
+                        tabContainer[1].className = "playlist_tab";
+                        tabContainer[2].className = "listen_tab off";
+                    }
+                })
+                tabArray[2].addEventListener('click',()=>{
+                    if(tabIndex != 2){
+                        tabArray[2].classList.toggle("hit");
+                        tabArray[tabIndex].classList.toggle("hit");
+                        tabIndex = 2;
+                        if(indexOfPlay!=-1){
+                            audioArray[indexOfPlay].pause();
+                            audioArray[indexOfPlay].currentTime = 0;
+                            indexOfPlay = -1;
+                        }
+                        tabContainer[0].className = "test off";
+                        tabContainer[1].className = "playlist_tab off";
+                        tabContainer[2].className = "listen_tab";
+                    }
+                })
                     document.querySelector(".container").innerHTML = `<div class = "logItem1" id="profile" title="View Profile">
                     <span class="logText"></span><i class="fa-solid fa-user"></i></span><div class="signtext">Profile</div>
                 </div>
@@ -98,14 +141,6 @@ window.onload = function(){
                                         }
                                         indexOfPlay = i;
                                         audioArray[indexOfPlay].play();
-                                        let audio = audioArray[indexOfPlay];
-                                        const checkAudioStopped = setInterval(function() {
-                                            if (audio.currentTime >= audio.duration) {
-                                              console.log('Audio has stopped playing');
-                                              document.getElementById(`play-${indexOfPlay}`).classList.toggle("off");
-                                              clearInterval(checkAudioStopped);
-                                            }
-                                          }, 1000);
                                     })
                                 }
                             })
@@ -302,14 +337,7 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                         }
                                         indexOfPlay = i;
                                         audioArray[indexOfPlay].play();
-                                        let audio = audioArray[indexOfPlay];
-                                        const checkAudioStopped = setInterval(function() {
-                                            if (audio.currentTime >= audio.duration) {
-                                              console.log('Audio has stopped playing');
-                                              document.getElementById(`play-${indexOfPlay}`).classList.toggle("off");
-                                              clearInterval(checkAudioStopped);
-                                            }
-                                          }, 1000);
+                                        
                                     })
                             }
 
