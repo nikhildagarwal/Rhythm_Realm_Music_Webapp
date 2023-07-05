@@ -52,6 +52,9 @@ const server = http.createServer((req,res) => {
                 break;
             case "check_liked":
                 handleCheckLiked(req,res,splited[2]);
+                break;
+            case "remove_song":
+                handleRemoveSong(req,res,splited[2],splited[3]);
         }
         return;
     }
@@ -94,6 +97,41 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleRemoveSong(req,res,username,filename){
+    try{
+        let result = await removeSong(username,filename);
+        if(result == 1){
+            res.writeHead(200);
+        }else{
+            res.writeHead(400);
+        }
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function removeSong(username,filename){
+    let path = db.ref(`/users/${username}/songs/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    console.log(promise)
+    let objects = Object.values(promise);
+    for(let i = 0;i<objects.length;i++){
+        if(objects[i].filename == filename){
+            let code = Object.keys(promise)[i];
+            console.log(code);
+            let newPath = db.ref(`/users/${username}/songs/${code}/`);
+            newPath.remove();
+            return 1;
+        }
+    }
+    return 0;
+}
 
 async function handleCheckLiked(req,res,username){
     try{

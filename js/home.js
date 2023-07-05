@@ -430,13 +430,10 @@ function removeSongFromList(filename,song,artist,image,index){
 
     /**Remove Song from user db */
     fetch(`/api/remove_song/${localStorage.getItem("username")}/${filename}`,{
-        method:"DELETE",
+        method:"POST",
         cache:"no-cache"
     }).then((response)=>{
         console.log(response.status);
     })
 
-    /**
-     * ADDDD FTECH FUNCTIONALITY IN SERVER
-     */
 }
