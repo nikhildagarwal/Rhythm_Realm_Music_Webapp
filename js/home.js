@@ -3,6 +3,7 @@ let numberOfSongs = 0;
 let indexOfPlay = -1;
 let tabIndex = 0;
 let audioArray = [];
+let indexOfDots = -1;
 
 window.onload = function(){
     
@@ -87,7 +88,7 @@ window.onload = function(){
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
                             audioArray.push(new Audio(`../audio/${filename}`));
-                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list" data-file="${filename}">
+                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list">
                                     <img src=${image} class = "list_item_img">
                                     <div class="list_item_title">
                                         ${song}
@@ -97,7 +98,7 @@ window.onload = function(){
                                     </div>
                                     <i class="fa-regular fa-circle-play" id="play-${i}"></i>
                                     <i class="fa-regular fa-heart" id="heart-${i}"></i>
-                                    <i class="fa-solid fa-ellipsis" id="dots-${i}"></i>
+                                    <i class="fa-solid fa-trash" id="dots-${i}" data-file="${filename}"></i>
                                 </div>`;
                             numberOfSongs++;
                         }
@@ -135,8 +136,10 @@ window.onload = function(){
                                         }
                                     });
                                     document.getElementById(`dots-${i}`).addEventListener('click',()=>{
-                                        
-                                    })
+                                        let thisTrash = document.getElementById(`dots-${i}`);
+                                        thisTrash.classList.toggle("hit");
+                                        console.log(thisTrash.dataset.file);
+                                    });
                                     document.getElementById(`play-${i}`).addEventListener('click',()=>{
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
                                         if(indexOfPlay!=-1){
@@ -311,7 +314,7 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
                             audioArray.push(new Audio(`../audio/${filename}`));
-                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list" data-file="${filename}">
+                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list" >
                                     <img src=${image} class = "list_item_img">
                                     <div class="list_item_title">
                                         ${song}
@@ -321,7 +324,7 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                     </div>
                                     <i class="fa-regular fa-circle-play" id="play-${numberOfSongs}"></i>
                                     <i class="fa-regular fa-heart" id="heart-${numberOfSongs}"></i>
-                                    <i class="fa-solid fa-ellipsis" id="dots-${numberOfSongs}"></i>
+                                    <i class="fa-solid fa-trash" id="dots-${numberOfSongs}" data-file="${filename}"></i>
                                 </div>`;
                             numberOfSongs++;
                             let arrayMutex = [];
@@ -343,6 +346,9 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                         arrayMutex[i] = 0;
                                     }
                                 });
+                                document.getElementById(`dots-${i}`).addEventListener('click',()=>{
+                                    document.getElementById(`dots-${i}`).classList.toggle("hit");
+                                });
                                 document.getElementById(`play-${i}`).addEventListener('click',()=>{
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
                                         if(indexOfPlay!=-1){
@@ -352,7 +358,6 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                         }
                                         indexOfPlay = i;
                                         audioArray[indexOfPlay].play();
-                                        
                                     })
                             }
 
@@ -383,3 +388,10 @@ function populate(masterArray,val){
             document.getElementById("mySelect").innerHTML = message;
     }
 }
+
+const menuButton = document.getElementById('menuButton');
+const popupMenu = document.querySelector('.popupMenu');
+let smallMutex = 0;
+menuButton.addEventListener('click', function() {
+    popupMenu.classList.toggle("hit");
+});
