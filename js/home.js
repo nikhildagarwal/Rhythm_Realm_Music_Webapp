@@ -138,7 +138,16 @@ window.onload = function(){
                                     document.getElementById(`dots-${i}`).addEventListener('click',()=>{
                                         let thisTrash = document.getElementById(`dots-${i}`);
                                         thisTrash.classList.toggle("hit");
-                                        console.log(thisTrash.dataset.file);
+                                        let fileToRemove = thisTrash.dataset.file;
+                                        let bruh = fileToRemove.split("-");
+                                        let songToRemove = bruh[0].replace(/_/g,' ');
+                                        let artistToRemove = bruh[1].substring(0,bruh[1].length-4).replace(/_/g,' ');
+                                        let confirmResult = window.confirm(`Do you want to remove this song:\n\n${songToRemove} - ${artistToRemove}`);
+                                        if(confirmResult){
+
+                                        }else{
+                                            thisTrash.classList.toggle("hit");
+                                        }
                                     });
                                     document.getElementById(`play-${i}`).addEventListener('click',()=>{
                                         document.getElementById(`play-${i}`).classList.toggle("hit");

@@ -451,7 +451,7 @@ body{
 .fa-solid.fa-trash{
   color:#e4e4e4;
   margin-left:32px;
-  font-size: 20px;
+  font-size: 15px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
 }
