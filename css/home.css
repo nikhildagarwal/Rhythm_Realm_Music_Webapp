@@ -380,6 +380,10 @@ body{
   width: 90%;
 }
 
+.item_in_list.off{
+  display:none;
+}
+
 .list_item_img{
   margin-left: 5px;
   width: 50px;

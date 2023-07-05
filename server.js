@@ -129,9 +129,9 @@ async function checkLiked(username){
     return booleanArray;
 }
 
-async function handleChangeLiked(req,res,username,index,value){
+async function handleChangeLiked(req,res,username,filename,value){
     try{
-        await changeLiked(username,index,value);
+        await changeLiked(username,filename,value);
         res.writeHead(200);
         res.end();
     }catch (err){
@@ -139,14 +139,21 @@ async function handleChangeLiked(req,res,username,index,value){
     }
 }
 
-async function changeLiked(username,index,value){
+async function changeLiked(username,filename,value){
     let path = db.ref(`/users/${username}/songs`);
     let promise = await new Promise((resolve,reject)=>{
         path.get().then((snapshot)=>{
             resolve(snapshot.val());
         })
     })
-    let code = Object.keys(promise)[index];
+    let code = "";
+    let objects = Object.values(promise);
+    for(let i = 0;i<objects.length;i++){
+        if(objects[i].filename == filename){
+            code = Object.keys(promise)[i];
+            i = objects.length;
+        }
+    }
     path = db.ref(`/users/${username}/songs/${code}`);
     path.update({
         liked:value

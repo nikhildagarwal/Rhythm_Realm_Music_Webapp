@@ -88,7 +88,7 @@ window.onload = function(){
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
                             audioArray.push(new Audio(`../audio/${filename}`));
-                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list">
+                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list" id="list-item-${i}">
                                     <img src=${image} class = "list_item_img">
                                     <div class="list_item_title">
                                         ${song}
@@ -97,7 +97,7 @@ window.onload = function(){
                                         ${artist}
                                     </div>
                                     <i class="fa-regular fa-circle-play" id="play-${i}"></i>
-                                    <i class="fa-regular fa-heart" id="heart-${i}"></i>
+                                    <i class="fa-regular fa-heart" id="heart-${i}" data-file="${filename}"></i>
                                     <i class="fa-solid fa-trash" id="dots-${i}" data-file="${filename}"></i>
                                 </div>`;
                             numberOfSongs++;
@@ -122,13 +122,13 @@ window.onload = function(){
                                     document.getElementById(`heart-${i}`).addEventListener('click',()=>{
                                         document.getElementById(`heart-${i}`).classList.toggle("hit");
                                         if(arrayMutex[i] ==0){
-                                            fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${true}`,{
+                                            fetch(`/api/change_liked/${localStorage.getItem("username")}/${document.getElementById(`heart-${i}`).dataset.file}/${true}`,{
                                                 method:"POST",
                                                 cache:"no-cache"
                                             })
                                             arrayMutex[i] = 1;
                                         }else{
-                                            fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${false}`,{
+                                            fetch(`/api/change_liked/${localStorage.getItem("username")}/${document.getElementById(`heart-${i}`).dataset.file}/${false}`,{
                                                 method:"POST",
                                                 cache:"no-cache"
                                             })
@@ -142,9 +142,11 @@ window.onload = function(){
                                         let bruh = fileToRemove.split("-");
                                         let songToRemove = bruh[0].replace(/_/g,' ');
                                         let artistToRemove = bruh[1].substring(0,bruh[1].length-4).replace(/_/g,' ');
+                                        let imgTemp = fileToRemove.split(".")[0];
+                                        let imageToRemove = `../img/${imgTemp+".jpeg"}`;
                                         let confirmResult = window.confirm(`Do you want to remove this song:\n\n${songToRemove} - ${artistToRemove}`);
                                         if(confirmResult){
-
+                                            removeSongFromList(fileToRemove,songToRemove,artistToRemove,imageToRemove,i);
                                         }else{
                                             thisTrash.classList.toggle("hit");
                                         }
@@ -279,7 +281,6 @@ function filterOptions() {
     for (let i = 0; i < select.options.length; i++) {
       const option = select.options[i];
       const optionText = option.text.toLowerCase();
-
       if (optionText.includes(input)) {
         option.style.display = '';
       } else {
@@ -323,7 +324,7 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                             const sub = [song,artist,filename,image];
                             scrollable.set(filename,sub);
                             audioArray.push(new Audio(`../audio/${filename}`));
-                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list" >
+                            document.getElementById("song-container").innerHTML += `<div class = "item_in_list" id="list-item-${numberOfSongs}" >
                                     <img src=${image} class = "list_item_img">
                                     <div class="list_item_title">
                                         ${song}
@@ -332,7 +333,7 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                         ${artist}
                                     </div>
                                     <i class="fa-regular fa-circle-play" id="play-${numberOfSongs}"></i>
-                                    <i class="fa-regular fa-heart" id="heart-${numberOfSongs}"></i>
+                                    <i class="fa-regular fa-heart" id="heart-${numberOfSongs}" data-file="${filename}"></i>
                                     <i class="fa-solid fa-trash" id="dots-${numberOfSongs}" data-file="${filename}"></i>
                                 </div>`;
                             numberOfSongs++;
@@ -342,13 +343,13 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                 document.getElementById(`heart-${i}`).addEventListener('click',()=>{
                                     document.getElementById(`heart-${i}`).classList.toggle("hit");
                                     if(arrayMutex[i] ==0){
-                                        fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${true}`,{
+                                        fetch(`/api/change_liked/${localStorage.getItem("username")}/${document.getElementById(`heart-${i}`).dataset.file}/${true}`,{
                                             method:"POST",
                                             cache:"no-cache"
                                         })
                                         arrayMutex[i] = 1;
                                     }else{
-                                        fetch(`/api/change_liked/${localStorage.getItem("username")}/${i}/${false}`,{
+                                        fetch(`/api/change_liked/${localStorage.getItem("username")}/${document.getElementById(`heart-${i}`).dataset.file}/${false}`,{
                                             method:"POST",
                                             cache:"no-cache"
                                         })
@@ -356,7 +357,20 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                     }
                                 });
                                 document.getElementById(`dots-${i}`).addEventListener('click',()=>{
-                                    document.getElementById(`dots-${i}`).classList.toggle("hit");
+                                    let thisTrash = document.getElementById(`dots-${i}`);
+                                    thisTrash.classList.toggle("hit");
+                                    let fileToRemove = thisTrash.dataset.file;
+                                    let bruh = fileToRemove.split("-");
+                                    let songToRemove = bruh[0].replace(/_/g,' ');
+                                    let artistToRemove = bruh[1].substring(0,bruh[1].length-4).replace(/_/g,' ');
+                                    let imgTemp = filename.split(".")[0];
+                                    let imageToRemove = `../img/${imgTemp+".jpeg"}`;
+                                    let confirmResult = window.confirm(`Do you want to remove this song:\n\n${songToRemove} - ${artistToRemove}`);
+                                    if(confirmResult){
+                                        removeSongFromList(fileToRemove,songToRemove,artistToRemove,imageToRemove,i);
+                                    }else{
+                                        thisTrash.classList.toggle("hit");
+                                    }
                                 });
                                 document.getElementById(`play-${i}`).addEventListener('click',()=>{
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
@@ -404,3 +418,25 @@ let smallMutex = 0;
 menuButton.addEventListener('click', function() {
     popupMenu.classList.toggle("hit");
 });
+
+function removeSongFromList(filename,song,artist,image,index){
+    /**Repopulate select menu */
+    let sub = [song,artist,filename,image]
+    masterArray.set(filename,sub);
+    populate(masterArray,document.getElementById("filterSelect").value);
+    
+    /**Hide List Item from Scrollable View */
+    document.getElementById(`list-item-${index}`).classList.toggle("off");
+
+    /**Remove Song from user db */
+    fetch(`/api/remove_song/${localStorage.getItem("username")}/${filename}`,{
+        method:"DELETE",
+        cache:"no-cache"
+    }).then((response)=>{
+        console.log(response.status);
+    })
+
+    /**
+     * ADDDD FTECH FUNCTIONALITY IN SERVER
+     */
+}
