@@ -5,6 +5,7 @@ let tabIndex = 0;
 let audioArray = [];
 let indexOfDots = -1;
 let songNumberTracker = 0;
+let playListMap = null;
 
 window.onload = function(){
     
@@ -33,6 +34,7 @@ window.onload = function(){
                     }
                 })
                 tabArray[1].addEventListener('click',()=>{
+                    populatePlayListSelect();
                     if(tabIndex != 1){
                         tabArray[1].classList.toggle("hit");
                         tabArray[tabIndex].classList.toggle("hit");
@@ -197,16 +199,35 @@ window.onload = function(){
     }
 }
 
+let playlistIconMutex = 0;
+document.getElementById("playlist_plus").addEventListener('click',()=>{
+    let ref = document.getElementById("playlist_plus");
+    document.getElementById("playlist_select").classList.toggle("off");
+    if(playlistIconMutex==0){
+        ref.className = "fa-solid fa-xmark";
+        ref.style = "color: #c63939;";
+        ref.title = "Clear";
+        document.getElementById("playlist_select").disabled = false;
+        playlistIconMutex = 1;
+    }else{
+        document.getElementById("playlist_select").disabled = true;
+        ref.className = "fa-solid fa-plus";
+        ref.style = "color: #e4e4e4;";
+        ref.title = "Select PlayList";
+        playlistIconMutex = 0;
+    }
+})
+
 let iconMutex =0;
 document.getElementById("plus").addEventListener(("click"),()=>{
     let ref = document.getElementById("plus");
     if(iconMutex==0){
-        ref.className = "fa-solid fa-xmark fa-fade";
+        ref.className = "fa-solid fa-xmark";
         ref.style = "color: #c63939;";
         ref.title = "Clear";
         iconMutex = 1;
     }else{
-        ref.className = "fa-regular fa-square-plus fa-fade";
+        ref.className = "fa-solid fa-plus";
         ref.style = "color: #e4e4e4;";
         ref.title = "Add Songs";
         iconMutex =0;
@@ -419,12 +440,44 @@ function populate(masterArray,val){
     }
 }
 
-const menuButton = document.getElementById('menuButton');
-const popupMenu = document.querySelector('.popupMenu');
-let smallMutex = 0;
-menuButton.addEventListener('click', function() {
-    popupMenu.classList.toggle("hit");
-});
+function populatePlayListSelect(){
+    fetch(`/api/get_playlist_names/${localStorage.getItem("username")}`,{
+        method:"GET",
+        cache:"no-cache"
+    }).then((response)=>{
+        response.json().then((data_structure)=>{
+            fetch(`/api/get_song_list/${localStorage.getItem("username")}`,{
+                method:"GET",
+                cache:"no-cache"
+            }).then((response2)=>{
+                response2.json().then((usersSongs)=>{
+                    /**
+                     * Start population here
+                     */
+                    let message = `<option value="Select">Select Playlist</option>`;
+                    if(data_structure==null){
+                        document.getElementById("playlist_select").innerHTML = message;
+                        return 0;
+                    }
+                    playListMap = new Map(data_structure);
+                    playListMap.forEach((value,key)=>{
+                        message += `<option value="${key}">${key}</option>`
+                    })
+                    document.getElementById("playlist_select").innerHTML = message;
+                })
+            })
+        })
+    })
+}
+
+function loadSelectedPlaylist(){
+    let selectRef = document.getElementById("playlist_select");
+    let value = selectRef.value;
+    if(value!="Select"){
+        console.log(playListMap.get(selectRef.value));
+        /**Create Back Button */
+    }
+}
 
 function removeSongFromList(filename,song,artist,image,index){
     /**Repopulate select menu */
@@ -456,3 +509,4 @@ function displayNoSongText(action){
         document.getElementById("display_no_song").className = "display_no_song_text off";
     }
 }
+

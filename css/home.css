@@ -54,6 +54,10 @@ body{
     transition: 0.2s ease-in-out;
   }
 
+  .add-btn.off{
+    display: none;
+  }
+
   .menuItem.hit{
     color: #30f789;
   }
@@ -129,7 +133,7 @@ body{
     border-radius: 15px;
     justify-content: center;
     align-self: center;
-    background-color: #f31010cb;
+    background-color: #423f3fcb;
     margin-top: 10%;
     width:50%;
     padding: 10px;
@@ -450,6 +454,31 @@ body{
 .fa-regular.fa-heart:hover{
   transition: 0.2s ease-in-out;
   color: #e049a1;
+}
+
+.fa-solid.fa-caret-left{
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  color: #e4e4e4;
+}
+
+.fa-solid.fa-plus{
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.fa-solid.fa-xmark{
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
 }
 
 .fa-solid.fa-trash{

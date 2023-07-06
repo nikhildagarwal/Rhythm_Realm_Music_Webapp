@@ -55,6 +55,9 @@ const server = http.createServer((req,res) => {
                 break;
             case "remove_song":
                 handleRemoveSong(req,res,splited[2],splited[3]);
+                break;
+            case "get_playlist_names":
+                handleGetPlaylistNames(req,res,splited[2]);
         }
         return;
     }
@@ -97,6 +100,40 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleGetPlaylistNames(req,res,username){
+    try{
+        let dataToSend = await getPlaylistName(username);
+        const mapArray = Array.from(dataToSend.entries());
+        res.writeHead(200,{'Content-type':'application/json'});
+        res.end(JSON.stringify(mapArray));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getPlaylistName(username){
+    let path = db.ref(`/users/${username}/playlists/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    if(promise == null){
+        return null;
+    }
+    let ourMap = new Map();
+    let playlist_names = Object.keys(promise);
+    let contents = Object.values(promise);
+    console.log(contents);
+    let index = 0;
+    contents.forEach((item)=>{
+        let inner = Object.values(item);
+        ourMap.set(playlist_names[index],inner);
+        index++;
+    })
+    return ourMap;
+}
 
 async function handleRemoveSong(req,res,username,filename){
     try{

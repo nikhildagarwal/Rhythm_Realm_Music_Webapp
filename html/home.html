@@ -28,12 +28,18 @@
     </div>
 
     <div class = "playlist_tab off">
-        <button id="menuButton">Open Menu</button>
-        <div class ="popupMenu" id="popupMenu-${i}">
-            <div class ="ul">
-              <div class = "li">Remove</div>
+        <div class = "add_btn" id="add-btn-playlist">
+            <i class="fa-solid fa-plus" style="color: #e4e4e4;" id="playlist_plus" title="Add Songs"></i>
+            <select id="playlist_select" class ="select_bar" onchange="loadSelectedPlaylist()">
+                
+            </select>
+            <i class="fa-solid fa-caret-left" id="playlist_back" title="Back"></i>
+        </div>
+        <div class = "song_container" id = "playlist-container">
+            <div class = "display_no_song_text" id="display_no_playlist">
+                No Playlist Selected
             </div>
-          </div>
+        </div>
     </div>
 
     <div class="listen_tab off">
@@ -42,7 +48,7 @@
 
     <div class = "test off">
         <div class = "add_btn">
-            <i class="fa-regular fa-square-plus fa-fade" style="color: #e4e4e4;" id="plus" title="Add Songs"></i>
+            <i class="fa-solid fa-plus" style="color: #e4e4e4;" id="plus" title="Add Songs"></i>
             <input class="search_bar" type="text" id="myInput" oninput="filterOptions()" placeholder="Search">
             <select id="mySelect" class ="select_bar" onchange="spoof_btn()">
                 
@@ -51,7 +57,7 @@
                 Add
             </button>
             <select id="filterSelect" class ="filter_bar" onchange="changeList()" >
-                <option value="song">By Song</option>
+                <option value="song">By Title</option>
                 <option value="artist">By Artist</option>
             </select>
         </div>
