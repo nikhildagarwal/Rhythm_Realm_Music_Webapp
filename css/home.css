@@ -456,11 +456,23 @@ body{
   color: #e049a1;
 }
 
-.fa-solid.fa-caret-left{
+#playlist_select{
+  background-color:#e4e4e4;
+  width:30%;
+}
+
+#create_new_playlist_btn{
+  font-family: monospace;
+  background-color:#e4e4e4;
+  border-radius: 15px;
+  margin-left: 20px;
+}
+
+.fa-solid.fa-caret-right{
+  margin-right: 12px;
   display: flex;
   align-items: center;
   font-size: 20px;
-  cursor: pointer;
   transition: 0.2s ease-in-out;
   color: #e4e4e4;
 }
@@ -544,3 +556,54 @@ body{
   color: #e4e4e4;
 }
 
+.new_playlist_display.off{
+  display:none;
+}
+
+.new_playlist_display{
+  z-index: 400;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height: 100%;
+  background-color: #00000036;
+  backdrop-filter: blur(6px);
+}
+
+.playlist_container {
+  flex-direction: column;
+    display: flex;
+    width: 350px;
+    height: auto;
+    background-color: #b111e228;
+    border: 2px solid rgba(0, 0, 0, 0.582);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.playlist_title{
+  width:100%;
+  margin-top: 3%;
+  display: flex;
+  font-size: 20px;
+  color: #ccc;
+  font-family: monospace;   
+}
+
+.back{
+  color:#ccc;
+  width:17%;
+  padding:5px;
+  border-radius: 5px;
+  border: 0px solid rgba(0, 0, 0, 0.582);
+  cursor: pointer;
+}
+
+.backtext{
+  margin-left:10px;
+  font-family: monospace;
+  align-items: center;
+  font-size: 16px;
+}

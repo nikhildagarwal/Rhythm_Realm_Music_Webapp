@@ -7,7 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 </head>
+
+
+
 <body>
+    <div class = "new_playlist_display off" id="create_display">
+        <div class="playlist_container">
+            <div class = "back">
+                <i class="fa-solid fa-square-caret-left"></i><span class="backtext">Back</span>
+            </div>
+            <div class = "playlist_title">
+                <text>Create Playlist</text>
+            </div>
+        </div>
+    </div>
     <div class ="logo_backdrop">
         
     </div>
@@ -29,11 +42,13 @@
 
     <div class = "playlist_tab off">
         <div class = "add_btn" id="add-btn-playlist">
-            <i class="fa-solid fa-plus" style="color: #e4e4e4;" id="playlist_plus" title="Add Songs"></i>
+            <i class="fa-solid fa-caret-right" id="playlist_back" ></i>
             <select id="playlist_select" class ="select_bar" onchange="loadSelectedPlaylist()">
                 
             </select>
-            <i class="fa-solid fa-caret-left" id="playlist_back" title="Back"></i>
+            <button id="create_new_playlist_btn" class ="playlist_btn" onclick="newDisplay()">
+                Create New Playlist
+            </button>
         </div>
         <div class = "song_container" id = "playlist-container">
             <div class = "display_no_song_text" id="display_no_playlist">
@@ -42,6 +57,7 @@
         </div>
     </div>
 
+    
     <div class="listen_tab off">
 
     </div>

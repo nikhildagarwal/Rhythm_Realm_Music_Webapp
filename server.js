@@ -104,9 +104,14 @@ server.listen(3000, "localhost", () => {
 async function handleGetPlaylistNames(req,res,username){
     try{
         let dataToSend = await getPlaylistName(username);
-        const mapArray = Array.from(dataToSend.entries());
-        res.writeHead(200,{'Content-type':'application/json'});
-        res.end(JSON.stringify(mapArray));
+        if(dataToSend ==null){
+            res.writeHead(200,{'Content-type':'application/json'});
+            res.end(JSON.stringify(dataToSend));
+        }else{
+            const mapArray = Array.from(dataToSend.entries());
+            res.writeHead(200,{'Content-type':'application/json'});
+            res.end(JSON.stringify(mapArray));
+        }
     }catch (err){
         console.log(err);
     }

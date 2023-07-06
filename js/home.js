@@ -11,11 +11,11 @@ window.onload = function(){
     
     if(localStorage.getItem("username") != null){
         document.querySelector(".search_bar").classList.toggle("off");
-    document.querySelector(".select_bar").classList.toggle("off");
+    document.getElementById("mySelect").classList.toggle("off");
     document.querySelector(".filter_bar").classList.toggle("off");
     document.querySelector(".user_add_song").classList.toggle("off");
     document.querySelector(".search_bar").disabled = true;
-        document.querySelector(".select_bar").disabled = true;
+        document.getElementById("mySelect").disabled = true;
         document.querySelector(".filter_bar").disabled = true;
     document.querySelector(".user_add_song").disabled = true;
     loadSongs();
@@ -199,25 +199,6 @@ window.onload = function(){
     }
 }
 
-let playlistIconMutex = 0;
-document.getElementById("playlist_plus").addEventListener('click',()=>{
-    let ref = document.getElementById("playlist_plus");
-    document.getElementById("playlist_select").classList.toggle("off");
-    if(playlistIconMutex==0){
-        ref.className = "fa-solid fa-xmark";
-        ref.style = "color: #c63939;";
-        ref.title = "Clear";
-        document.getElementById("playlist_select").disabled = false;
-        playlistIconMutex = 1;
-    }else{
-        document.getElementById("playlist_select").disabled = true;
-        ref.className = "fa-solid fa-plus";
-        ref.style = "color: #e4e4e4;";
-        ref.title = "Select PlayList";
-        playlistIconMutex = 0;
-    }
-})
-
 let iconMutex =0;
 document.getElementById("plus").addEventListener(("click"),()=>{
     let ref = document.getElementById("plus");
@@ -226,6 +207,7 @@ document.getElementById("plus").addEventListener(("click"),()=>{
         ref.style = "color: #c63939;";
         ref.title = "Clear";
         iconMutex = 1;
+        document.getElementById("mySelect").disabled = false;
     }else{
         ref.className = "fa-solid fa-plus";
         ref.style = "color: #e4e4e4;";
@@ -241,19 +223,19 @@ document.getElementById("crest").addEventListener(("click"),()=>{
 let mutex = 1;
 document.getElementById("plus").addEventListener(("click"),()=>{
     document.querySelector(".search_bar").classList.toggle("off");
-    document.querySelector(".select_bar").classList.toggle("off");
+    document.getElementById("mySelect").classList.toggle("off");
     document.querySelector(".filter_bar").classList.toggle("off");
     document.querySelector(".user_add_song").classList.toggle("off");
     if(mutex == 0){
         document.querySelector(".search_bar").disabled = true;
-        document.querySelector(".select_bar").disabled = true;
+        document.getElementById("mySelect").disabled = true;
         document.querySelector(".filter_bar").disabled = true;
         document.querySelector(".user_add_song").disabled = true;
         document.getElementById("mySelect").value = "Select";
         mutex = 1;
     }else{
         document.querySelector(".search_bar").disabled = false;
-        document.querySelector(".select_bar").disabled = false;
+        document.getElementById("mySelect").disabled = false;
         document.querySelector(".filter_bar").disabled = false;
         
         mutex = 0;
@@ -510,3 +492,10 @@ function displayNoSongText(action){
     }
 }
 
+function newDisplay(){
+    document.getElementById("create_display").className = "new_playlist_display";
+}
+
+document.querySelector(".back").addEventListener("click",()=>{
+    document.getElementById("create_display").className = "new_playlist_display off";
+})
