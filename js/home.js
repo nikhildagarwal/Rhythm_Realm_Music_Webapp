@@ -4,6 +4,7 @@ let indexOfPlay = -1;
 let tabIndex = 0;
 let audioArray = [];
 let indexOfDots = -1;
+let songNumberTracker = 0;
 
 window.onload = function(){
     
@@ -101,6 +102,7 @@ window.onload = function(){
                                     <i class="fa-solid fa-trash" id="dots-${i}" data-file="${filename}"></i>
                                 </div>`;
                             numberOfSongs++;
+                            songNumberTracker++;
                         }
                         fetch(`/api/check_liked/${localStorage.getItem("username")}`,{
                             method:"GET",
@@ -118,6 +120,9 @@ window.onload = function(){
                                     }
                                 }
                                 /**Start here */
+                                if(songNumberTracker!=0){
+                                    displayNoSongText("remove");
+                                }
                                 for(let i = 0;i<numberOfSongs;i++){
                                     document.getElementById(`heart-${i}`).addEventListener('click',()=>{
                                         document.getElementById(`heart-${i}`).classList.toggle("hit");
@@ -336,7 +341,9 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
                                     <i class="fa-regular fa-heart" id="heart-${numberOfSongs}" data-file="${filename}"></i>
                                     <i class="fa-solid fa-trash" id="dots-${numberOfSongs}" data-file="${filename}"></i>
                                 </div>`;
+                            displayNoSongText("remove");
                             numberOfSongs++;
+                            songNumberTracker++;
                             let arrayMutex = [];
                             for(let i = 0;i<numberOfSongs;i++){
                                 arrayMutex.push(0);
@@ -436,4 +443,16 @@ function removeSongFromList(filename,song,artist,image,index){
         console.log(response.status);
     })
 
+    songNumberTracker--;
+    if(songNumberTracker==0){
+        displayNoSongText("put");
+    }
+}
+
+function displayNoSongText(action){
+    if(action =="put"){
+        document.getElementById("display_no_song").className = "display_no_song_text";
+    }else{
+        document.getElementById("display_no_song").className = "display_no_song_text off";
+    }
 }
