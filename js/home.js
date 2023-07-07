@@ -6,21 +6,23 @@ let audioArray = [];
 let indexOfDots = -1;
 let songNumberTracker = 0;
 let playListMap = null;
+let currPlaylistMap = null;
+let numberOfSongsInPlaylist = new Map();
 
 window.onload = function(){
     
     if(localStorage.getItem("username") != null){
-        document.querySelector(".search_bar").classList.toggle("off");
+        document.getElementById("myInput").classList.toggle("off");
     document.getElementById("mySelect").classList.toggle("off");
-    document.querySelector(".filter_bar").classList.toggle("off");
-    document.querySelector(".user_add_song").classList.toggle("off");
-    document.querySelector(".search_bar").disabled = true;
+    document.getElementById("filterSelect").classList.toggle("off");
+    document.getElementById("in_songs").classList.toggle("off");
+    document.getElementById("myInput").disabled = true;
         document.getElementById("mySelect").disabled = true;
-        document.querySelector(".filter_bar").disabled = true;
-    document.querySelector(".user_add_song").disabled = true;
+        document.getElementById("filterSelect").disabled = true;
+        document.getElementById("in_songs").disabled = true;
     loadSongs();
                 let tabArray = [document.getElementById("songs"),document.getElementById("playlists"),document.getElementById("listen")];
-                let tabContainer = [document.querySelector(".test"),document.querySelector(".playlist_tab"),document.querySelector(".listen_tab")];
+                let tabContainer = [document.getElementById("test_test_test"),document.querySelector(".playlist_tab"),document.querySelector(".listen_tab")];
                 tabArray[0].classList.toggle("hit");
                 tabContainer[0].className = "test";
                 tabArray[0].addEventListener('click',()=>{
@@ -222,21 +224,21 @@ document.getElementById("crest").addEventListener(("click"),()=>{
 
 let mutex = 1;
 document.getElementById("plus").addEventListener(("click"),()=>{
-    document.querySelector(".search_bar").classList.toggle("off");
+    document.getElementById("myInput").classList.toggle("off");
     document.getElementById("mySelect").classList.toggle("off");
-    document.querySelector(".filter_bar").classList.toggle("off");
-    document.querySelector(".user_add_song").classList.toggle("off");
+    document.getElementById("filterSelect").classList.toggle("off");
+    document.getElementById("in_songs").classList.toggle("off");
     if(mutex == 0){
-        document.querySelector(".search_bar").disabled = true;
+        document.getElementById("myInput").disabled = true;
         document.getElementById("mySelect").disabled = true;
-        document.querySelector(".filter_bar").disabled = true;
-        document.querySelector(".user_add_song").disabled = true;
+        document.getElementById("filterSelect").disabled = true;
+        document.getElementById("in_songs").disabled = true;
         document.getElementById("mySelect").value = "Select";
         mutex = 1;
     }else{
-        document.querySelector(".search_bar").disabled = false;
+        document.getElementById("myInput").disabled = false;
         document.getElementById("mySelect").disabled = false;
-        document.querySelector(".filter_bar").disabled = false;
+        document.getElementById("filterSelect").disabled = false;
         
         mutex = 0;
     }
@@ -297,22 +299,53 @@ function filterOptions() {
     }
   }
 
+  function filterOptions2() {
+    const input = document.getElementById('my_songs_search').value.toLowerCase();
+    const select = document.getElementById('my_songs_select');
+    for (let i = 0; i < select.options.length; i++) {
+      const option = select.options[i];
+      const optionText = option.text.toLowerCase();
+      if (optionText.includes(input)) {
+        option.style.display = '';
+      } else {
+        option.style.display = 'none';
+      }
+    }
+  }
+
 function changeList(){
     let val = document.getElementById("filterSelect").value;
-    document.querySelector(".user_add_song").disabled = true;
+    document.getElementById("in_songs").disabled = true;
     populate(masterArray,val);
+}
+
+function playlistChangeList(){
+    let val = document.getElementById("playlist_filter").value;
+    document.getElementById("in_playlist").disabled = true;
+    populate1(currPlaylistMap,val);
 }
 
 function spoof_btn(){
     let val = document.getElementById("mySelect").value;
     if(val=="Select"){
-        document.querySelector(".user_add_song").disabled = true;
+        document.getElementById("in_songs").disabled = true;
     }else{
-        document.querySelector(".user_add_song").disabled = false;
+        document.getElementById("in_songs").disabled = false;
     }
 }
 
-document.querySelector(".user_add_song").addEventListener(("click"),()=>{
+function makeAddBtn(){
+    let val = document.getElementById("my_songs_select").value;
+    if(val=="Select"){
+        document.getElementById("in_playlist").disabled = true;
+    }else{
+        document.getElementById("in_playlist").disabled = false;
+    }
+}
+
+
+
+document.getElementById("in_songs").addEventListener(("click"),()=>{
     document.getElementById("myInput").value = "";
     let filename = document.getElementById("mySelect").value;
     fetch(`/api/add_song_to_user/${localStorage.getItem("username")}/${filename}`,{
@@ -321,7 +354,7 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
     }).then((response)=>{
         if(response.status==200){
             document.getElementById("mySelect").value = "Select";
-            document.querySelector(".user_add_song").disabled = true;
+            document.getElementById("in_songs").disabled = true;
             masterArray.delete(filename);
             populate(masterArray,document.getElementById("filterSelect").value);
             let yo = filename.split("-");
@@ -397,6 +430,30 @@ document.querySelector(".user_add_song").addEventListener(("click"),()=>{
         }
     })
 })
+
+function populate1(masterArray,val){
+    let sortableArray = [];
+    masterArray.forEach((value,key)=>{
+        sortableArray.push(value);
+    })
+    if(val=="artist"){
+        let message = `<option value="Select">Select</option>`;
+        sortableArray.sort((a,b)=>a[1].localeCompare(b[1]));
+        sortableArray.forEach((item)=>{
+                let subMessage = `<option value="${item[2]}">${item[1]} - ${item[0]}</option>`;
+                message+=subMessage;
+            })
+            document.getElementById("my_songs_select").innerHTML = message;
+    }else{
+        let message = `<option value="Select">Select</option>`;
+        sortableArray.sort((a,b)=>a[0].localeCompare(b[0]));
+        sortableArray.forEach((item)=>{
+                let subMessage = `<option value="${item[2]}">${item[0]} - ${item[1]}</option>`;
+                message+=subMessage;
+            })
+            document.getElementById("my_songs_select").innerHTML = message;
+    }
+}
 
 function populate(masterArray,val){
     let sortableArray = [];
@@ -520,7 +577,7 @@ document.getElementById("create_btn_final").addEventListener('click',()=>{
         setTimeout(function(){
             document.getElementById("playlist_creating").className = "success1";
             afterPlaylistCreation(val);
-        },2000);
+        },1000);
         return;
     }
     playlistMasterMap.forEach((value,key)=>{
@@ -535,10 +592,93 @@ document.getElementById("create_btn_final").addEventListener('click',()=>{
         setTimeout(function(){
             document.getElementById("playlist_creating").className = "success1";
             afterPlaylistCreation(val);
-        },5000);
+        },1000);
     }
 })
 
-function afterPlaylistCreation(name,){
-
+function afterPlaylistCreation(name){
+    document.getElementById("current_playlist_text").className = "playlist_text";
+    document.getElementById("create_display").className = "new_playlist_display off";
+    document.getElementById("current_playlist_text").innerHTML = name;
+    document.getElementById("playlist_back").className = "fa-solid fa-caret-right off";
+    document.getElementById("playlist_select").className = "select_bar dis";
+    document.getElementById("create_new_playlist_btn").className = "playlist_btn off";
+    document.getElementById("my_songs_search").className = "search_bar";
+    document.getElementById("my_songs_select").className = "select_bar";
+    document.getElementById("in_playlist").className = "user_add_song";
+    document.getElementById("playlist_filter").className = "filter_bar";
+    document.getElementById("my_songs_search").disabled = false;
+    document.getElementById("my_songs_select").disabled = false;
+    document.getElementById("in_playlist").disabled = true;
+    document.getElementById("playlist_filter").disabled = false;
+    fetch(`/api/get_my_song_filenames/${localStorage.getItem("username")}`,{
+        method:"GET",
+        cache:"no-cache"
+    }).then((response)=>{
+        response.json().then((filenames)=>{
+            let tempMap = new Map();
+            filenames.forEach((filename)=>{
+                let yo = filename.split("-");
+                let song = yo[0].replace(/_/g,' ');
+                let image = "";
+                let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
+                const sub = [song,artist,filename,image];
+                tempMap.set(filename,sub);
+            })
+            currPlaylistMap = tempMap;
+            populate1(currPlaylistMap,document.getElementById("playlist_filter").value);
+            document.getElementById("display_no_playlist").className = "display_no_song_text off";
+            document.getElementById("display_no_playlist_songs").className = "display_no_song_text";
+        })
+    })
 }
+
+document.getElementById("in_playlist").addEventListener('click',()=>{
+    document.getElementById("display_no_playlist_songs").className = "display_no_song_text off";
+    let filename = document.getElementById("my_songs_select").value;
+    document.getElementById("in_playlist").disabled = true;
+    document.getElementById("my_songs_select").value = "Select";
+    let name = document.getElementById("current_playlist_text").innerHTML;
+    fetch(`/api/playlist_add_song/${localStorage.getItem("username")}/${filename}/${name}`,{
+        method:"POST",
+        cache:"no-cache"
+    }).then((response)=>{
+        console.log(currPlaylistMap);
+        let value = currPlaylistMap.get(filename);
+        let imgName = filename.split(".")[0];
+        let image = `../img/${imgName+".jpeg"}`;
+        if(numberOfSongsInPlaylist.get(name)==null){
+            document.getElementById("playlist-container").innerHTML += `<div class = "item_in_list" id="${name}-${0}">
+                                        <img src=${image} class = "list_item_img">
+                                        <div class="list_item_title">
+                                            ${value[0]}
+                                        </div>
+                                        <div class ="list_item_artist">
+                                            ${value[1]}
+                                        </div>
+                                        <i class="fa-regular fa-circle-play" id="${name}-play-${0}"></i>
+                                        <i class="fa-regular fa-heart" id="${name}-heart-${0}" data-file="${filename}"></i>
+                                        <i class="fa-solid fa-trash" id="${name}-dots-${0}" data-file="${filename}"></i>
+                                    </div>`;
+            numberOfSongsInPlaylist.set(name,1);
+        }else{
+            document.getElementById("playlist-container").innerHTML += `<div class = "item_in_list" id="${name}-${numberOfSongsInPlaylist.get(name)}">
+                                        <img src=${image} class = "list_item_img">
+                                        <div class="list_item_title">
+                                            ${value[0]}
+                                        </div>
+                                        <div class ="list_item_artist">
+                                            ${value[1]}
+                                        </div>
+                                        <i class="fa-regular fa-circle-play" id="${name}-play-${numberOfSongsInPlaylist.get(name)}"></i>
+                                        <i class="fa-regular fa-heart" id="${name}-heart-${numberOfSongsInPlaylist.get(name)}" data-file="${filename}"></i>
+                                        <i class="fa-solid fa-trash" id="${name}-dots-${numberOfSongsInPlaylist.get(name)}" data-file="${filename}"></i>
+                                    </div>`;
+            numberOfSongsInPlaylist.get(name)++;
+        }
+        currPlaylistMap.delete(filename);
+        populate1(currPlaylistMap,document.getElementById("playlist_filter").value);
+    })
+    
+        
+})

@@ -58,6 +58,12 @@ const server = http.createServer((req,res) => {
                 break;
             case "get_playlist_names":
                 handleGetPlaylistNames(req,res,splited[2]);
+                break;
+            case "get_my_song_filenames":
+                handleGetMySongsFilenames(req,res,splited[2]);
+                break;
+            case "playlist_add_song":
+                handlePlaylistAddSong(req,res,splited[2],splited[3],splited[4]);
         }
         return;
     }
@@ -100,6 +106,52 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handlePlaylistAddSong(req,res,username,filename,playlistName){
+    try{
+        await playlistAddSong(username,filename,playlistName);
+        res.writeHead(200);
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function playlistAddSong(username,filename,playlistName){
+    let path = db.ref(`/users/${username}/playlists/${playlistName}/`);
+    path.push({
+        filename:filename
+    })
+    return 0;
+}
+
+async function handleGetMySongsFilenames(req,res,username){
+    try{
+        let array = await getMySongsFilenames(username);
+        res.writeHead(200,{'Content-type':'application/json'});
+        res.end(JSON.stringify(array));
+    }catch (Err){
+        console.log(Err);
+    }
+}
+
+async function getMySongsFilenames(username){
+    let path = db.ref(`/users/${username}/songs/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    if(promise == null){
+        return [];
+    }
+    let values = Object.values(promise);
+    let array = [];
+    values.forEach((item)=>{
+        array.push(item.filename);
+    })
+    return array;
+}
 
 async function handleGetPlaylistNames(req,res,username){
     try{

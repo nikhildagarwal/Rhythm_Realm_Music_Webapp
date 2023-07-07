@@ -63,12 +63,33 @@
                 
             </select>
             <button id="create_new_playlist_btn" class ="playlist_btn" onclick="newDisplay()">
-                Create New Playlist
+                New Playlist
             </button>
+            <div class = "playlist_text off" id="current_playlist_text">
+
+            </div>
+
+            <!--Start of Playlist select songs-->
+            <input class="search_bar hid" type="text" id="my_songs_search" oninput="filterOptions2()" placeholder="Search">
+            <select class ="select_bar hid" id="my_songs_select"  onchange="makeAddBtn()">
+                
+            </select>
+            <button class = "user_add_song hid" id="in_playlist">
+                Add
+            </button>
+            <select class ="filter_bar hid" id="playlist_filter"  onchange="playlistChangeList()" >
+                <option value="song">By Title</option>
+                <option value="artist">By Artist</option>
+            </select>
+            <!--End of Playlist select songs-->
+
         </div>
         <div class = "song_container" id = "playlist-container">
             <div class = "display_no_song_text" id="display_no_playlist">
                 No Playlist Selected
+            </div>
+            <div class = "display_no_song_text off" id="display_no_playlist_songs">
+                No Songs Yet
             </div>
         </div>
     </div>
@@ -78,14 +99,14 @@
 
     </div>
 
-    <div class = "test off">
+    <div class = "test off" id="test_test_test">
         <div class = "add_btn">
             <i class="fa-solid fa-plus" style="color: #e4e4e4;" id="plus" title="Add Songs"></i>
             <input class="search_bar" type="text" id="myInput" oninput="filterOptions()" placeholder="Search">
             <select id="mySelect" class ="select_bar" onchange="spoof_btn()">
                 
             </select>
-            <button class = "user_add_song">
+            <button class = "user_add_song" id="in_songs">
                 Add
             </button>
             <select id="filterSelect" class ="filter_bar" onchange="changeList()" >

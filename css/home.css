@@ -345,7 +345,16 @@ body{
   background-color: #5c5b5b;}
 
 .select_bar.off{
-  background-color: #5c5b5b;}
+  background-color: #5c5b5b;
+}
+
+.select_bar.dis{
+  display:none;
+}
+
+.playlist_btn.off{
+  display:none;
+}
 
 .fa-regular.fa-square-plus.fa-fade{
   cursor: pointer;
@@ -462,10 +471,24 @@ body{
 }
 
 #create_new_playlist_btn{
+  cursor: pointer;
+  transition:0.2s ease-in-out;
   font-family: monospace;
   background-color:#e4e4e4;
   border-radius: 15px;
   margin-left: 20px;
+}
+
+.fa-solid.fa-caret-right.off{
+  display:none;
+}
+
+
+
+#create_new_playlist_btn:hover{
+  transition:0.2s ease-in-out;
+  background-color:#242424;
+  color:#e4e4e4;
 }
 
 .fa-solid.fa-caret-right{
@@ -672,4 +695,34 @@ body{
   border-radius: 5px;
   margin-left: 2rem;
   font-family: monospace;
+}
+
+.playlist_text.off{
+  display:none;
+}
+
+.search_bar.hid{
+  display:none;
+}
+
+.select_bar.hid{
+  display:none;
+}
+
+.user_add_song.hid{
+  display:none;
+}
+
+.filter_bar.hid{
+  display:none;
+}
+
+.playlist_text{
+  font-family: monospace;
+  font-weight: bolder;
+  font-size: 24px;
+  padding:5px;
+  border-radius: 15px;
+  background-color:#242424;
+  color:#e4e4e4;
 }
