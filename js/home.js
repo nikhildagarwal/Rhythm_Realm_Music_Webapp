@@ -422,6 +422,8 @@ function populate(masterArray,val){
     }
 }
 
+let playlistMasterMap = null;
+
 function populatePlayListSelect(){
     fetch(`/api/get_playlist_names/${localStorage.getItem("username")}`,{
         method:"GET",
@@ -442,6 +444,8 @@ function populatePlayListSelect(){
                         return 0;
                     }
                     playListMap = new Map(data_structure);
+                    console.log(playListMap);
+                    playlistMasterMap = playListMap;
                     playListMap.forEach((value,key)=>{
                         message += `<option value="${key}">${key}</option>`
                     })
@@ -498,4 +502,43 @@ function newDisplay(){
 
 document.querySelector(".back").addEventListener("click",()=>{
     document.getElementById("create_display").className = "new_playlist_display off";
+    document.getElementById("name-empty").className = "error1";
+    document.getElementById("name-taken").className = "error1";
 })
+
+document.getElementById("create_btn_final").addEventListener('click',()=>{
+    document.getElementById("name-empty").className = "error1";
+    document.getElementById("name-taken").className = "error1";
+    let val = document.getElementById("name-field").value;
+    if(val==""){
+        document.getElementById("name-empty").className = "error";
+        return;
+    }
+    let errorOcc = false;
+    if(playlistMasterMap==null){
+        document.getElementById("playlist_creating").className = "success";
+        setTimeout(function(){
+            document.getElementById("playlist_creating").className = "success1";
+            afterPlaylistCreation(val);
+        },2000);
+        return;
+    }
+    playlistMasterMap.forEach((value,key)=>{
+        if(key==val){
+            document.getElementById("name-taken").className = "error";
+            errorOcc = true;
+            return;
+        }
+    })
+    if(!errorOcc){
+        document.getElementById("playlist_creating").className = "success";
+        setTimeout(function(){
+            document.getElementById("playlist_creating").className = "success1";
+            afterPlaylistCreation(val);
+        },5000);
+    }
+})
+
+function afterPlaylistCreation(name,){
+
+}
