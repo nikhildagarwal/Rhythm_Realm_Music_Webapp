@@ -124,10 +124,9 @@ window.onload = function(){
                                     }
                                 }
                                 /**Start here */
-                                if(songNumberTracker!=0){
-                                    displayNoSongText("remove");
-                                }
+                                document.getElementById("display_no_song").className = "display_no_song_text";
                                 for(let i = 0;i<numberOfSongs;i++){
+                                    displayNoSongText("remove");
                                     document.getElementById(`heart-${i}`).addEventListener('click',()=>{
                                         document.getElementById(`heart-${i}`).classList.toggle("hit");
                                         if(arrayMutex[i] ==0){
@@ -516,9 +515,33 @@ function populatePlayListSelect(){
 function loadSelectedPlaylist(){
     let selectRef = document.getElementById("playlist_select");
     let value = selectRef.value;
+    switchTop(0,value);
     if(value!="Select"){
-        console.log(playListMap.get(selectRef.value));
-        /**Create Back Button */
+        let array = playListMap.get(selectRef.value);
+        let ourset = new Set();
+        array.forEach((item)=>{
+            ourset.add(item.filename);
+        })
+        let tempMap = new Map();
+        fetch(`/api/get_my_song_filenames/${localStorage.getItem("username")}`,{
+            method:"GET",
+            cache:"no-cache"
+        }).then((response)=>{
+            response.json().then((filenames)=>{
+                filenames.forEach((filename)=>{
+                    if(!ourset.has(filename)){
+                        let yo = filename.split("-");
+                    let song = yo[0].replace(/_/g,' ');
+                    let image = "";
+                    let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
+                    const sub = [song,artist,filename,image];
+                    tempMap.set(filename,sub);
+                    }
+                })
+                currPlaylistMap = tempMap;
+                populate1(tempMap,document.getElementById("in_playlist").value);
+            })
+        })
     }
 }
 
@@ -597,20 +620,7 @@ document.getElementById("create_btn_final").addEventListener('click',()=>{
 })
 
 function afterPlaylistCreation(name){
-    document.getElementById("current_playlist_text").className = "playlist_text";
-    document.getElementById("create_display").className = "new_playlist_display off";
-    document.getElementById("current_playlist_text").innerHTML = name;
-    document.getElementById("playlist_back").className = "fa-solid fa-caret-right off";
-    document.getElementById("playlist_select").className = "select_bar dis";
-    document.getElementById("create_new_playlist_btn").className = "playlist_btn off";
-    document.getElementById("my_songs_search").className = "search_bar";
-    document.getElementById("my_songs_select").className = "select_bar";
-    document.getElementById("in_playlist").className = "user_add_song";
-    document.getElementById("playlist_filter").className = "filter_bar";
-    document.getElementById("my_songs_search").disabled = false;
-    document.getElementById("my_songs_select").disabled = false;
-    document.getElementById("in_playlist").disabled = true;
-    document.getElementById("playlist_filter").disabled = false;
+    switchTop(0,name);
     fetch(`/api/get_my_song_filenames/${localStorage.getItem("username")}`,{
         method:"GET",
         cache:"no-cache"
@@ -674,11 +684,30 @@ document.getElementById("in_playlist").addEventListener('click',()=>{
                                         <i class="fa-regular fa-heart" id="${name}-heart-${numberOfSongsInPlaylist.get(name)}" data-file="${filename}"></i>
                                         <i class="fa-solid fa-trash" id="${name}-dots-${numberOfSongsInPlaylist.get(name)}" data-file="${filename}"></i>
                                     </div>`;
-            numberOfSongsInPlaylist.get(name)++;
+            numberOfSongsInPlaylist.set(name,numberOfSongsInPlaylist.get(name)+1);
         }
         currPlaylistMap.delete(filename);
         populate1(currPlaylistMap,document.getElementById("playlist_filter").value);
     })
-    
-        
 })
+
+function switchTop(direction,name){
+    if(direction == 0){
+        document.getElementById("current_playlist_text").className = "playlist_text";
+    document.getElementById("create_display").className = "new_playlist_display off";
+    document.getElementById("current_playlist_text").innerHTML = name;
+    document.getElementById("playlist_back").className = "fa-solid fa-caret-right off";
+    document.getElementById("playlist_select").className = "select_bar dis";
+    document.getElementById("create_new_playlist_btn").className = "playlist_btn off";
+    document.getElementById("my_songs_search").className = "search_bar";
+    document.getElementById("my_songs_select").className = "select_bar";
+    document.getElementById("in_playlist").className = "user_add_song";
+    document.getElementById("playlist_filter").className = "filter_bar";
+    document.getElementById("my_songs_search").disabled = false;
+    document.getElementById("my_songs_select").disabled = false;
+    document.getElementById("in_playlist").disabled = true;
+    document.getElementById("playlist_filter").disabled = false;
+    }else{
+
+    }
+}
