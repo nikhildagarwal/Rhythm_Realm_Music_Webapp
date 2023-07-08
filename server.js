@@ -64,6 +64,9 @@ const server = http.createServer((req,res) => {
                 break;
             case "playlist_add_song":
                 handlePlaylistAddSong(req,res,splited[2],splited[3],splited[4]);
+                break;
+            case "check_individual_liked":
+                handleCheckIndividualLiked(req,res,splited[2],splited[3]);
         }
         return;
     }
@@ -106,6 +109,32 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleCheckIndividualLiked(req,res,username,filename){
+    try{
+        let value = await checkIndiviualLiked(username,filename);
+        res.writeHead(200,{'Content-type':'application/json'});
+        res.end(JSON.stringify(value));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function checkIndiviualLiked(username,filename){
+    let path = db.ref(`/users/${username}/songs`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    let objects = Object.values(promise);
+    for(let i = 0;i<objects.length;i++){
+        if(objects[i].filename == filename){
+            return objects[i].liked;
+        }
+    }
+    return null;
+}
 
 async function handlePlaylistAddSong(req,res,username,filename,playlistName){
     try{
@@ -182,7 +211,6 @@ async function getPlaylistName(username){
     let ourMap = new Map();
     let playlist_names = Object.keys(promise);
     let contents = Object.values(promise);
-    console.log(contents);
     let index = 0;
     contents.forEach((item)=>{
         let inner = Object.values(item);
@@ -213,12 +241,10 @@ async function removeSong(username,filename){
             resolve(snapshot.val());
         })
     })
-    console.log(promise)
     let objects = Object.values(promise);
     for(let i = 0;i<objects.length;i++){
         if(objects[i].filename == filename){
             let code = Object.keys(promise)[i];
-            console.log(code);
             let newPath = db.ref(`/users/${username}/songs/${code}/`);
             newPath.remove();
             return 1;
