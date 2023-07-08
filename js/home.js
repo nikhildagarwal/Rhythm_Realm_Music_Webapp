@@ -649,6 +649,14 @@ function removeSongFromList(filename,song,artist,image,index){
         cache:"no-cache"
     })
 
+    /**
+     * Remove song from each playlist that it is in
+     */
+    fetch(`/api/remove_song_from_all_playlists/${localStorage.getItem("username")}/${filename}`,{
+        method:"DELETE",
+        cache:"no-cache"
+    })
+
     songNumberTracker--;
     if(songNumberTracker==0){
         displayNoSongText("put");
@@ -773,8 +781,6 @@ document.getElementById("in_playlist").addEventListener('click',()=>{
                                     </div>`;
             numberOfSongsInPlaylist.set(name,numberOfSongsInPlaylist.get(name)+1);
         }
-        console.log(START);
-        console.log(numberOfSongsInPlaylist.get(name)-1);
         for(let i = START;i<numberOfSongsInPlaylist.get(name);i++){
             document.getElementById(`${name}-dots-${i}`).addEventListener('click',()=>{
                 document.getElementById(`${name}-dots-${i}`).classList.toggle("hit");

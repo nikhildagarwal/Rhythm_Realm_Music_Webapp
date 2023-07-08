@@ -70,6 +70,9 @@ const server = http.createServer((req,res) => {
                 break;
             case "remove_song_from_playlist":
                 handleRemoveSongFromPlaylist(req,res,splited[2],splited[3],splited[4]);
+                break;
+            case "remove_song_from_all_playlists":
+                handleRemoveSongFromAllPlaylists(req,res,splited[2],splited[3]);
         }
         return;
     }
@@ -112,6 +115,43 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleRemoveSongFromAllPlaylists(req,res,username,filename){
+    try{
+        await removeSongFromAllPlaylists(username,filename);
+        res.writeHead(200);
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function removeSongFromAllPlaylists(username,filename){
+    let path = db.ref(`/users/${username}/playlists/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    if(promise==null){
+        return;
+    }
+    let playlist_names = Object.keys(promise);
+    let playlist_itself = Object.values(promise);
+    for(let i = 0;i<playlist_itself.length;i++){
+        let items = Object.values(playlist_itself[i]);
+        let codes = Object.keys(playlist_itself[i]);
+        for(let j = 0;j<items.length;j++){
+            if(items[j].filename == filename){
+                j = items.length;
+                let code = codes[j];
+                let newPath = db.ref(`/users/${username}/playlists/${playlist_names[i]}/${code}/`);
+                /**FIX THE ABOVE LINE */
+                newPath.remove();
+            }
+        }
+    }
+}
 
 async function handleRemoveSongFromPlaylist(req,res,username,name,filename){
     try{
