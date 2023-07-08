@@ -1,4 +1,9 @@
-
+function getSongAndArtist(filename){
+    let yo = filename.split("-");
+    song = yo[0].replace(/_/g,' ');
+    artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
+    return [song,artist];
+}
 
 let scrollable = new Map();
 let numberOfSongs = 0;
@@ -10,6 +15,7 @@ let songNumberTracker = 0;
 let playListMap = null;
 let currPlaylistMap = null;
 let numberOfSongsInPlaylist = new Map();
+let START = 0;
 
 window.onload = function(){
     
@@ -522,7 +528,6 @@ function populatePlayListSelect(){
                         return 0;
                     }
                     playListMap = new Map(data_structure);
-                    console.log(playListMap);
                     playlistMasterMap = playListMap;
                     playListMap.forEach((value,key)=>{
                         message += `<option value="${key}">${key}</option>`
@@ -563,13 +568,14 @@ function loadSelectedPlaylist(){
                 currPlaylistMap = tempMap;
                 populate1(tempMap,document.getElementById("in_playlist").value);
                 let start = array.length*-1;
+                START = start;
                 document.getElementById("display_no_playlist").className = "display_no_song_text off";
                 for(let j=0;j<array.length;j++){
                     let res = array[j];
                     let filename = res.filename;
                     let yo = filename.split("-");
-                    let song = yo[0].replace(/_/g,' ');
-                    let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
+                    song = yo[0].replace(/_/g,' ');
+                    artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
                     let imgName = filename.split(".")[0];
                     let image = `../img/${imgName+".jpeg"}`;
                     document.getElementById("playlist-container").innerHTML += `<div class = "item_in_list" id="${vish}-${start+j}">
@@ -589,19 +595,39 @@ function loadSelectedPlaylist(){
                         cache:"no-cache"
                     }).then((r)=>{
                         r.json().then((bool)=>{
-                            console.log(bool);
                             if(bool=="true"){
                                 document.getElementById(`${vish}-heart-${start+j}`).className = "fa-regular fa-heart hit";
-                                console.log("on");
                             }else{
                                 document.getElementById(`${vish}-heart-${start+j}`).className = "fa-regular fa-heart";
-                                console.log("off");
                             }
                         })
                     })
                 }
                 for(let i = start;i<0;i++){
-
+                    document.getElementById(`${vish}-dots-${i}`).addEventListener('click',()=>{
+                        document.getElementById(`${vish}-dots-${i}`).classList.toggle("hit");
+                        let sa = getSongAndArtist(document.getElementById(`${vish}-dots-${i}`).dataset.file);
+                        let c = window.confirm(`Do you want to remove\n${sa[0]}    by   ${sa[1]}\nfrom this playlist?`);
+                        if(c){
+                            fetch(`/api/remove_song_from_playlist/${localStorage.getItem("username")}/${vish}/${document.getElementById(`${vish}-dots-${i}`).dataset.file}`,{
+                                method:"DELETE",
+                                cache:"no-cache"
+                            }).then(()=>{
+                                document.getElementById(`${vish}-${i}`).classList.toggle("off");
+                                let filename = document.getElementById(`${vish}-dots-${i}`).dataset.file;
+                                let yo = filename.split("-");
+                                let song = yo[0].replace(/_/g,' ');
+                                let image = "";
+                                let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
+                                const sub = [song,artist,filename,image];
+                                tempMap.set(filename,sub);
+                                currPlaylistMap = tempMap;
+                                populate1(tempMap,document.getElementById("in_playlist").value);
+                            })
+                        }else{
+                            document.getElementById(`${vish}-dots-${i}`).classList.toggle("hit");
+                        }
+                    })
                 }
             })
         })
@@ -621,8 +647,6 @@ function removeSongFromList(filename,song,artist,image,index){
     fetch(`/api/remove_song/${localStorage.getItem("username")}/${filename}`,{
         method:"POST",
         cache:"no-cache"
-    }).then((response)=>{
-        console.log(response.status);
     })
 
     songNumberTracker--;
@@ -717,7 +741,6 @@ document.getElementById("in_playlist").addEventListener('click',()=>{
         method:"POST",
         cache:"no-cache"
     }).then((response)=>{
-        console.log(currPlaylistMap);
         let value = currPlaylistMap.get(filename);
         let imgName = filename.split(".")[0];
         let image = `../img/${imgName+".jpeg"}`;
@@ -749,6 +772,34 @@ document.getElementById("in_playlist").addEventListener('click',()=>{
                                         <i class="fa-solid fa-trash" id="${name}-dots-${numberOfSongsInPlaylist.get(name)}" data-file="${filename}"></i>
                                     </div>`;
             numberOfSongsInPlaylist.set(name,numberOfSongsInPlaylist.get(name)+1);
+        }
+        console.log(START);
+        console.log(numberOfSongsInPlaylist.get(name)-1);
+        for(let i = START;i<numberOfSongsInPlaylist.get(name);i++){
+            document.getElementById(`${name}-dots-${i}`).addEventListener('click',()=>{
+                document.getElementById(`${name}-dots-${i}`).classList.toggle("hit");
+                let sa = getSongAndArtist(document.getElementById(`${name}-dots-${i}`).dataset.file);
+                let c = window.confirm(`Do you want to remove\n${sa[0]}    by   ${sa[1]}\nfrom this playlist?`);
+                if(c){
+                    fetch(`/api/remove_song_from_playlist/${localStorage.getItem("username")}/${name}/${document.getElementById(`${name}-dots-${i}`).dataset.file}`,{
+                        method:"DELETE",
+                        cache:"no-cache"
+                    }).then(()=>{
+                        let tempMap = currPlaylistMap;
+                        document.getElementById(`${name}-${i}`).classList.toggle("off");
+                        let filename = document.getElementById(`${name}-dots-${i}`).dataset.file;
+                        let yo = filename.split("-");
+                        let song = yo[0].replace(/_/g,' ');
+                        let image = "";
+                        let artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
+                        const sub = [song,artist,filename,image];
+                        tempMap.set(filename,sub);
+                        populate1(tempMap,document.getElementById("in_playlist").value);
+                    })
+                }else{
+                    document.getElementById(`${name}-dots-${i}`).classList.toggle("hit");
+                }
+            })
         }
         currPlaylistMap.delete(filename);
         populate1(currPlaylistMap,document.getElementById("playlist_filter").value);

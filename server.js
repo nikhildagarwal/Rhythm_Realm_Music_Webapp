@@ -67,6 +67,9 @@ const server = http.createServer((req,res) => {
                 break;
             case "check_individual_liked":
                 handleCheckIndividualLiked(req,res,splited[2],splited[3]);
+                break;
+            case "remove_song_from_playlist":
+                handleRemoveSongFromPlaylist(req,res,splited[2],splited[3],splited[4]);
         }
         return;
     }
@@ -109,6 +112,37 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleRemoveSongFromPlaylist(req,res,username,name,filename){
+    try{
+        await removeSongFromPlaylist(username,name,filename);
+        res.writeHead(200);
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function removeSongFromPlaylist(username,name,filename){
+    let path = db.ref(`/users/${username}/playlists/${name}/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    });
+    let code = "";
+    let objects = Object.values(promise);
+    for(let i = 0;i<objects.length;i++){
+        let thisFilename = objects[i].filename;
+        if(thisFilename==filename){
+            code = Object.keys(promise)[i];
+            i = objects.length;
+        }
+    }
+    let newPath = db.ref(`/users/${username}/playlists/${name}/${code}/`);
+    newPath.remove();
+    return 0;
+}
 
 async function handleCheckIndividualLiked(req,res,username,filename){
     try{
