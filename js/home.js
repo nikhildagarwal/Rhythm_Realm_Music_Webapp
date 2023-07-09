@@ -180,7 +180,7 @@ window.onload = function(){
                                         let artistToRemove = bruh[1].substring(0,bruh[1].length-4).replace(/_/g,' ');
                                         let imgTemp = fileToRemove.split(".")[0];
                                         let imageToRemove = `../img/${imgTemp+".jpeg"}`;
-                                        let confirmResult = window.confirm(`Do you want to remove this song:\n\n${songToRemove} - ${artistToRemove}`);
+                                        let confirmResult = window.confirm(`Do you want to remove this song:\n\n${songToRemove} - ${artistToRemove}\n\n*This action will remove this song from all playlists it is in as well`);
                                         if(confirmResult){
                                             removeSongFromList(fileToRemove,songToRemove,artistToRemove,imageToRemove,i);
                                         }else{
@@ -435,7 +435,7 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                     let artistToRemove = bruh[1].substring(0,bruh[1].length-4).replace(/_/g,' ');
                                     let imgTemp = filename.split(".")[0];
                                     let imageToRemove = `../img/${imgTemp+".jpeg"}`;
-                                    let confirmResult = window.confirm(`Do you want to remove this song:\n\n${songToRemove} - ${artistToRemove}`);
+                                    let confirmResult = window.confirm(`Do you want to remove this song:\n\n${songToRemove} - ${artistToRemove}\n\n*This action will remove this song from all playlists it is in as well`);
                                     if(confirmResult){
                                         removeSongFromList(fileToRemove,songToRemove,artistToRemove,imageToRemove,i);
                                     }else{

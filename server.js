@@ -1,6 +1,7 @@
 const http = require("http");
 const url = require("url");
 const fs = require("fs");
+const nodemailer = require("nodemailer");
 const admin = require('./js/firebase.js').admin;
 const db = admin.database();
 
