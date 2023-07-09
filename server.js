@@ -74,6 +74,12 @@ const server = http.createServer((req,res) => {
                 break;
             case "remove_song_from_all_playlists":
                 handleRemoveSongFromAllPlaylists(req,res,splited[2],splited[3]);
+                break;
+            case "check_valid_email":
+                handleCheckValidEmail(req,res,splited[2]);
+                break;
+            case "send_email_forgot_username":
+                handleSendEmailForgotUsername(req,res,splited[2],splited[3]);
         }
         return;
     }
@@ -116,6 +122,81 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleSendEmailForgotUsername(req,res,username,email){
+    try{
+        let subject = `RhythmRealm - Username Recovery`;
+        let message = `Dear Valued Member,\n\nDo not worry your username is here!!\nYour username is:  ${username}\nWe hope to see you back in our realm soon!\nAs always, Rock on!!\n\nAll the best,\nThe RhythmRealm Team`;
+        let sentStatus = sendEmail(subject,message,email);
+        if(sentStatus == 1){
+            res.writeHead(200);
+        }else{
+            res.writeHead(300);
+        } 
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function sendEmail(subject,message,email){
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'rhythmrealm.play@gmail.com',
+          pass: 'rrm15289'
+        }
+    });
+    const mailOptions = {
+        from: 'rhythmrealm.play@gmail.com',
+        to: `${email}`,
+        subject: `${subject}`,
+        text: `${message}`
+    };
+    let promise = await new Promise((resolve,reject)=>{
+        transporter.sendMail(mailOptions,(error,info)=>{
+            if(error){
+                console.log(error);
+                resolve(0);
+            }else{
+                resolve(1);
+            }
+        })
+    });
+    return promise;
+}
+
+async function handleCheckValidEmail(req,res,email){
+    try{
+        let result = await checkValidEmail(email);
+        if(result[0]==0){
+            res.writeHead(300);
+            res.end();
+        }else{
+            res.writeHead(200,{'Content-type':'application/json'});
+            res.end(JSON.stringify(result[1]));
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function checkValidEmail(email){
+    let path = db.ref(`/users/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    let users = Object.keys(promise);
+    let info = Object.values(promise);
+    for(let i = 0;i<info.length;i++){
+        if(info[i].email == email){
+            return [1,users[i]];
+        }
+    }
+    return [0];
+}
 
 async function handleRemoveSongFromAllPlaylists(req,res,username,filename){
     try{
