@@ -26,7 +26,7 @@ document.querySelector(".button").addEventListener('click',()=>{
     }).then((response)=>{
         if(response.status == 200){
             response.json().then((username)=>{
-                fetch(`/api/send_email_forgot_username/${username}/${email}`,{
+                fetch(`/api/send_email_forgot_username/${username[0]}/${email}`,{
                     method:"POST",
                     cache:"no-cache"
                 }).then((sent)=>{

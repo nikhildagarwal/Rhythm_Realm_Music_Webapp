@@ -173,7 +173,7 @@ async function handleCheckValidEmail(req,res,email){
             res.end();
         }else{
             res.writeHead(200,{'Content-type':'application/json'});
-            res.end(JSON.stringify(result[1]));
+            res.end(JSON.stringify([result[1],result[2]]));
         }
     }catch (err){
         console.log(err);
@@ -191,7 +191,7 @@ async function checkValidEmail(email){
     let info = Object.values(promise);
     for(let i = 0;i<info.length;i++){
         if(info[i].email == email){
-            return [1,users[i]];
+            return [1,users[i],info[i].userid];
         }
     }
     return [0];
