@@ -586,7 +586,7 @@ function loadSelectedPlaylist(){
                                         <div class ="list_item_artist">
                                             ${artist}
                                         </div>
-                                        <i class="fa-regular fa-circle-play" id="${vish}-play-${start+j}"></i>
+                                        <!--<i class="fa-regular fa-circle-play" id="${vish}-play-${start+j}"></i>-->
                                         <i class="fa-regular fa-heart" id="${vish}-heart-${start+j}" data-file="${filename}"></i>
                                         <i class="fa-solid fa-trash" id="${vish}-dots-${start+j}" data-file="${filename}"></i>
                                     </div>`;
@@ -655,7 +655,7 @@ function removeSongFromList(filename,song,artist,image,index){
             method:"DELETE",
             cache:"no-cache"
         }).then((nextResponse)=>{
-            
+
         })
     })
 
@@ -765,7 +765,7 @@ document.getElementById("in_playlist").addEventListener('click',()=>{
                                         <div class ="list_item_artist">
                                             ${value[1]}
                                         </div>
-                                        <i class="fa-regular fa-circle-play" id="${name}-play-${0}"></i>
+                                        <!--<i class="fa-regular fa-circle-play" id="${name}-play-${0}"></i>-->
                                         <i class="fa-regular fa-heart" id="${name}-heart-${0}" data-file="${filename}"></i>
                                         <i class="fa-solid fa-trash" id="${name}-dots-${0}" data-file="${filename}"></i>
                                     </div>`;
@@ -779,7 +779,7 @@ document.getElementById("in_playlist").addEventListener('click',()=>{
                                         <div class ="list_item_artist">
                                             ${value[1]}
                                         </div>
-                                        <i class="fa-regular fa-circle-play" id="${name}-play-${numberOfSongsInPlaylist.get(name)}"></i>
+                                        <!--<i class="fa-regular fa-circle-play" id="${name}-play-${numberOfSongsInPlaylist.get(name)}"></i>-->
                                         <i class="fa-regular fa-heart" id="${name}-heart-${numberOfSongsInPlaylist.get(name)}" data-file="${filename}"></i>
                                         <i class="fa-solid fa-trash" id="${name}-dots-${numberOfSongsInPlaylist.get(name)}" data-file="${filename}"></i>
                                     </div>`;
