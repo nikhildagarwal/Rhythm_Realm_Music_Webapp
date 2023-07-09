@@ -647,15 +647,19 @@ function removeSongFromList(filename,song,artist,image,index){
     fetch(`/api/remove_song/${localStorage.getItem("username")}/${filename}`,{
         method:"POST",
         cache:"no-cache"
+    }).then((response)=>{
+        /**
+         * Remove song from each playlist that it is in
+         */
+        fetch(`/api/remove_song_from_all_playlists/${localStorage.getItem("username")}/${filename}`,{
+            method:"DELETE",
+            cache:"no-cache"
+        }).then((nextResponse)=>{
+            
+        })
     })
 
-    /**
-     * Remove song from each playlist that it is in
-     */
-    fetch(`/api/remove_song_from_all_playlists/${localStorage.getItem("username")}/${filename}`,{
-        method:"DELETE",
-        cache:"no-cache"
-    })
+    
 
     songNumberTracker--;
     if(songNumberTracker==0){

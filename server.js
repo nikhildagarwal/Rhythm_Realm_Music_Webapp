@@ -133,24 +133,44 @@ async function removeSongFromAllPlaylists(username,filename){
             resolve(snapshot.val());
         })
     })
-    if(promise==null){
-        return;
-    }
-    let playlist_names = Object.keys(promise);
-    let playlist_itself = Object.values(promise);
-    for(let i = 0;i<playlist_itself.length;i++){
-        let items = Object.values(playlist_itself[i]);
-        let codes = Object.keys(playlist_itself[i]);
-        for(let j = 0;j<items.length;j++){
-            if(items[j].filename == filename){
-                j = items.length;
-                let code = codes[j];
-                let newPath = db.ref(`/users/${username}/playlists/${playlist_names[i]}/${code}/`);
-                /**FIX THE ABOVE LINE */
-                newPath.remove();
+    if(promise!=null){
+        let playlist_names = Object.keys(promise);
+        let playlist_contents = Object.values(promise);
+        for(let i = 0;i<playlist_names.length;i++){
+            let currName = playlist_names[i];
+            let thisContent = playlist_contents[i];
+            let codes = Object.keys(thisContent);
+            let files = Object.values(thisContent);
+            for(let j = 0;j<codes.length;j++){
+                let thisCode = codes[j];
+                let thisFile = files[j].filename;
+                if(thisFile==filename){
+                    let tempPath = db.ref(`/users/${username}/playlists/${currName}/${thisCode}/`);
+                    tempPath.remove();
+                }
             }
         }
     }
+}
+
+function deleteValueRecursively(ref) {
+  ref.once('value', (snapshot) => {
+    if (snapshot.exists()) {
+      snapshot.forEach((childSnapshot) => {
+        // Recursively delete child nodes
+        deleteValueRecursively(childSnapshot.ref);
+      });
+    }
+
+    // Delete the current value
+    ref.remove()
+      .then(() => {
+        console.log('Value deleted successfully.');
+      })
+      .catch((error) => {
+        console.error('Error deleting value:', error);
+      });
+  });
 }
 
 async function handleRemoveSongFromPlaylist(req,res,username,name,filename){
