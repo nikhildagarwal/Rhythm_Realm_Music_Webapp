@@ -126,8 +126,8 @@ server.listen(3000, "localhost", () => {
 async function handleSendEmailForgotUsername(req,res,username,email){
     try{
         let subject = `RhythmRealm - Username Recovery`;
-        let message = `Dear Valued Member,\n\nDo not worry your username is here!!\nYour username is:  ${username}\nWe hope to see you back in our realm soon!\nAs always, Rock on!!\n\nAll the best,\nThe RhythmRealm Team`;
-        let sentStatus = sendEmail(subject,message,email);
+        let message = `Dear Valued Member,\n\nDo not worry your username is here!!\nYour username is:  ${username}\nPlease revisit the login page, log in, and rock on!!\n\nAll the best,\nThe RhythmRealm Team`;
+        let sentStatus = await sendEmail(subject,message,email);
         if(sentStatus == 1){
             res.writeHead(200);
         }else{
@@ -144,7 +144,7 @@ async function sendEmail(subject,message,email){
         service: 'gmail',
         auth: {
           user: 'rhythmrealm.play@gmail.com',
-          pass: 'rrm15289'
+          pass: 'yxprvpwiiycuanjb'
         }
     });
     const mailOptions = {
@@ -156,7 +156,6 @@ async function sendEmail(subject,message,email){
     let promise = await new Promise((resolve,reject)=>{
         transporter.sendMail(mailOptions,(error,info)=>{
             if(error){
-                console.log(error);
                 resolve(0);
             }else{
                 resolve(1);

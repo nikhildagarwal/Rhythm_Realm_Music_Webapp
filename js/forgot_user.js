@@ -30,7 +30,9 @@ document.querySelector(".button").addEventListener('click',()=>{
                     method:"POST",
                     cache:"no-cache"
                 }).then((sent)=>{
-                    console.log(sent.status);
+                    if(sent.status==200){
+                        window.location.href="../html/email_sent.html";
+                    }
                 })
             })
         }else{
