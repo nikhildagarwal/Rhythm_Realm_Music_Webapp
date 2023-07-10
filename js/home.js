@@ -18,7 +18,6 @@ let numberOfSongsInPlaylist = new Map();
 let START = 0;
 
 window.onload = function(){
-    
     if(localStorage.getItem("username") != null){
         document.getElementById("myInput").classList.toggle("off");
     document.getElementById("mySelect").classList.toggle("off");

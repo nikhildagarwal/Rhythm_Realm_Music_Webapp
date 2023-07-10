@@ -184,6 +184,9 @@ const server = http.createServer((req,res) => {
                     }else{
                         handleForgotUsername(req,res);
                     }
+                    break;
+                case "test":
+                    handleTest(req,res);
             }
         }
         return;
@@ -278,6 +281,20 @@ async function resetPasswordsFromRecovery(checkuserid,newPassword){
             return info[i].email;
         }
     }
+}
+
+async function handleTest(req,res){
+    let file = __dirname +"/html/test.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
 }
 
 async function handleForgotUsername(req,res){
