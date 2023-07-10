@@ -30,7 +30,14 @@ document.querySelector(".button").addEventListener('click',()=>{
     }).then((response)=>{
         if(response.status == 200){
             response.json().then((username)=>{
-                console.log(username[0]+"    "+username[1]);
+                fetch(`/api/send_forgot_password_email/${username[1]}/${email}`,{
+                    method:"POST",
+                    cache:"no-cache"
+                }).then((sent)=>{
+                    if(sent.status==200){
+                        window.location.href="../html/email_sent.html";
+                    }
+                })
             })
         }else{
             document.getElementById("email-error-not-associated").className = "error";

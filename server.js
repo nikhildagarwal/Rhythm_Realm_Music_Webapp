@@ -14,72 +14,146 @@ const server = http.createServer((req,res) => {
     console.log(`Requested path ${path} `);
     let splited = path.split("/");
     if(splited[0] == "api"){
-        switch(splited[1]){
-            case "changePassword":
-                handleChangePassword(req,res,splited[2],splited[3]);
-                break;
-            case "changeUsername":
-                handleChangeUsername(req,res,splited[2],splited[3]);
-                break;
-            case "checkUsernameMatchFound":
-                handleCheckUsernameMatchFound(req,res,splited[2]);
-                break;
-            case "changeEmail":
-                handleChangeEmail(req,res,splited[2],splited[3]);
-                break;
-            case "checkEmailMatchFound":
-                handleCheckEmailMatchFound(req,res,splited[2]);
-                break;
-            case "checkLogIn":
-                handleCheckLogIn(req,res,splited[2],splited[3]);
-                break;
-            case "createUser":
-                handleCreateUser(req,res,splited[2],splited[3],splited[4],splited[5]);
-                break;
-            case "getUserList":
-                handleGetUserList(req,res,splited[2],splited[3]);
-                break;
-            case "load_songs":
-                handleLoadSongs(req,res);
-                break;
-            case "add_song_to_user":
-                handleAddSongToUser(req,res,splited[2],splited[3],splited[4]);
-                break;
-            case "get_song_list":
-                handleGetSongList(req,res,splited[2]);
-                break;
-            case "change_liked":
-                handleChangeLiked(req,res,splited[2],splited[3],splited[4]);
-                break;
-            case "check_liked":
-                handleCheckLiked(req,res,splited[2]);
-                break;
-            case "remove_song":
-                handleRemoveSong(req,res,splited[2],splited[3]);
-                break;
-            case "get_playlist_names":
-                handleGetPlaylistNames(req,res,splited[2]);
-                break;
-            case "get_my_song_filenames":
-                handleGetMySongsFilenames(req,res,splited[2]);
-                break;
-            case "playlist_add_song":
-                handlePlaylistAddSong(req,res,splited[2],splited[3],splited[4]);
-                break;
-            case "check_individual_liked":
-                handleCheckIndividualLiked(req,res,splited[2],splited[3]);
-                break;
-            case "remove_song_from_playlist":
-                handleRemoveSongFromPlaylist(req,res,splited[2],splited[3],splited[4]);
-                break;
-            case "remove_song_from_all_playlists":
-                handleRemoveSongFromAllPlaylists(req,res,splited[2],splited[3]);
-                break;
-            case "check_valid_email":
-                handleCheckValidEmail(req,res,splited[2]);
-                break;
-            case "send_email_forgot_username":
-                handleSendEmailForgotUsername(req,res,splited[2],splited[3]);
+        if(splited[1]=="html"){
+            let file = __dirname +"/html/"+splited[2];
+            fs.readFile(file,function(err,content){
+                if(err){
+                    res.writeHead(404);
+                    res.end();
+                }else{
+                    res.setHeader("X-Content-Type-Options","nosniff");
+                    res.writeHead(200,{'Content-type':'text/html'});
+                    res.end(content);
+                }
+            })
+        }else if(splited[1]=="css"){
+            let file = __dirname +"/css/"+splited[2];
+            fs.readFile(file,function(err,content){
+                if(err){
+                    res.writeHead(404);
+                    res.end();
+                }else{
+                    res.setHeader("X-Content-Type-Options","nosniff");
+                    res.writeHead(200,{'Content-type':'text/css'});
+                    res.end(content);
+                }
+            })
+        }else if(splited[1]=="img"){
+            let file = __dirname +"/img/"+splited[2];
+            fs.readFile(file,function(err,content){
+                if(err){
+                    res.writeHead(404);
+                    res.end();
+                }else{
+                    res.setHeader("X-Content-Type-Options","nosniff");
+                    res.writeHead(200,{'Content-type':'image/jpeg'});
+                    res.end(content);
+                }
+            })
+        }else if(splited[1] =="js"){
+            let file = __dirname +"/js/"+splited[2];
+            fs.readFile(file,function(err,content){
+                if(err){
+                    res.writeHead(404);
+                    res.end();
+                }else{
+                    res.setHeader("X-Content-Type-Options","nosniff");
+                    res.writeHead(200,{'Content-type':'application/javascript'});
+                    res.end(content);
+                }
+            })
+        }else if(splited[1] == "audio"){
+            let file = __dirname +"/audio/"+splited[2];
+            fs.readFile(file,function(err,content){
+                if(err){
+                    res.writeHead(404);
+                    res.end();
+                }else{
+                    res.setHeader("X-Content-Type-Options","nosniff");
+                    res.writeHead(200,{'Content-type':'audio/mpeg'});
+                    res.end(content);
+                }
+            })
+        }else{
+            switch(splited[1]){
+                case "changePassword":
+                    handleChangePassword(req,res,splited[2],splited[3]);
+                    break;
+                case "changeUsername":
+                    handleChangeUsername(req,res,splited[2],splited[3]);
+                    break;
+                case "checkUsernameMatchFound":
+                    handleCheckUsernameMatchFound(req,res,splited[2]);
+                    break;
+                case "changeEmail":
+                    handleChangeEmail(req,res,splited[2],splited[3]);
+                    break;
+                case "checkEmailMatchFound":
+                    handleCheckEmailMatchFound(req,res,splited[2]);
+                    break;
+                case "checkLogIn":
+                    handleCheckLogIn(req,res,splited[2],splited[3]);
+                    break;
+                case "createUser":
+                    handleCreateUser(req,res,splited[2],splited[3],splited[4],splited[5]);
+                    break;
+                case "getUserList":
+                    handleGetUserList(req,res,splited[2],splited[3]);
+                    break;
+                case "load_songs":
+                    handleLoadSongs(req,res);
+                    break;
+                case "add_song_to_user":
+                    handleAddSongToUser(req,res,splited[2],splited[3],splited[4]);
+                    break;
+                case "get_song_list":
+                    handleGetSongList(req,res,splited[2]);
+                    break;
+                case "change_liked":
+                    handleChangeLiked(req,res,splited[2],splited[3],splited[4]);
+                    break;
+                case "check_liked":
+                    handleCheckLiked(req,res,splited[2]);
+                    break;
+                case "remove_song":
+                    handleRemoveSong(req,res,splited[2],splited[3]);
+                    break;
+                case "get_playlist_names":
+                    handleGetPlaylistNames(req,res,splited[2]);
+                    break;
+                case "get_my_song_filenames":
+                    handleGetMySongsFilenames(req,res,splited[2]);
+                    break;
+                case "playlist_add_song":
+                    handlePlaylistAddSong(req,res,splited[2],splited[3],splited[4]);
+                    break;
+                case "check_individual_liked":
+                    handleCheckIndividualLiked(req,res,splited[2],splited[3]);
+                    break;
+                case "remove_song_from_playlist":
+                    handleRemoveSongFromPlaylist(req,res,splited[2],splited[3],splited[4]);
+                    break;
+                case "remove_song_from_all_playlists":
+                    handleRemoveSongFromAllPlaylists(req,res,splited[2],splited[3]);
+                    break;
+                case "check_valid_email":
+                    handleCheckValidEmail(req,res,splited[2]);
+                    break;
+                case "send_email_forgot_username":
+                    handleSendEmailForgotUsername(req,res,splited[2],splited[3]);
+                    break;
+                case "send_forgot_password_email":
+                    handleSendForgotPasswordEmail(req,res,splited[2],splited[3]);
+                    break;
+                case "account_recovery":
+                    handleAccountRecovery(req,res,splited[2]);
+                    break;
+                case "reset_passwords_from_recovery":
+                    handleResetPasswordsFromRecovery(req,res,splited[2],splited[3]);
+                    break;
+                case "changed_password_notif":
+                    handleChangedPasswordNotif(req,res,splited[2]);
+            }
         }
         return;
     }
@@ -123,11 +197,15 @@ server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
 
-async function handleSendEmailForgotUsername(req,res,username,email){
+async function handleChangedPasswordNotif(req,res,email){
     try{
-        let subject = `RhythmRealm - Username Recovery`;
-        let message = `Dear Valued Member,\n\nDo not worry your username is here!!\nYour username is:  ${username}\nPlease revisit the login page, log in, and rock on!!\n\nAll the best,\nThe RhythmRealm Team`;
-        let sentStatus = await sendEmail(subject,message,email);
+        let subject = `RhythmRealm - Password Reset`;
+        let html = `<p>Dear Valued Member,</p>
+        <p>&nbsp;</p>
+        <p>Your password has been successfully reset. Enjoy!!<br>We look forward to seeing you back soon. Rock On!!</p>
+        <p>&nbsp;</p>
+        <p>All the best,<br>The RhythmRealm Team</p>`;
+        let sentStatus = await sendEmail(subject,html,email);
         if(sentStatus == 1){
             res.writeHead(200);
         }else{
@@ -139,7 +217,97 @@ async function handleSendEmailForgotUsername(req,res,username,email){
     }
 }
 
-async function sendEmail(subject,message,email){
+async function handleResetPasswordsFromRecovery(req,res,userid,newPassword){
+    try{
+        let email = await resetPasswordsFromRecovery(userid,newPassword);
+        res.writeHead(200,{'Content-type':'application/json'});
+        res.end(JSON.stringify(email));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function resetPasswordsFromRecovery(checkuserid,newPassword){
+    let path = db.ref(`/users/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    let usernames = Object.keys(promise);
+    let info = Object.values(promise);
+    for(let i = 0;i<usernames.length;i++){
+        let username = usernames[i];
+        let userid = info[i].userid;
+        if(userid==checkuserid){
+            let newPath = db.ref(`/users/${username}/`);
+            newPath.update({
+                password:newPassword
+            })
+            return info[i].email;
+        }
+    }
+}
+
+async function handleAccountRecovery(req,res,userid){
+    let file = __dirname +"/html/account_recovery.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleSendForgotPasswordEmail(req,res,userid,email){
+    try{
+        let subject = `RhythmRealm - Account Recovery`;
+        let html = `<p>Dear Valued Member,</p>
+        <p>&nbsp;</p>
+        <p>Do not worry, we'll get you back to jamming right!! Please click the link provided below to reset your password and recover your account.</p>
+        <a href="http://localhost:3000/api/account_recovery/${userid}">Account Recovery</a>
+        <p>We look forward to seeing you back soon. Rock On!!</p>
+        <p>&nbsp;</p>
+        <p>All the best,<br>The RhythmRealm Team</p>`;
+        let sentStatus = await sendEmail(subject,html,email);
+        if(sentStatus == 1){
+            res.writeHead(200);
+        }else{
+            res.writeHead(300);
+        } 
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function handleSendEmailForgotUsername(req,res,username,email){
+    try{
+        let subject = `RhythmRealm - Username Recovery`;
+        let html = `<p>Dear Valued Member,</p>
+        <p>&nbsp;</p>
+        <p>Do not worry your username is here!!</p>
+        <p>Your username is:  ${username}</p>
+        <p>Please revisit the login page, log in, and rock on!!</p>
+        <p>&nbsp;</p>
+        <p>All the best,<br>The RhythmRealm Team</p>`;
+        let sentStatus = await sendEmail(subject,html,email);
+        if(sentStatus == 1){
+            res.writeHead(200);
+        }else{
+            res.writeHead(300);
+        } 
+        res.end();
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function sendEmail(subject,html,email){
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -151,7 +319,7 @@ async function sendEmail(subject,message,email){
         from: 'rhythmrealm.play@gmail.com',
         to: `${email}`,
         subject: `${subject}`,
-        text: `${message}`
+        html: `${html}`
     };
     let promise = await new Promise((resolve,reject)=>{
         transporter.sendMail(mailOptions,(error,info)=>{
