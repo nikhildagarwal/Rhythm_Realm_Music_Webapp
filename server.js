@@ -9,7 +9,7 @@ const server = http.createServer((req,res) => {
     let parsedURL = url.parse(req.url,true);
     let path = parsedURL.path.replace(/^\/+|\/+$/g,"");
     if(path==""){
-        path = "html/home.html";
+        path = "html/index.html";
     }
     console.log(`Requested path ${path} `);
     let splited = path.split("/");
@@ -396,7 +396,7 @@ async function handleLogin(req,res){
 }
 
 async function handleHome(req,res){
-    let file = __dirname +"/html/home.html";
+    let file = __dirname +"/html/index.html";
     fs.readFile(file,function(err,content){
         if(err){
             res.writeHead(404);
