@@ -3,19 +3,19 @@ window.onload = function(){
 }
 
 document.querySelector(".signup").addEventListener(("click"),()=>{
-    window.location.href = '../html/signup.html';
+    window.location.href = '/api/signup';
 })
 
 document.querySelector(".forgot").addEventListener(("click"),()=>{
-    window.location.href = '../html/forgot_username.html';
+    window.location.href = '/api/forgot/username';
 })
 
 document.querySelector(".forgotpass").addEventListener(("click"),()=>{
-    window.location.href = '../html/forgot_password.html';
+    window.location.href = '/api/forgot/password';
 })
 
 document.getElementById("crest").addEventListener(("click"),()=>{
-    window.location.href = "../html/home.html";
+    window.location.href = "/api/home";
 })
 
 document.querySelector(".button").addEventListener(("click"),()=>{
@@ -53,7 +53,7 @@ document.querySelector(".button").addEventListener(("click"),()=>{
                     localStorage.setItem("userid",twoParts[1]);
                 })
                 localStorage.setItem("password_length",password.length.toString());
-                window.location.href = "../html/home.html";
+                window.location.href = "/api/home";
         }
     })
 })

@@ -7,7 +7,7 @@ window.onload=function(){
 }
 
 document.getElementById("crest").addEventListener(("click"),()=>{
-    window.location.href="../html/home.html";
+    window.location.href="/api/home";
 })
 
 function checkEmpty(value){
@@ -50,7 +50,7 @@ document.getElementById("change-password-button").addEventListener(("click"),()=
             document.getElementById("changed1").className = "success";
             setTimeout(function(){
                 document.getElementById("changed1").className = "success1";
-                window.location.href="../html/login.html";
+                window.location.href="/api/login";
             },1500)
 
         }

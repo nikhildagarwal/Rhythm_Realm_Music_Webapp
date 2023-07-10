@@ -1,7 +1,7 @@
 
 window.onload = function(){
     if(localStorage.getItem("username")==null){
-        window.location.href="../html/login.html";
+        window.location.href="/api/login";
     }
     document.getElementById("email-field").value = localStorage.getItem("email");
     document.getElementById("username-field").value = localStorage.getItem("username");
@@ -14,11 +14,11 @@ window.onload = function(){
 }
 
 document.getElementById("crest").addEventListener(("click"),()=>{
-    window.location.href="../html/home.html";
+    window.location.href="/api/home";
 })
 
 document.querySelector(".back").addEventListener(("click"),()=>{
-    window.location.href="../html/home.html";
+    window.location.href="/api/home";
 })
 
 document.getElementById("change-email").addEventListener(("click"),()=>{
@@ -154,5 +154,5 @@ function checkEmpty(value){
 }
 
 document.getElementById("reset-password").addEventListener(("click"),()=>{
-    window.location.href = "../html/confirm_password.html";
+    window.location.href = "/api/confirm/password";
 })

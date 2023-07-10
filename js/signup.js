@@ -8,13 +8,13 @@ function generateUserID() {
 const userId = generateUserID();
 
 document.querySelector(".login").addEventListener(("click"),()=>{
-    window.location.href = '../html/login.html';
+    window.location.href = '/api/login';
 })
 
 
 
 document.getElementById("crest").addEventListener(("click"),()=>{
-    window.location.href = "../html/home.html";
+    window.location.href = "/api/home";
 })
 
 document.getElementById("submit-btn").addEventListener(("click"),()=>{
@@ -80,7 +80,7 @@ document.getElementById("submit-btn").addEventListener(("click"),()=>{
                     localStorage.setItem("email",email);
                     localStorage.setItem("password_length",password1.length.toString());
                     localStorage.setItem("userid",userId);
-                    window.location.href = "../html/home.html";
+                    window.location.href = "/api/home";
                 }
             })
         })

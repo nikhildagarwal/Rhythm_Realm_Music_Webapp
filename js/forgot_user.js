@@ -1,9 +1,9 @@
 document.querySelector(".back").addEventListener(("click"),()=>{
-    window.location.href = "../html/login.html";
+    window.location.href = "/api/login";
 })
 
 document.getElementById("crest").addEventListener(("click"),()=>{
-    window.location.href = "../html/home.html";
+    window.location.href = "/api/home";
 })
 
 document.querySelector(".button").addEventListener('click',()=>{
@@ -31,7 +31,7 @@ document.querySelector(".button").addEventListener('click',()=>{
                     cache:"no-cache"
                 }).then((sent)=>{
                     if(sent.status==200){
-                        window.location.href="../html/email_sent.html";
+                        window.location.href="/api/email/sent";
                     }
                 })
             })

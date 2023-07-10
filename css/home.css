@@ -269,14 +269,14 @@ body{
 
 .label-left{
   position: inherit;
-  color: white;
+  color: #e4e4e4;
   margin-left:-75%;
   margin-top:84%;
 }
 
 .label-right{
   position:inherit;
-  color: white;
+  color: #e4e4e4;
   margin-left:75%;
   margin-top:84%;
 }
@@ -301,6 +301,7 @@ body{
   font-family: monospace;
   padding: 10px;
   border-radius: 15px;
+  background-color: #e4e4e4;
 }
 
 .select_bar{
@@ -309,6 +310,7 @@ body{
   font-family: monospace;
   padding: 10px;
   border-radius: 15px;
+  background-color: #e4e4e4;
 }
 
 .filter_bar{
@@ -317,6 +319,7 @@ body{
   font-family: monospace;
   padding: 10px;
   border-radius: 15px;
+  background-color: #e4e4e4;
 }
 
 .filter_bar.off{
@@ -348,6 +351,7 @@ body{
   width: 10%;
   padding: 10px;
   border-radius: 15px;
+  background-color: #e4e4e4;
 }
 
 .user_add_song.off{

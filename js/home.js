@@ -101,10 +101,10 @@ window.onload = function(){
                     <span class="logText"></span><i class="fa-solid fa-right-from-bracket fa-flip-horizontal"></i></span><div class="signtext1">Log Out</div>
                 </div>`;
                 document.getElementById("logout").addEventListener(("click"),()=>{
-                    window.location.href="../html/logout.html";
+                    window.location.href="/api/logout/";
                 })
                 document.getElementById("profile").addEventListener(("click"),()=>{
-                window.location.href="../html/profile.html";
+                    window.location.href="/api/profile/myinfo";
                 })
                 fetch(`/api/get_song_list/${localStorage.getItem("username")}`,{
                     method:"GET",
@@ -220,10 +220,10 @@ window.onload = function(){
                     <span class="logText"></span><i class="fa-solid fa-right-to-bracket"></i></span><div class="signtext3">Log In</div>
                 </div>`;
                 document.getElementById("signup").addEventListener(("click"),()=>{
-                    window.location.href="../html/signup.html";
+                    window.location.href="/api/signup";
                 })
                 document.getElementById("login").addEventListener(("click"),()=>{
-                    window.location.href="../html/login.html";
+                    window.location.href="/api/login";
                 })
     }
 }
@@ -246,7 +246,7 @@ document.getElementById("plus").addEventListener(("click"),()=>{
 })
 
 document.getElementById("crest").addEventListener(("click"),()=>{
-    window.location.href = "../html/home.html";
+    window.location.href="/api/home";
 })
 
 let mutex = 1;

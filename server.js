@@ -153,6 +153,37 @@ const server = http.createServer((req,res) => {
                     break;
                 case "changed_password_notif":
                     handleChangedPasswordNotif(req,res,splited[2]);
+                case "home":
+                    handleHome(req,res);
+                    break;
+                case "login":
+                    handleLogin(req,res);
+                    break;
+                case "logout":
+                    handleLogout(req,res);
+                    break;
+                case "profile":
+                    handleProfile(req,res);
+                    break;
+                case "signup":
+                    handleSignup(req,res);
+                    break;
+                case "confirm":
+                    if(splited[2]=="password"){
+                        handleConfirmPassword(req,res);
+                    }
+                    break;
+                case "email":
+                    if(splited[2]=="sent"){
+                        handleEmailSent(req,res);
+                    }
+                    break;
+                case "forgot":
+                    if(splited[2]=="password"){
+                        handleForgotPassword(req,res);
+                    }else{
+                        handleForgotUsername(req,res);
+                    }
             }
         }
         return;
@@ -247,6 +278,135 @@ async function resetPasswordsFromRecovery(checkuserid,newPassword){
             return info[i].email;
         }
     }
+}
+
+async function handleForgotUsername(req,res){
+    let file = __dirname +"/html/forgot_username.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleForgotPassword(req,res){
+    let file = __dirname +"/html/forgot_password.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleEmailSent(req,res){
+    let file = __dirname +"/html/email_sent.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleConfirmPassword(req,res){
+    let file = __dirname +"/html/confirm_password.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleSignup(req,res){
+    let file = __dirname +"/html/signup.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleProfile(req,res){
+    let file = __dirname +"/html/profile.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            console.log(err);
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleLogout(req,res){
+    let file = __dirname +"/html/logout.html";
+    console.log("hi");
+    fs.readFile(file,function(err,content){
+        if(err){
+            console.log(err);
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleLogin(req,res){
+    let file = __dirname +"/html/login.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
+}
+
+async function handleHome(req,res){
+    let file = __dirname +"/html/home.html";
+    fs.readFile(file,function(err,content){
+        if(err){
+            res.writeHead(404);
+            res.end();
+        }else{
+            res.setHeader("X-Content-Type-Options","nosniff");
+            res.writeHead(200,{'Content-type':'text/html'});
+            res.end(content);
+        }
+    })
 }
 
 async function handleAccountRecovery(req,res,userid){

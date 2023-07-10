@@ -1,19 +1,19 @@
 window.onload=function(){
     if(localStorage.getItem("username")==null){
-        window.location.href="../html/login.html";
+        window.location.href="/api/login";
     }
 }
 
 document.getElementById("crest").addEventListener(("click"),()=>{
-    window.location.href="../html/home.html";
+    window.location.href="/api/home";
 })
 
 document.querySelector(".back").addEventListener(("click"),()=>{
-    window.location.href="../html/profile.html";
+    window.location.href="/api/profile";
 })
 
 document.querySelector(".signup").addEventListener(("click"),()=>{
-    window.location.href="../html/forgot_password.html";
+    window.location.href="/api/forgot/password";
 })
 
 document.getElementById("confirm-button").addEventListener(("click"),()=>{
@@ -85,7 +85,7 @@ document.getElementById("change-password-button").addEventListener(("click"),()=
             document.getElementById("changed1").className = "success";
             setTimeout(function(){
                 document.getElementById("changed1").className = "success1";
-                window.location.href="../html/profile.html";
+                window.location.href="/api/profile";
             },1500)
         }
     })
