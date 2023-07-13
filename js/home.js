@@ -71,6 +71,7 @@ window.onload = function(){
                         if(indexOfPlay!=-1){
                             audioArray[indexOfPlay].pause();
                             audioArray[indexOfPlay].currentTime = 0;
+                            document.getElementById(`play-${indexOfPlay}`).className = "fa-regular fa-circle-play";
                             indexOfPlay = -1;
                         }
                         tabContainer[0].className = "test off";
