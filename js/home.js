@@ -19,6 +19,7 @@ let START = 0;
 
 window.onload = function(){
     if(localStorage.getItem("username") != null){
+        document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
         document.getElementById("myInput").classList.toggle("off");
     document.getElementById("mySelect").classList.toggle("off");
     document.getElementById("filterSelect").classList.toggle("off");
@@ -73,6 +74,7 @@ window.onload = function(){
                             audioArray[indexOfPlay].currentTime = 0;
                             document.getElementById(`play-${indexOfPlay}`).className = "fa-regular fa-circle-play";
                             indexOfPlay = -1;
+                            document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
                         }
                         tabContainer[0].className = "test off";
                         tabContainer[1].className = "playlist_tab";
@@ -195,10 +197,17 @@ window.onload = function(){
                                             audioArray[indexOfPlay].currentTime = 0;
                                         }
                                         indexOfPlay = i;
+                                        audioArray[indexOfPlay].load();
                                         audioArray[indexOfPlay].play();
                                         let f = document.getElementById(`play-${i}`).dataset.file;
                                         let imagePath = "../img/"+f.substring(0,f.length-3)+"jpeg";
                                         document.getElementById('image_for_mp').innerHTML = `<img src=${imagePath} class = "mp_image">`;
+                                        document.getElementById('mp_slider').max = `${audioArray[indexOfPlay].duration}`;
+                                        document.getElementById('mp_slider').oninput = function(){
+                                            audioArray[indexOfPlay].pause();
+                                            audioArray[indexOfPlay].currentTime = Number(this.value);
+                                            audioArray[indexOfPlay].play();
+                                        }
                                     })
                                 }
                             })
