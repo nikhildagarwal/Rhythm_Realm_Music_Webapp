@@ -97,18 +97,24 @@ body{
     margin-right:76.5%;
 }
 
+.mp_image{
+  width:100%;
+  height:160px;
+  margin-top:-150px;
+}
+
   .media_player{
     display: flex;
     flex-direction: column;
     position:absolute;
     border-radius: 15px;
-    justify-content: center;
     align-self: center;
+    justify-content: center;
     background-color: #ff0000cb;
     margin-top: 135px;
     width:12%;
     padding: 10px;
-    height:275px;
+    height:315px;
     margin-left: 76.5%;
   }
 

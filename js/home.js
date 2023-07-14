@@ -129,7 +129,7 @@ window.onload = function(){
                                     <div class ="list_item_artist">
                                         ${artist}
                                     </div>
-                                    <i class="fa-regular fa-circle-play" id="play-${i}"></i>
+                                    <i class="fa-regular fa-circle-play" id="play-${i}" data-file="${filename}"></i>
                                     <i class="fa-regular fa-heart" id="heart-${i}" data-file="${filename}"></i>
                                     <i class="fa-solid fa-trash" id="dots-${i}" data-file="${filename}"></i>
                                 </div>`;
@@ -196,6 +196,9 @@ window.onload = function(){
                                         }
                                         indexOfPlay = i;
                                         audioArray[indexOfPlay].play();
+                                        let f = document.getElementById(`play-${i}`).dataset.file;
+                                        let imagePath = "../img/"+f.substring(0,f.length-3)+"jpeg";
+                                        document.getElementById('image_for_mp').innerHTML = `<img src=${imagePath} class = "mp_image">`;
                                     })
                                 }
                             })
@@ -400,7 +403,7 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                     <div class ="list_item_artist">
                                         ${artist}
                                     </div>
-                                    <i class="fa-regular fa-circle-play" id="play-${numberOfSongs}"></i>
+                                    <i class="fa-regular fa-circle-play" id="play-${numberOfSongs}" data-file="${filename}"></i>
                                     <i class="fa-regular fa-heart" id="heart-${numberOfSongs}" data-file="${filename}"></i>
                                     <i class="fa-solid fa-trash" id="dots-${numberOfSongs}" data-file="${filename}"></i>
                                 </div>`;
@@ -451,6 +454,9 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                         }
                                         indexOfPlay = i;
                                         audioArray[indexOfPlay].play();
+                                        let f = document.getElementById(`play-${i}`).dataset.file;
+                                        let imagePath = "../img/"+f.substring(0,f.length-3)+"jpeg";
+                                        document.getElementById('image_for_mp').innerHTML = `<img src=${imagePath} class = "mp_image">`;
                                     })
                             }
 
