@@ -213,7 +213,7 @@ window.onload = function(){
                                             audioArray[indexOfPlay].currentTime = Number(this.value);
                                             audioArray[indexOfPlay].play();
                                         }
-
+                                        handleEndOfSong();
                                     })
                                 }
                             })
@@ -476,6 +476,7 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                         let f = document.getElementById(`play-${i}`).dataset.file;
                                         let imagePath = "../img/"+f.substring(0,f.length-3)+"jpeg";
                                         document.getElementById('image_for_mp').innerHTML = `<img src=${imagePath} class = "mp_image">`;
+                                        handleEndOfSong();
                                     })
                             }
 
@@ -932,3 +933,18 @@ document.getElementById("mp_stop").addEventListener('click',()=>{
         indexOfPlay = -1;
     }
 });
+
+function handleEndOfSong(){
+    let currAudio = audioArray[indexOfPlay];
+    currAudio.addEventListener("ended", function() {
+        /**
+         * Add repeat functionality
+         */
+        audioArray[indexOfPlay].currentTime = 0;
+        pauseMutex = 0;
+        document.getElementById("mp_pause").className = "fa-solid fa-play";
+        document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
+        document.getElementById(`play-${indexOfPlay}`).className = "fa-regular fa-circle-play";
+        indexOfPlay = -1;
+    });
+}
