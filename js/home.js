@@ -1,3 +1,4 @@
+
 function getSongAndArtist(filename){
     let yo = filename.split("-");
     song = yo[0].replace(/_/g,' ');
@@ -69,13 +70,13 @@ window.onload = function(){
                         tabArray[1].classList.toggle("hit");
                         tabArray[tabIndex].classList.toggle("hit");
                         tabIndex = 1;
-                        if(indexOfPlay!=-1){
+                        /*if(indexOfPlay!=-1){
                             audioArray[indexOfPlay].pause();
                             audioArray[indexOfPlay].currentTime = 0;
                             document.getElementById(`play-${indexOfPlay}`).className = "fa-regular fa-circle-play";
                             indexOfPlay = -1;
                             document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
-                        }
+                        }*/
                         tabContainer[0].className = "test off";
                         tabContainer[1].className = "playlist_tab";
                         tabContainer[2].className = "listen_tab off";
@@ -86,11 +87,11 @@ window.onload = function(){
                         tabArray[2].classList.toggle("hit");
                         tabArray[tabIndex].classList.toggle("hit");
                         tabIndex = 2;
-                        if(indexOfPlay!=-1){
+                        /**if(indexOfPlay!=-1){
                             audioArray[indexOfPlay].pause();
                             audioArray[indexOfPlay].currentTime = 0;
                             indexOfPlay = -1;
-                        }
+                        }**/
                         tabContainer[0].className = "test off";
                         tabContainer[1].className = "playlist_tab off";
                         tabContainer[2].className = "listen_tab";
@@ -190,6 +191,10 @@ window.onload = function(){
                                         }
                                     });
                                     document.getElementById(`play-${i}`).addEventListener('click',()=>{
+                                        if(indexOfPlay == i){
+                                            return;
+                                        }
+                                        document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
                                         if(indexOfPlay!=-1){
                                             document.getElementById(`play-${indexOfPlay}`).classList.toggle("hit");
@@ -208,6 +213,7 @@ window.onload = function(){
                                             audioArray[indexOfPlay].currentTime = Number(this.value);
                                             audioArray[indexOfPlay].play();
                                         }
+
                                     })
                                 }
                             })
@@ -455,6 +461,10 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                     }
                                 });
                                 document.getElementById(`play-${i}`).addEventListener('click',()=>{
+                                        if(indexOfPlay == i){
+                                            return;
+                                        }
+                                        document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
                                         if(indexOfPlay!=-1){
                                             document.getElementById(`play-${indexOfPlay}`).classList.toggle("hit");
@@ -895,3 +905,30 @@ document.getElementById("current_playlist_text").addEventListener('click',()=>{
                                                                     No Songs Yet
                                                                 </div>`;
 })
+
+let pauseMutex = 0;
+document.getElementById("mp_pause").addEventListener('click',()=>{
+    if(indexOfPlay != -1){
+        if(pauseMutex == 0){
+            audioArray[indexOfPlay].pause();
+            pauseMutex = 1;
+            document.getElementById("mp_pause").className = "fa-solid fa-play";
+        }else{
+            audioArray[indexOfPlay].play();
+            pauseMutex = 0;
+            document.getElementById("mp_pause").className = "fa-solid fa-pause";
+        }
+    }
+});
+
+document.getElementById("mp_stop").addEventListener('click',()=>{
+    if(indexOfPlay!=-1){
+        audioArray[indexOfPlay].pause();
+        audioArray[indexOfPlay].currentTime = 0;
+        pauseMutex = 0;
+        document.getElementById("mp_pause").className = "fa-solid fa-play";
+        document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
+        document.getElementById(`play-${indexOfPlay}`).className = "fa-regular fa-circle-play";
+        indexOfPlay = -1;
+    }
+});
