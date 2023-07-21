@@ -931,20 +931,37 @@ document.getElementById("mp_stop").addEventListener('click',()=>{
         document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
         document.getElementById(`play-${indexOfPlay}`).className = "fa-regular fa-circle-play";
         indexOfPlay = -1;
+        document.getElementById("mp_repeat").style.color = "#e4e4e4";
+        repeatMutex = 0;
     }
 });
 
 function handleEndOfSong(){
     let currAudio = audioArray[indexOfPlay];
     currAudio.addEventListener("ended", function() {
-        /**
-         * Add repeat functionality
-         */
-        audioArray[indexOfPlay].currentTime = 0;
-        pauseMutex = 0;
-        document.getElementById("mp_pause").className = "fa-solid fa-play";
+        if(document.getElementById("mp_repeat").style.color == "rgba(8, 243, 114, 0.933)"){
+            currAudio.currentTime = 0;
+            currAudio.play();
+            handleEndOfSong();
+        }else{
+            audioArray[indexOfPlay].currentTime = 0;
+            pauseMutex = 0;
+            document.getElementById("mp_pause").className = "fa-solid fa-play";
         document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
         document.getElementById(`play-${indexOfPlay}`).className = "fa-regular fa-circle-play";
         indexOfPlay = -1;
+        }
     });
 }
+
+var repeatMutex = 0;
+document.getElementById("mp_repeat").addEventListener('click',()=>{
+    if(repeatMutex == 0){
+        document.getElementById("mp_repeat").style.color = "#08f372ee";
+        repeatMutex = 1;
+    }else{
+        document.getElementById("mp_repeat").style.color = "#e4e4e4";
+        repeatMutex = 0;
+    }
+    console.log(document.getElementById("mp_repeat").style.color);
+})

@@ -30,6 +30,11 @@ body{
     transition: 0.2s ease-in-out;
   }
 
+  #mp_repeat_on{
+    color: #18d496;
+    transition:0.2s ease-in-out;
+  }
+
   .add-btn.off{
     display: none;
   }
