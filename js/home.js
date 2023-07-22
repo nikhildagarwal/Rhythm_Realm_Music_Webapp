@@ -971,7 +971,6 @@ document.getElementById("mp_repeat").addEventListener('click',()=>{
         document.getElementById("mp_repeat").style.color = "#e4e4e4";
         repeatMutex = 0;
     }
-    console.log(document.getElementById("mp_repeat").style.color);
 })
 
 function loadListenNow(){

@@ -328,7 +328,6 @@ async function getForListenNow(username){
             let currpl = [];
             let currName = names[i];
             let currContents = Object.values(contentsOfName[i]);
-            console.log(currContents);
             for(let j = 0;j<currContents.length;j++){
                 let file = currContents[j].filename;
                 currpl.push(file);
