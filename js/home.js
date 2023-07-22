@@ -956,6 +956,9 @@ function handleEndOfSong(){
 
 var repeatMutex = 0;
 document.getElementById("mp_repeat").addEventListener('click',()=>{
+    if(indexOfPlay == -1){
+        return;
+    }
     if(repeatMutex == 0){
         document.getElementById("mp_repeat").style.color = "#08f372ee";
         repeatMutex = 1;
