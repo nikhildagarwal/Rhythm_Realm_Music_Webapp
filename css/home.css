@@ -392,6 +392,10 @@ body{
   margin-bottom:2%;
 }
 
+.icon-holder-off{
+  display:none;
+}
+
 .song_container{
   background-color: #423f3fcb;
   margin-top:4%;
@@ -421,6 +425,7 @@ body{
   margin-left: 5px;
   width: 50px;
   height: 50px;
+  border-radius: 10px;
 }
 
 .list_item_title{
@@ -757,6 +762,21 @@ body{
   color:#e4e4e4;
   transition:0.2s ease-in-out;
   cursor: pointer;
+}
+
+.listen_now_text{
+  font-family: monospace;
+  font-weight: bolder;
+  font-size: 24px;
+  padding:5px;
+  border-radius: 15px;
+  background-color:#242424;
+  color:#e4e4e4;
+  transition:0.2s ease-in-out;
+}
+
+.listen_now_text.off{
+  display: none;
 }
 
 .playlist_text:hover{

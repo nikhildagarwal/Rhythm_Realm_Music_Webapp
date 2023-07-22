@@ -95,6 +95,7 @@ window.onload = function(){
                         tabContainer[0].className = "test off";
                         tabContainer[1].className = "playlist_tab off";
                         tabContainer[2].className = "listen_tab";
+                        loadListenNow();
                     }
                 })
                     document.querySelector(".container").innerHTML += `<div class = "logItem1" id="profile" title="View Profile">
@@ -194,6 +195,7 @@ window.onload = function(){
                                         if(indexOfPlay == i){
                                             return;
                                         }
+                                        document.getElementById("icon_holder").className = "icon-holder";
                                         document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
                                         if(indexOfPlay!=-1){
@@ -464,6 +466,7 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                         if(indexOfPlay == i){
                                             return;
                                         }
+                                        document.getElementById("icon_holder").className = "icon-holder";
                                         document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
                                         if(indexOfPlay!=-1){
@@ -924,6 +927,7 @@ document.getElementById("mp_pause").addEventListener('click',()=>{
 
 document.getElementById("mp_stop").addEventListener('click',()=>{
     if(indexOfPlay!=-1){
+        document.getElementById("icon_holder").className = "icon-holder-off";
         audioArray[indexOfPlay].pause();
         audioArray[indexOfPlay].currentTime = 0;
         pauseMutex = 0;
@@ -944,6 +948,7 @@ function handleEndOfSong(){
             currAudio.play();
             handleEndOfSong();
         }else{
+            document.getElementById("icon_holder").className = "icon-holder-off";
             audioArray[indexOfPlay].currentTime = 0;
             pauseMutex = 0;
             document.getElementById("mp_pause").className = "fa-solid fa-play";
@@ -968,3 +973,14 @@ document.getElementById("mp_repeat").addEventListener('click',()=>{
     }
     console.log(document.getElementById("mp_repeat").style.color);
 })
+
+function loadListenNow(){
+    fetch(`/api/get_for_listen_now/${localStorage.getItem("username")}`,{
+        method:"GET",
+        cache:"no-cache"
+    }).then((response)=>{
+        response.json().then((array)=>{
+            console.log(array);
+        })
+    })
+}

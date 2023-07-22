@@ -91,6 +91,9 @@ const server = http.createServer((req,res) => {
                 case "checkEmailMatchFound":
                     handleCheckEmailMatchFound(req,res,splited[2]);
                     break;
+                case "get_for_listen_now":
+                    handleGetForListenNow(req,res,splited[2]);
+                    break;
                 case "checkLogIn":
                     handleCheckLogIn(req,res,splited[2],splited[3]);
                     break;
@@ -281,6 +284,59 @@ async function resetPasswordsFromRecovery(checkuserid,newPassword){
             return info[i].email;
         }
     }
+}
+
+async function handleGetForListenNow(req,res,username){
+    try{
+        let array = await getForListenNow(username);
+        res.writeHead(200,{'Content-type':'application/json'});
+        res.end(JSON.stringify(array));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getForListenNow(username){
+    let path = db.ref(`/users/${username}/`);
+    let promise = await new Promise((resolve,reject)=>{
+        path.get().then((snapshot)=>{
+            resolve(snapshot.val());
+        })
+    })
+    let arrayToReturn = [];
+    let songs = [];
+    let liked = [];
+    let songObjects = promise.songs;
+    if(songObjects != undefined){
+        let a = Object.values(songObjects);
+        a.forEach((object)=>{
+            songs.push(object.filename);
+            if(object.liked == 'true'){
+                liked.push(object.filename);
+            }
+        })
+        arrayToReturn.push(['My Songs',songs]);
+        if(liked.length != 0){
+            arrayToReturn.push(['Liked Songs',liked]);
+        }
+    }
+    let playlistObjects = promise.playlists;
+    if(playlistObjects != undefined){
+        let names = Object.keys(playlistObjects);
+        let contentsOfName = Object.values(playlistObjects);
+        for(let i = 0;i<names.length;i++){
+            let currpl = [];
+            let currName = names[i];
+            let currContents = Object.values(contentsOfName[i]);
+            console.log(currContents);
+            for(let j = 0;j<currContents.length;j++){
+                let file = currContents[j].filename;
+                currpl.push(file);
+            }
+            arrayToReturn.push([currName,currpl]);
+        }
+    }
+    return arrayToReturn;
 }
 
 async function handleTest(req,res){

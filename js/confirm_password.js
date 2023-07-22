@@ -81,7 +81,6 @@ document.getElementById("change-password-button").addEventListener(("click"),()=
     }).then((response)=>{
         if(response.status==200){
             localStorage.setItem("password_length",password1.length.toString());
-            console.log(localStorage);
             document.getElementById("changed1").className = "success";
             setTimeout(function(){
                 document.getElementById("changed1").className = "success1";
