@@ -11,7 +11,7 @@ const server = http.createServer((req,res) => {
     if(path==""){
         path = "html/index.html";
     }
-    console.log(`Requested path ${path} `);
+    //console.log(`Requested path ${path} `);
     let splited = path.split("/");
     if(splited[0] == "api"){
         if(splited[1]=="html"){
@@ -197,11 +197,11 @@ const server = http.createServer((req,res) => {
     let file =  __dirname +"/"+path;
     fs.readFile(file,function(err,content){
         if(err){
-            console.log(`file not found  ${file}`);
+            //console.log(`file not found  ${file}`);
             res.writeHead(404);
             res.end();
         }else{
-            console.log(`Returning ${path}`);
+            //console.log(`Returning ${path}`);
             res.setHeader("X-Content-Type-Options","nosniff"); //tells the browser to strictly honor the given content-type (security concerns);
             const array = path.split("/");
             switch(array[0]){

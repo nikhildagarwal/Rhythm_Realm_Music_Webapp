@@ -1005,7 +1005,7 @@ function loadListenNow(){
 
 document.getElementById("listen-now-back").addEventListener('click',()=>{
     document.getElementById("listen-now-back").className = "fa-solid fa-circle-chevron-left off";
-    document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;Main Menu&nbsp;`;
+    document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;Listen Now&nbsp;`;
     loadListenNow();
 })
 
@@ -1015,11 +1015,20 @@ function switchToDisplay(maintitle,index,array){
     let filenames = data.split(",");
     let containerRef = document.getElementById("listen-now-container");
     document.getElementById("listen-now-back").className = "fa-solid fa-circle-chevron-left";
-    containerRef.innerHTML = filenames;
+    containerRef.innerHTML = "";
+    for(let i = 0;i<filenames.length;i++){
+        let image = "../img/"+filenames[i].substring(0,filenames[i].length-3)+"jpeg";
+        containerRef.innerHTML += `<div class = "item_in_list" id="${maintitle}-${i}" data-file="${subArray[1]}">
+        <img src=${image} class = "list_item_img">
+        <div class="list_item_title">
+            ${subArray[0]}
+        </div>
+    </div>`;
+    }
     document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;${maintitle}&nbsp;`;
 }
 
 function getRandomIndex(array) {
     const randomIndex = Math.floor(Math.random() * array.length);
     return randomIndex;
-  }
+}
