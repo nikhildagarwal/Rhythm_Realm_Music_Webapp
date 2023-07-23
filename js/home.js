@@ -35,6 +35,7 @@ window.onload = function(){
                 tabArray[0].classList.toggle("hit");
                 tabContainer[0].className = "test";
                 tabArray[0].addEventListener('click',()=>{
+                    document.getElementById("listen-now-container").innerHTML = "";
                     if(tabIndex != 0){
                         tabArray[0].classList.toggle("hit");
                         tabArray[tabIndex].classList.toggle("hit");
@@ -65,6 +66,7 @@ window.onload = function(){
                                                                                 </div>`;
                 })
                 tabArray[1].addEventListener('click',()=>{
+                    document.getElementById("listen-now-container").innerHTML = "";
                     populatePlayListSelect();
                     if(tabIndex != 1){
                         tabArray[1].classList.toggle("hit");
@@ -979,7 +981,22 @@ function loadListenNow(){
         cache:"no-cache"
     }).then((response)=>{
         response.json().then((array)=>{
-            console.log(array);
+            for(let i = 0;i<array.length;i++){
+                let subArray = array[i];
+                let image = '../img/test_banner.jpeg';
+                document.getElementById("listen-now-container").innerHTML += `<div class = "item_in_list" id="listen-now-${i}" data-file="${JSON.stringify(subArray[1])}">
+                                        <img src=${image} class = "list_item_img">
+                                        <div class="list_item_title">
+                                            ${subArray[0]}
+                                        </div>
+                                    </div>`;
+            }
+            for(let i = 0;i<array.length;i++){
+                document.getElementById(`listen-now-${i}`).style.cursor = "pointer";
+                document.getElementById(`listen-now-${i}`).addEventListener('click',()=>{
+                    console.log(i);
+                })
+            }
         })
     })
 }

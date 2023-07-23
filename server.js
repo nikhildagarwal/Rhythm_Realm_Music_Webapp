@@ -317,7 +317,7 @@ async function getForListenNow(username){
         })
         arrayToReturn.push(['My Songs',songs]);
         if(liked.length != 0){
-            arrayToReturn.push(['Liked Songs',liked]);
+            arrayToReturn.push(['Liked',liked]);
         }
     }
     let playlistObjects = promise.playlists;
