@@ -201,7 +201,7 @@ body{
     border-radius: 15px;
     justify-content: center;
     align-self: center;
-    background-color: #0cd81dcb;
+    background-color: #423f3fcb;
     margin-top: 135px;
     width:50%;
     padding: 10px;
@@ -380,6 +380,22 @@ body{
   background-color: #e4e4e4;
 }
 
+.fa-solid.fa-circle-chevron-left{
+  margin-right:10px;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.fa-solid.fa-circle-chevron-left.off{
+  display: none;
+}
+
+.fa-solid.fa-solid.fa-circle-chevron-left:hover{
+  transition: 0.2s ease-in-out;
+  color:#b114e0c9;
+}
+
+
 .user_add_song.off{
   background-color: #5c5b5b;
 }
@@ -415,6 +431,12 @@ body{
   border-radius: 15px;
   padding: 10px;
   width: 90%;
+  transition: 0.2s ease-in-out;
+}
+
+.item_in_list:hover{
+  transition: 0.2s ease-in-out;
+  background-color: #838181af;
 }
 
 .item_in_list.off{

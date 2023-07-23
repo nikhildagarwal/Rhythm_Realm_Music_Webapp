@@ -981,9 +981,11 @@ function loadListenNow(){
         cache:"no-cache"
     }).then((response)=>{
         response.json().then((array)=>{
+            document.getElementById("listen-now-container").innerHTML = "";
             for(let i = 0;i<array.length;i++){
                 let subArray = array[i];
-                let image = '../img/test_banner.jpeg';
+                let f = subArray[1][getRandomIndex(subArray[1])];
+                let image = '../img/'+f.substring(0,f.length-3)+'jpeg';
                 document.getElementById("listen-now-container").innerHTML += `<div class = "item_in_list" id="listen-now-${i}" data-file="${subArray[1]}">
                                         <img src=${image} class = "list_item_img">
                                         <div class="list_item_title">
@@ -1001,11 +1003,23 @@ function loadListenNow(){
     })
 }
 
+document.getElementById("listen-now-back").addEventListener('click',()=>{
+    document.getElementById("listen-now-back").className = "fa-solid fa-circle-chevron-left off";
+    document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;Main Menu&nbsp;`;
+    loadListenNow();
+})
+
 function switchToDisplay(maintitle,index,array){
     let playlistRef = document.getElementById(`listen-now-${index}`);
     let data = playlistRef.dataset.file;
     let filenames = data.split(",");
     let containerRef = document.getElementById("listen-now-container");
+    document.getElementById("listen-now-back").className = "fa-solid fa-circle-chevron-left";
     containerRef.innerHTML = filenames;
     document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;${maintitle}&nbsp;`;
 }
+
+function getRandomIndex(array) {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return randomIndex;
+  }
