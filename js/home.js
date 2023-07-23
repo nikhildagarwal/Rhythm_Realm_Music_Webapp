@@ -984,7 +984,7 @@ function loadListenNow(){
             for(let i = 0;i<array.length;i++){
                 let subArray = array[i];
                 let image = '../img/test_banner.jpeg';
-                document.getElementById("listen-now-container").innerHTML += `<div class = "item_in_list" id="listen-now-${i}" data-file="${JSON.stringify(subArray[1])}">
+                document.getElementById("listen-now-container").innerHTML += `<div class = "item_in_list" id="listen-now-${i}" data-file="${subArray[1]}">
                                         <img src=${image} class = "list_item_img">
                                         <div class="list_item_title">
                                             ${subArray[0]}
@@ -994,9 +994,18 @@ function loadListenNow(){
             for(let i = 0;i<array.length;i++){
                 document.getElementById(`listen-now-${i}`).style.cursor = "pointer";
                 document.getElementById(`listen-now-${i}`).addEventListener('click',()=>{
-                    console.log(i);
+                    switchToDisplay(array[i][0],i,array);
                 })
             }
         })
     })
+}
+
+function switchToDisplay(maintitle,index,array){
+    let playlistRef = document.getElementById(`listen-now-${index}`);
+    let data = playlistRef.dataset.file;
+    let filenames = data.split(",");
+    let containerRef = document.getElementById("listen-now-container");
+    containerRef.innerHTML = filenames;
+    document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;${maintitle}&nbsp;`;
 }
