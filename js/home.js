@@ -1017,11 +1017,18 @@ function switchToDisplay(maintitle,index,array){
     document.getElementById("listen-now-back").className = "fa-solid fa-circle-chevron-left";
     containerRef.innerHTML = "";
     for(let i = 0;i<filenames.length;i++){
+        let filename = filenames[i];
         let image = "../img/"+filenames[i].substring(0,filenames[i].length-3)+"jpeg";
-        containerRef.innerHTML += `<div class = "item_in_list" id="${maintitle}-${i}" data-file="${subArray[1]}">
+        let yo = filename.split("-");
+        song = yo[0].replace(/_/g,' ');
+        artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
+        containerRef.innerHTML += `<div class = "item_in_list" id="${maintitle}-${i}" data-file="${filenames[i]}">
         <img src=${image} class = "list_item_img">
         <div class="list_item_title">
-            ${subArray[0]}
+            ${song}
+        </div>
+        <div class ="list_item_artist">
+            ${artist}
         </div>
     </div>`;
     }
