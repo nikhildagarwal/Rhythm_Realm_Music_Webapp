@@ -32,6 +32,7 @@ let START = 0;
 
 window.onload = function(){
     if(localStorage.getItem("username") != null){
+        
         document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
         document.getElementById("myInput").classList.toggle("off");
     document.getElementById("mySelect").classList.toggle("off");
