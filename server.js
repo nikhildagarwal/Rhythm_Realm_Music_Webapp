@@ -8,7 +8,7 @@ const db = admin.database();
 const server = http.createServer((req,res) => {
     let parsedURL = url.parse(req.url,true);
     let path = parsedURL.path.replace(/^\/+|\/+$/g,"");
-    if(path=="spontaneous-meerkat-5a9c07.netlify.app" || path==""){
+    if(path==""){
         path = "html/index.html";
     }
     console.log(`Requested path ${path} `);
