@@ -147,6 +147,20 @@ body{
   color: #fd0d0dee;
 }
 
+#node_stop{
+  color: #e4e4e4;
+  margin-left: 7%;
+  margin-right: 7%;
+  font-size: 22px;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#node_stop:hover{
+  transition: 0.2s ease-in-out;
+  color: #fd0d0dee;
+}
+
 #node_backward{
   color: #e4e4e4;
   margin-left: 7%;
@@ -171,6 +185,20 @@ body{
 }
 
 #mp_repeat:hover{
+  transition: 0.2s ease-in-out;
+  color: #08f372ee;
+}
+
+#node_repeat{
+  color: #e4e4e4;
+  margin-left: 7%;
+  margin-right: 7%;
+  font-size: 22px;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#node_repeat:hover{
   transition: 0.2s ease-in-out;
   color: #08f372ee;
 }
@@ -413,9 +441,11 @@ body{
 }
 
 .fa-solid.fa-circle-chevron-left{
-  margin-right:10px;
+  margin-right:20px;
   transition: 0.2s ease-in-out;
   cursor: pointer;
+  font-size: 20px;
+  align-self: center;
 }
 
 .fa-solid.fa-circle-chevron-left.off{

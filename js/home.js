@@ -217,6 +217,7 @@ window.onload = function(){
                                             }
                                         }
                                         document.getElementById("icon_holder_node").className = "icon-holder-off";
+                                        document.getElementById("icon_holder_node2").className = "icon-holder-off";
                                         document.getElementById("icon_holder").className = "icon-holder";
                                         document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
@@ -501,6 +502,7 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                             }
                                         }
                                         document.getElementById("icon_holder_node").className = "icon-holder-off";
+                                        document.getElementById("icon_holder_node2").className = "icon-holder-off";
                                         document.getElementById("icon_holder").className = "icon-holder";
                                         document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
@@ -1094,6 +1096,7 @@ function switchToDisplay(maintitle,index,array){
     }
     document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;${maintitle}&nbsp;`;
     document.getElementById("icon_holder_node").className = "icon-holder";
+    document.getElementById("icon_holder_node2").className = "icon-holder";
     let start = head;
     playFromNode(start);
 }
@@ -1123,7 +1126,6 @@ function playFromNode(start){
         }
     });
 }
-
 
 document.getElementById("node_pause").addEventListener('click',()=>{
     if(m == 0){
