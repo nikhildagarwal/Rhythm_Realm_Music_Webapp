@@ -439,7 +439,6 @@ async function handleProfile(req,res){
 
 async function handleLogout(req,res){
     let file = __dirname +"/html/logout.html";
-    console.log("hi");
     fs.readFile(file,function(err,content){
         if(err){
             console.log(err);

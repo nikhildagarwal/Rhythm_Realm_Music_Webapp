@@ -217,7 +217,6 @@ window.onload = function(){
                                             }
                                         }
                                         document.getElementById("icon_holder_node").className = "icon-holder-off";
-                                        document.getElementById("icon_holder_node2").className = "icon-holder-off";
                                         document.getElementById("icon_holder").className = "icon-holder";
                                         document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
@@ -502,7 +501,6 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                             }
                                         }
                                         document.getElementById("icon_holder_node").className = "icon-holder-off";
-                                        document.getElementById("icon_holder_node2").className = "icon-holder-off";
                                         document.getElementById("icon_holder").className = "icon-holder";
                                         document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
@@ -1096,7 +1094,6 @@ function switchToDisplay(maintitle,index,array){
     }
     document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;${maintitle}&nbsp;`;
     document.getElementById("icon_holder_node").className = "icon-holder";
-    document.getElementById("icon_holder_node2").className = "icon-holder";
     let start = head;
     playFromNode(start);
 }
@@ -1136,5 +1133,29 @@ document.getElementById("node_pause").addEventListener('click',()=>{
         document.getElementById("node_pause").className = "fa-solid fa-pause";
         currNode.audio.play();
         m = 0;
+    }
+})
+
+document.getElementById("node_forward").addEventListener('click',()=>{
+    currNode.audio.pause();
+    currNode.audio.currentTime = 0;
+    currNode = currNode.next;
+    if(currNode == null){
+        currNode = head;
+        playFromNode(currNode);
+    }else{
+        playFromNode(currNode);
+    }
+})
+
+document.getElementById("node_backward").addEventListener('click',()=>{
+    currNode.audio.pause();
+    currNode.audio.currentTime = 0;
+    currNode = currNode.prev;
+    if(currNode == null){
+        currNode = end;
+        playFromNode(currNode);
+    }else{
+        playFromNode(currNode);
     }
 })
