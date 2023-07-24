@@ -124,9 +124,13 @@ body{
   cursor: pointer;
 }
 
-#mp_pause:hover{
+#node_pause{
+  color: #e4e4e4;
+  margin-left: 7%;
+  margin-right: 7%;
+  font-size: 38px;
   transition: 0.2s ease-in-out;
-  color: #ff6803ee;
+  cursor: pointer;
 }
 
 #mp_stop{
@@ -143,6 +147,20 @@ body{
   color: #fd0d0dee;
 }
 
+#node_backward{
+  color: #e4e4e4;
+  margin-left: 7%;
+  margin-right: 7%;
+  font-size: 22px;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#node_backward:hover{
+  transition: 0.2s ease-in-out;
+  color: #fd0d0dee;
+}
+
 #mp_repeat{
   color: #e4e4e4;
   margin-left: 7%;
@@ -153,6 +171,20 @@ body{
 }
 
 #mp_repeat:hover{
+  transition: 0.2s ease-in-out;
+  color: #08f372ee;
+}
+
+#node_forward{
+  color: #e4e4e4;
+  margin-left: 7%;
+  margin-right: 7%;
+  font-size: 22px;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#node_forward:hover{
   transition: 0.2s ease-in-out;
   color: #08f372ee;
 }
@@ -772,6 +804,21 @@ body{
 
 .filter_bar.hid{
   display:none;
+}
+
+.fa-solid.fa-circle-play.off{
+  display: none;
+}
+
+.fa-solid.fa-circle-play{
+  margin-left:30px;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.fa-solid.fa-circle-play:hover{
+  transition: 0.2s ease-in-out;
+  color:#18d496;
 }
 
 .playlist_text{

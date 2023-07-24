@@ -1,4 +1,16 @@
 
+
+class Node{
+
+    constructor(audio,image,filename){
+        this.audio = audio;
+        this.image = image;
+        this.filename = filename;
+        this.next = null;
+        this.prev = null;
+    }
+
+}
 function getSongAndArtist(filename){
     let yo = filename.split("-");
     song = yo[0].replace(/_/g,' ');
@@ -197,6 +209,14 @@ window.onload = function(){
                                         if(indexOfPlay == i){
                                             return;
                                         }
+                                        if(head!=null){
+                                            while(head!=null){
+                                                head.audio.pause();
+                                                head.currentTime = 0;
+                                                head = head.next;
+                                            }
+                                        }
+                                        document.getElementById("icon_holder_node").className = "icon-holder-off";
                                         document.getElementById("icon_holder").className = "icon-holder";
                                         document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
@@ -348,6 +368,11 @@ function filterOptions() {
     }
   }
 
+  function getRandomIndex(array) {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return randomIndex;
+}
+
   function filterOptions2() {
     const input = document.getElementById('my_songs_search').value.toLowerCase();
     const select = document.getElementById('my_songs_select');
@@ -468,6 +493,14 @@ document.getElementById("in_songs").addEventListener(("click"),()=>{
                                         if(indexOfPlay == i){
                                             return;
                                         }
+                                        if(head!=null){
+                                            while(head!=null){
+                                                head.audio.pause();
+                                                head.currentTime = 0;
+                                                head = head.next;
+                                            }
+                                        }
+                                        document.getElementById("icon_holder_node").className = "icon-holder-off";
                                         document.getElementById("icon_holder").className = "icon-holder";
                                         document.getElementById("mp_pause").className = "fa-solid fa-pause";
                                         document.getElementById(`play-${i}`).classList.toggle("hit");
@@ -1009,13 +1042,30 @@ document.getElementById("listen-now-back").addEventListener('click',()=>{
     loadListenNow();
 })
 
+var head = null;
+var currNode = null;
+var end = null;
+let m = 0;
+var pauseVar = "fa-solid fa-pause";
+
 function switchToDisplay(maintitle,index,array){
+    if(head!=null){
+        while(head!=null){
+            head.audio.pause();
+            head.currentTime = 0;
+            head = head.next;
+        }
+    }
+    head = null;
+    currNode = null;
+    end = null;
     let playlistRef = document.getElementById(`listen-now-${index}`);
     let data = playlistRef.dataset.file;
     let filenames = data.split(",");
     let containerRef = document.getElementById("listen-now-container");
     document.getElementById("listen-now-back").className = "fa-solid fa-circle-chevron-left";
     containerRef.innerHTML = "";
+    let prev = null;
     for(let i = 0;i<filenames.length;i++){
         let filename = filenames[i];
         let image = "../img/"+filenames[i].substring(0,filenames[i].length-3)+"jpeg";
@@ -1023,19 +1073,66 @@ function switchToDisplay(maintitle,index,array){
         song = yo[0].replace(/_/g,' ');
         artist = yo[1].substring(0,yo[1].length-4).replace(/_/g,' ');
         containerRef.innerHTML += `<div class = "item_in_list" id="${maintitle}-${i}" data-file="${filenames[i]}">
-        <img src=${image} class = "list_item_img">
-        <div class="list_item_title">
-            ${song}
-        </div>
-        <div class ="list_item_artist">
-            ${artist}
-        </div>
-    </div>`;
+                                        <img src=${image} class = "list_item_img">
+                                        <div class="list_item_title">
+                                            ${song}
+                                        </div>
+                                        <div class ="list_item_artist">
+                                            ${artist}
+                                        </div>
+                                    </div>`;
+        let newNode = new Node(new Audio("../audio/"+filename),image,filename);
+        if(i==0){
+            head = newNode;
+        }
+        if(prev != null){
+            prev.next = newNode;
+            newNode.prev = prev;
+        }
+        prev = newNode;
+        end = prev;
     }
     document.getElementById("listen_now_main_menu_title").innerHTML = `&nbsp;${maintitle}&nbsp;`;
+    document.getElementById("icon_holder_node").className = "icon-holder";
+    let start = head;
+    playFromNode(start);
 }
 
-function getRandomIndex(array) {
-    const randomIndex = Math.floor(Math.random() * array.length);
-    return randomIndex;
+function playFromNode(start){
+    currNode = start;
+    if(indexOfPlay != -1){
+        document.getElementById("icon_holder").className = "icon-holder-off";
+        audioArray[indexOfPlay].pause();
+        audioArray[indexOfPlay].currentTime = 0;
+        document.getElementById(`play-${indexOfPlay}`).className = "fa-regular fa-circle-play";
+        indexOfPlay = -1;
+    }
+    start.audio.play();
+    document.getElementById('image_for_mp').innerHTML = `<img src=${start.image} class = "mp_image">`;
+    m = 0;
+    document.getElementById("node_pause").className = "fa-solid fa-pause";
+    
+    start.audio.addEventListener('ended',()=>{
+        start.audio.currentTime = 0;
+        start = start.next;
+        if(start == null){
+            start = head;
+            playFromNode(start);
+        }else{
+            playFromNode(start);
+        }
+    });
 }
+
+
+document.getElementById("node_pause").addEventListener('click',()=>{
+    if(m == 0){
+        document.getElementById("node_pause").className = "fa-solid fa-play";
+        currNode.audio.pause();
+        m = 1;
+    }else{
+        document.getElementById("node_pause").className = "fa-solid fa-pause";
+        currNode.audio.play();
+        m = 0;
+    }
+})
