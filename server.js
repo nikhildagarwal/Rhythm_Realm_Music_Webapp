@@ -8,7 +8,7 @@ const db = admin.database();
 const server = http.createServer((req,res) => {
     let parsedURL = url.parse(req.url,true);
     let path = parsedURL.path.replace(/^\/+|\/+$/g,"");
-    if(path=="" || path =="helpful-crisp-b0e81c.netlify.app"){
+    if(path=="" || path =="main--enchanting-lamington-ab10bd.netlify.app"){
         path = "html/index.html";
     }
     //console.log(`Requested path ${path} `);
