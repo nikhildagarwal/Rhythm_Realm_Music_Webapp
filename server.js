@@ -8,10 +8,10 @@ const db = admin.database();
 const server = http.createServer((req,res) => {
     let parsedURL = url.parse(req.url,true);
     let path = parsedURL.path.replace(/^\/+|\/+$/g,"");
-    if(path=="" || path =="enchanting-lamington-ab10bd.netlify.app"){
+    if(path==""){
         path = "html/index.html";
     }
-    //console.log(`Requested path ${path} `);
+    console.log(`Requested path ${path} `);
     let splited = path.split("/");
     if(splited[0] == "api"){
         if(splited[1]=="html"){
