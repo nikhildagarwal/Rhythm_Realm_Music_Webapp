@@ -245,6 +245,7 @@ window.onload = function(){
                         })
                     })
                 })
+        document.querySelector(".media_player").style.backgroundColor = "#423f3fcb";
     }else{
         let tabArray = [document.getElementById("songs"),document.getElementById("playlists"),document.getElementById("listen")];
         tabArray[0].addEventListener('click',()=>{
