@@ -234,7 +234,7 @@ const server = http.createServer((req,res) => {
     });
 });
 
-server.listen(3000, "iridescent-boba-b8f58c", () => {
+server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
 
