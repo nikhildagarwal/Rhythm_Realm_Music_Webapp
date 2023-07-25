@@ -1,5 +1,6 @@
 window.onload = function(){
-    
+    console.log("hi");
+    document.getElementById("loading-display").className = "loading_display off";
 }
 
 document.querySelector(".signup").addEventListener(("click"),()=>{
@@ -34,10 +35,12 @@ document.querySelector(".button").addEventListener(("click"),()=>{
     if(errOcc){
         return;
     }
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/checkLogIn/${username}/${password}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         switch(response.status){
             case 400:
                 document.getElementById("username-error").className = "error";

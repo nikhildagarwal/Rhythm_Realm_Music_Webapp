@@ -1001,10 +1001,39 @@ async function changeUsername(newUsername,oldUsername){
     })
     let pathToSet = db.ref(`/users/${newUsername}/`);
     pathToRemove.remove();
-    pathToSet.set({
-        email:userinfo.email,
-        password:userinfo.password
-    })
+    if(userinfo.songs == undefined && userinfo.playlists == undefined){
+
+        pathToSet.set({
+            email:userinfo.email,
+            password:userinfo.password,
+            userid:userinfo.userid
+        })
+    }else if(userinfo.songs == undefined){
+
+        pathToSet.set({
+            email:userinfo.email,
+            password:userinfo.password,
+            playlists:userinfo.playlists,
+            userid:userinfo.userid
+        })
+    }else if(userinfo.playlists == undefined){
+        pathToSet.set({
+            email:userinfo.email,
+            password:userinfo.password,
+            songs:userinfo.songs,
+            userid:userinfo.userid
+        })
+
+    }else{
+        pathToSet.set({
+            email:userinfo.email,
+            password:userinfo.password,
+            songs:userinfo.songs,
+            playlists:userinfo.playlists,
+            userid:userinfo.userid
+        })
+    }
+    
     return "done";
 }
 

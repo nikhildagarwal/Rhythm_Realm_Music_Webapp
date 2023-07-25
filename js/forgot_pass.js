@@ -1,3 +1,7 @@
+window.onload=function(){
+    document.getElementById("loading-display").className = "loading_display off";
+}
+
 document.querySelector(".back").addEventListener(("click"),()=>{
     if(localStorage.getItem("username") == null){
         window.location.href = "/api/login";
@@ -24,16 +28,20 @@ document.querySelector(".button").addEventListener('click',()=>{
         document.getElementById("email-error-invalid").className = "error";
         return;
     }
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/check_valid_email/${email}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         if(response.status == 200){
             response.json().then((username)=>{
+                document.getElementById("loading-display").className = "loading_display";
                 fetch(`/api/send_forgot_password_email/${username[1]}/${email}`,{
                     method:"POST",
                     cache:"no-cache"
                 }).then((sent)=>{
+                    document.getElementById("loading-display").className = "loading_display off";
                     if(sent.status==200){
                         window.location.href="/api/email/sent";
                     }

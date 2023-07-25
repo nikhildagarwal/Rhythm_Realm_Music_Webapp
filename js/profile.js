@@ -1,5 +1,6 @@
 
 window.onload = function(){
+    document.getElementById("loading-display").className = "loading_display";
     if(localStorage.getItem("username")==null){
         window.location.href="/api/login";
     }
@@ -11,6 +12,7 @@ window.onload = function(){
         ans+="* ";
     }
     document.getElementById("password1").value = ans;
+    document.getElementById("loading-display").className = "loading_display off";
 }
 
 document.getElementById("crest").addEventListener(("click"),()=>{
@@ -47,15 +49,19 @@ document.getElementById("new-email-button").addEventListener(("click"),()=>{
         document.getElementById("email-invalid").className = "error";
         return;
     }
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/checkEmailMatchFound/${email}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         if(response.status==200){
+            document.getElementById("loading-display").className = "loading_display";
             fetch(`/api/changeEmail/${email}/${localStorage.getItem("username")}/`,{
                 method:"POST",
                 cache:"no-cache"
             }).then((response)=>{
+                document.getElementById("loading-display").className = "loading_display off";
                 if(response.status==200){
                     localStorage.setItem("email",email);
                     resetEmailErrors();
@@ -83,15 +89,19 @@ document.getElementById("new-username-button").addEventListener(("click"),()=>{
         document.getElementById("username-empty").className = "error";
         return;
     }
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/checkUsernameMatchFound/${username}`,{
         method:"GET",
         chache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         if(response.status == 200){
+            document.getElementById("loading-display").className = "loading_display";
             fetch(`/api/changeUsername/${username}/${localStorage.getItem("username")}`,{
                 method:"POST",
                 cache:"no-cache"
             }).then((response)=>{
+                document.getElementById("loading-display").className = "loading_display off";
                 if(response.status==200){
                     localStorage.setItem("username",username);
                     resetNewUsername();

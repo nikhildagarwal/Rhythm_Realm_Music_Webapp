@@ -1,9 +1,11 @@
 let userid = "";
 
 window.onload=function(){
+    document.getElementById("loading-display").className = "loading_display";
     let url = window.location.href;
     let array = url.split("/");
     userid = array[array.length-1];
+    document.getElementById("loading-display").className = "loading_display off";
 }
 
 document.getElementById("crest").addEventListener(("click"),()=>{
@@ -36,15 +38,20 @@ document.getElementById("change-password-button").addEventListener(("click"),()=
         document.getElementById("mismatch1").className = "error";
         return;
     }
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/reset_passwords_from_recovery/${userid}/${password1}`,{
         method:"POST",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         if(response.status==200){
             response.json().then((email)=>{
+                document.getElementById("loading-display").className = "loading_display";
                 fetch(`/api/changed_password_notif/${email}`,{
                     method:"POST",
                     cache:"no-cache"
+                }).then((response)=>{
+                    document.getElementById("loading-display").className = "loading_display off";
                 })
             })
             document.getElementById("changed1").className = "success";

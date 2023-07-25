@@ -31,6 +31,16 @@ let numberOfSongsInPlaylist = new Map();
 let START = 0;
 
 window.onload = function(){
+    /**
+     * test start
+     */
+
+    
+
+    /**
+     * test end
+     */
+    document.getElementById("loading-display").className = "loading_display";
     if(localStorage.getItem("username") != null){
         
         document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
@@ -125,6 +135,7 @@ window.onload = function(){
                 document.getElementById("profile").addEventListener(("click"),()=>{
                     window.location.href="/api/profile/myinfo";
                 })
+                document.getElementById("loading-display").className = "loading_display";
                 fetch(`/api/get_song_list/${localStorage.getItem("username")}`,{
                     method:"GET",
                     cache:"no-cache"
@@ -159,6 +170,7 @@ window.onload = function(){
                             method:"GET",
                             cache:"no-cache"
                         }).then((response)=>{
+                            document.getElementById("loading-display").className = "loading_display off";
                             response.json().then((result)=>{
                                 let arrayMutex = [];
                                 
@@ -276,6 +288,7 @@ window.onload = function(){
                     window.location.href="/api/login";
                 })
     }
+    document.getElementById("loading-display").className = "loading_display off";
 }
 
 let iconMutex =0;
@@ -324,15 +337,19 @@ document.getElementById("plus").addEventListener(("click"),()=>{
 var masterArray = new Map();
 
 function loadSongs(){
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/load_songs`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         response.json().then((result)=>{
+            document.getElementById("loading-display").className = "loading_display";
             fetch(`/api/get_song_list/${localStorage.getItem("username")}`,{
                 method:"GET",
                 cache:"no-cache"
             }).then((response)=>{
+                document.getElementById("loading-display").className = "loading_display off";
                 response.json().then((set)=>{
                     let songSet = new Set();
                     set.forEach((item)=>{
@@ -430,10 +447,12 @@ function makeAddBtn(){
 document.getElementById("in_songs").addEventListener(("click"),()=>{
     document.getElementById("myInput").value = "";
     let filename = document.getElementById("mySelect").value;
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/add_song_to_user/${localStorage.getItem("username")}/${filename}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         if(response.status==200){
             document.getElementById("mySelect").value = "Select";
             document.getElementById("in_songs").disabled = true;
@@ -581,15 +600,19 @@ function populate(masterArray,val){
 let playlistMasterMap = null;
 
 function populatePlayListSelect(){
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/get_playlist_names/${localStorage.getItem("username")}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         response.json().then((data_structure)=>{
+            document.getElementById("loading-display").className = "loading_display";
             fetch(`/api/get_song_list/${localStorage.getItem("username")}`,{
                 method:"GET",
                 cache:"no-cache"
             }).then((response2)=>{
+                document.getElementById("loading-display").className = "loading_display off";
                 response2.json().then((usersSongs)=>{
                     /**
                      * Start population here
@@ -622,10 +645,12 @@ function loadSelectedPlaylist(){
             ourset.add(item.filename);
         })
         let tempMap = new Map();
+        document.getElementById("loading-display").className = "loading_display";
         fetch(`/api/get_my_song_filenames/${localStorage.getItem("username")}`,{
             method:"GET",
             cache:"no-cache"
         }).then((response)=>{
+            document.getElementById("loading-display").className = "loading_display off";
             response.json().then((filenames)=>{
                 filenames.forEach((filename)=>{
                     if(!ourset.has(filename)){
@@ -662,10 +687,12 @@ function loadSelectedPlaylist(){
                                         <i class="fa-regular fa-heart" id="${vish}-heart-${start+j}" data-file="${filename}"></i>
                                         <i class="fa-solid fa-trash" id="${vish}-dots-${start+j}" data-file="${filename}"></i>
                                     </div>`;
+                                    document.getElementById("loading-display").className = "loading_display";
                     fetch(`/api/check_individual_liked/${localStorage.getItem("username")}/${filename}`,{
                         method:"GET",
                         cache:"no-cache"
                     }).then((r)=>{
+                        document.getElementById("loading-display").className = "loading_display off";
                         r.json().then((bool)=>{
                             if(bool=="true"){
                                 document.getElementById(`${vish}-heart-${start+j}`).className = "fa-regular fa-heart hit";
@@ -681,10 +708,12 @@ function loadSelectedPlaylist(){
                         let sa = getSongAndArtist(document.getElementById(`${vish}-dots-${i}`).dataset.file);
                         let c = window.confirm(`Do you want to remove\n${sa[0]}    by   ${sa[1]}\nfrom this playlist?`);
                         if(c){
+                            document.getElementById("loading-display").className = "loading_display";
                             fetch(`/api/remove_song_from_playlist/${localStorage.getItem("username")}/${vish}/${document.getElementById(`${vish}-dots-${i}`).dataset.file}`,{
                                 method:"DELETE",
                                 cache:"no-cache"
                             }).then(()=>{
+                                document.getElementById("loading-display").className = "loading_display off";
                                 document.getElementById(`${vish}-${i}`).classList.toggle("off");
                                 let filename = document.getElementById(`${vish}-dots-${i}`).dataset.file;
                                 let yo = filename.split("-");
@@ -716,18 +745,21 @@ function removeSongFromList(filename,song,artist,image,index){
     document.getElementById(`list-item-${index}`).classList.toggle("off");
 
     /**Remove Song from user db */
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/remove_song/${localStorage.getItem("username")}/${filename}`,{
         method:"POST",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         /**
          * Remove song from each playlist that it is in
          */
+        document.getElementById("loading-display").className = "loading_display";
         fetch(`/api/remove_song_from_all_playlists/${localStorage.getItem("username")}/${filename}`,{
             method:"DELETE",
             cache:"no-cache"
         }).then((nextResponse)=>{
-
+            document.getElementById("loading-display").className = "loading_display off";
         })
     })
 
@@ -793,10 +825,12 @@ document.getElementById("create_btn_final").addEventListener('click',()=>{
 
 function afterPlaylistCreation(name){
     switchTop(0,name);
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/get_my_song_filenames/${localStorage.getItem("username")}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         response.json().then((filenames)=>{
             let tempMap = new Map();
             filenames.forEach((filename)=>{
@@ -821,10 +855,12 @@ document.getElementById("in_playlist").addEventListener('click',()=>{
     document.getElementById("in_playlist").disabled = true;
     document.getElementById("my_songs_select").value = "Select";
     let name = document.getElementById("current_playlist_text").innerHTML;
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/playlist_add_song/${localStorage.getItem("username")}/${filename}/${name}`,{
         method:"POST",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         let value = currPlaylistMap.get(filename);
         let imgName = filename.split(".")[0];
         let image = `../img/${imgName+".jpeg"}`;
@@ -863,10 +899,12 @@ document.getElementById("in_playlist").addEventListener('click',()=>{
                 let sa = getSongAndArtist(document.getElementById(`${name}-dots-${i}`).dataset.file);
                 let c = window.confirm(`Do you want to remove\n${sa[0]}    by   ${sa[1]}\nfrom this playlist?`);
                 if(c){
+                    document.getElementById("loading-display").className = "loading_display";
                     fetch(`/api/remove_song_from_playlist/${localStorage.getItem("username")}/${name}/${document.getElementById(`${name}-dots-${i}`).dataset.file}`,{
                         method:"DELETE",
                         cache:"no-cache"
                     }).then(()=>{
+                        document.getElementById("loading-display").className = "loading_display off";
                         let tempMap = currPlaylistMap;
                         document.getElementById(`${name}-${i}`).classList.toggle("off");
                         let filename = document.getElementById(`${name}-dots-${i}`).dataset.file;
@@ -1017,10 +1055,12 @@ document.getElementById("mp_repeat").addEventListener('click',()=>{
 })
 
 function loadListenNow(){
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/get_for_listen_now/${localStorage.getItem("username")}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         response.json().then((array)=>{
             document.getElementById("listen-now-container").innerHTML = "";
             for(let i = 0;i<array.length;i++){

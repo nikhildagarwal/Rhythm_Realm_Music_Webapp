@@ -1,7 +1,9 @@
 window.onload=function(){
+    document.getElementById("loading-display").className = "loading_display on";
     if(localStorage.getItem("username")==null){
         window.location.href="/api/login";
     }
+    document.getElementById("loading-display").className = "loading_display off";
 }
 
 document.getElementById("crest").addEventListener(("click"),()=>{
@@ -27,10 +29,12 @@ document.getElementById("confirm-button").addEventListener(("click"),()=>{
         document.getElementById("incorrect").className = "error";
         return;
     }
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/checkLogIn/${localStorage.getItem("username")}/${password}/`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         if(response.status==200){
             document.getElementById("confirmed").className = "success";
             setTimeout(function(){
@@ -75,10 +79,12 @@ document.getElementById("change-password-button").addEventListener(("click"),()=
         document.getElementById("mismatch1").className = "error";
         return;
     }
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/changePassword/${localStorage.getItem("username")}/${password1}`,{
         method:"POST",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display";
         if(response.status==200){
             localStorage.setItem("password_length",password1.length.toString());
             document.getElementById("changed1").className = "success";

@@ -1,3 +1,7 @@
+window.onload = function(){
+    document.getElementById("loading-display").className = "loading_display off";
+}
+
 function generateUserID() {
     const timestamp = Date.now().toString(); // Get the current timestamp as a string
     const randomNum = Math.floor(Math.random() * 10000); // Generate a random number between 0 and 9999
@@ -52,10 +56,12 @@ document.getElementById("submit-btn").addEventListener(("click"),()=>{
     if(anyEmpty){
         return;
     }
+    document.getElementById("loading-display").className = "loading_display";
     fetch(`/api/getUserList/${username}/${email}`,{
         method:"GET",
         cache:"no-cache"
     }).then((response)=>{
+        document.getElementById("loading-display").className = "loading_display off";
         response.json().then((result)=>{
             console.log(result);
             let answer = result.split(",");
@@ -71,10 +77,12 @@ document.getElementById("submit-btn").addEventListener(("click"),()=>{
             if(beenError){
                 return;
             }
+            document.getElementById("loading-display").className = "loading_display";
             fetch(`/api/createUser/${email}/${username}/${password1}/${userId}`,{
                 method:"POST",
                 cache:"no-cache"
             }).then((response)=>{
+                document.getElementById("loading-display").className = "loading_display off";
                 if(response.status == 200){
                     localStorage.setItem("username",username);
                     localStorage.setItem("email",email);
