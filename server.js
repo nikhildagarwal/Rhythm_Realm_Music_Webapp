@@ -234,7 +234,7 @@ const server = http.createServer((req,res) => {
     });
 });
 
-server.listen(443, "iridescent-boba-b8f58c.netlify.app", () => {
+server.listen(3000, "iridescent-boba-b8f58c.netlify.app", () => {
     console.log("Listening on port 3000");
 });
 
