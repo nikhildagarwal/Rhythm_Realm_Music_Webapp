@@ -76,6 +76,10 @@ const server = http.createServer((req,res) => {
             })
         }else{
             switch(splited[1]){
+                case "tester":
+                    res.writeHead(200);
+                    res.end();
+                    break;
                 case "changePassword":
                     handleChangePassword(req,res,splited[2],splited[3]);
                     break;

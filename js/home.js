@@ -247,6 +247,12 @@ window.onload = function(){
                 })
         document.querySelector(".media_player").style.backgroundColor = "#423f3fcb";
     }else{
+        fetch(`/api/tester`,{
+            method:"GET",
+            cache:"no-cache"
+        }).then((response)=>{
+            console.log(response);
+        })
         let tabArray = [document.getElementById("songs"),document.getElementById("playlists"),document.getElementById("listen")];
         tabArray[0].addEventListener('click',()=>{
             alert("You must (Log In) / (Create An Account) before you can access MY SONGS");
