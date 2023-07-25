@@ -234,9 +234,9 @@ const server = http.createServer((req,res) => {
     });
 });
 
-/*server.listen(3000, "localhost", () => {
+server.listen(80, "iridescent-boba-b8f58c.netlify.app", () => {
     console.log("Listening on port 3000");
-});*/
+});
 
 async function handleChangedPasswordNotif(req,res,email){
     try{
