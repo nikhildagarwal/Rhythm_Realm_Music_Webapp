@@ -289,6 +289,14 @@ window.onload = function(){
                 })
     }
     document.getElementById("loading-display").className = "loading_display off";
+    let testRef = document.getElementById("test_test_test");
+    testRef.innerHTML = "";
+    testRef.className = "test";
+    testRef.innerHTML = `<img src="../img/system_diagram.png" id="system-diagram">`;
+    testRef.style.backgroundColor= "#00000000";
+    document.getElementById("system-diagram").addEventListener('click',()=>{
+        window.location.href="../api/zoom_picture/system_diagram.png";
+    })
 }
 
 let iconMutex =0;

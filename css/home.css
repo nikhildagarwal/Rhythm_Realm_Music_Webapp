@@ -717,6 +717,16 @@ body{
   display:none;
 }
 
+#system-diagram{
+  width:100%;
+  height: auto;
+  border-radius: 15px;
+  padding:7px;
+  background-color: #e4e4e4a8;
+  backdrop-filter: blur(6px);
+  cursor: zoom-in;
+}
+
 #sup{
   font-size: 35px;
 }

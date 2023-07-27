@@ -163,6 +163,9 @@ const server = http.createServer((req,res) => {
                 case "home":
                     handleHome(req,res);
                     break;
+                case "zoom_picture":
+                    handleZoomPicture(req,res,splited[2]);
+                    break;
                 case "login":
                     handleLogin(req,res);
                     break;
@@ -237,6 +240,24 @@ const server = http.createServer((req,res) => {
 server.listen(3000, "localhost", () => {
     console.log("Listening on port 3000");
 });
+
+async function handleZoomPicture(req,res,image_filename){
+    try{
+        let file =  __dirname +"/img/"+image_filename;
+        fs.readFile(file,function(nope,content){
+            if(nope){
+                res.writeHead(404);
+                res.end();
+            }else{
+                res.setHeader("X-Content-Type-Options","nosniff");
+                res.writeHead(200,{'Content-type':'image/jpeg'});
+                    res.end(content);
+            }
+        })
+    }catch (err){
+        console.log(err);
+    }
+}
 
 async function handleChangedPasswordNotif(req,res,email){
     try{
