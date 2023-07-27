@@ -42,7 +42,8 @@ window.onload = function(){
      */
     document.getElementById("loading-display").className = "loading_display";
     if(localStorage.getItem("username") != null){
-        
+        document.getElementById("diagram-box").innerHTML = ""; 
+        document.getElementById("diagram-box").className = "diagram off";
         document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
         document.getElementById("myInput").classList.toggle("off");
     document.getElementById("mySelect").classList.toggle("off");
@@ -258,6 +259,7 @@ window.onload = function(){
                     })
                 })
         document.querySelector(".media_player").style.backgroundColor = "#423f3fcb";
+        
     }else{
         fetch(`/api/tester`,{
             method:"GET",
@@ -287,16 +289,17 @@ window.onload = function(){
                 document.getElementById("login").addEventListener(("click"),()=>{
                     window.location.href="/api/login";
                 })
-    }
-    document.getElementById("loading-display").className = "loading_display off";
-    let testRef = document.getElementById("test_test_test");
+                let testRef = document.getElementById("diagram-box");
     testRef.innerHTML = "";
-    testRef.className = "test";
+    testRef.className = "diagram";
     testRef.innerHTML = `<img src="../img/system_diagram.png" id="system-diagram">`;
     testRef.style.backgroundColor= "#00000000";
     document.getElementById("system-diagram").addEventListener('click',()=>{
         window.location.href="../api/zoom_picture/system_diagram.png";
     })
+    }
+    document.getElementById("loading-display").className = "loading_display off";
+    
 }
 
 let iconMutex =0;
