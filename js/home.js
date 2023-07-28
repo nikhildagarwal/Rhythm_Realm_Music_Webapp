@@ -290,13 +290,14 @@ window.onload = function(){
                     window.location.href="/api/login";
                 })
                 let testRef = document.getElementById("diagram-box");
-    testRef.innerHTML = "";
-    testRef.className = "diagram";
-    testRef.innerHTML = `<img src="../img/system_diagram.png" id="system-diagram">`;
-    testRef.style.backgroundColor= "#00000000";
-    document.getElementById("system-diagram").addEventListener('click',()=>{
-        window.location.href="../api/zoom_picture/system_diagram.png";
-    })
+                let imgVar = "login_system_diagram.png";
+                testRef.innerHTML = "";
+                testRef.className = "diagram";
+                testRef.innerHTML = `<img src="../img/${imgVar}" id="system-diagram">`;
+                testRef.style.backgroundColor= "#00000000";
+                document.getElementById("system-diagram").addEventListener('click',()=>{
+                    window.location.href=`../api/zoom_picture/${imgVar}`;
+                })
     }
     document.getElementById("loading-display").className = "loading_display off";
     
