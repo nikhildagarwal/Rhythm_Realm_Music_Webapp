@@ -290,7 +290,7 @@ window.onload = function(){
                     window.location.href="/api/login";
                 })
                 let testRef = document.getElementById("diagram-box");
-                let imgVar = "login_system_diagram.png";
+                let imgVar = "signup_system_diagram.png";
                 testRef.innerHTML = "";
                 testRef.className = "diagram";
                 testRef.innerHTML = `<img src="../img/${imgVar}" id="system-diagram">`;
