@@ -1,7 +1,6 @@
 
 
 class Node{
-
     constructor(audio,image,filename){
         this.audio = audio;
         this.image = image;
@@ -9,8 +8,8 @@ class Node{
         this.next = null;
         this.prev = null;
     }
-
 }
+
 function getSongAndArtist(filename){
     let yo = filename.split("-");
     song = yo[0].replace(/_/g,' ');
@@ -290,7 +289,7 @@ window.onload = function(){
                     window.location.href="/api/login";
                 })
                 let testRef = document.getElementById("diagram-box");
-                let imgVar = "signup_system_diagram.png";
+                let imgVar = "song_select_system_diagram.png";
                 testRef.innerHTML = "";
                 testRef.className = "diagram";
                 testRef.innerHTML = `<img src="../img/${imgVar}" id="system-diagram">`;
