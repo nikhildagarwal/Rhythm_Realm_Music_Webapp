@@ -44,7 +44,7 @@ window.onload = function(){
      */
     document.getElementById("loading-display").className = "loading_display";
     if(localStorage.getItem("username") != null){
-        document.getElementById("diagram-box").innerHTML = ""; 
+        //document.getElementById("slideshow-bar").className = "slideshow off";
         document.getElementById("diagram-box").className = "diagram off";
         document.getElementById("image_for_mp").innerHTML = `<img src="../img/no_music_holder.jpeg" class = "mp_image">`;
         document.getElementById("myInput").classList.toggle("off");
@@ -291,8 +291,21 @@ window.onload = function(){
         document.getElementById("login").addEventListener(("click"),()=>{
             window.location.href="/api/login";
         })
+        //document.getElementById("slideshow-bar").className = "slideshow";
         diagramContainer.className = "diagram";
-        document.getElementById("spot").innerHTML = `<img src="../img/system_diagram.png" id="system-diagram">`;
+        document.getElementById("spot").innerHTML = `<img src="../img/system_diagram.png" id="system-diagram"><div class = "slideshow" id="slideshow-bar">
+                                                        <i class="fa-solid fa-circle" id="0"></i>
+                                                        <i class="fa-solid fa-circle" id="1"> </i>
+                                                        <i class="fa-solid fa-circle" id="2"></i>
+                                                        <i class="fa-solid fa-circle" id="3"></i>
+                                                        <i class="fa-solid fa-circle" id="4"></i>
+                                                        <i class="fa-solid fa-circle" id="5"></i>
+                                                    </div>`;
+        document.getElementById("0").className = "fa-solid fa-circle hit";
+        /**
+         * add here
+         */
+        directToDiagram();
         document.getElementById("system-diagram").addEventListener('click',()=>{
             window.location.href = `/api/zoom_picture/system_diagram.png`;
         })
@@ -305,7 +318,19 @@ document.getElementById("diagram-left").addEventListener('click',()=>{
     if(diagramIndex<0){
         diagramIndex = diagramLength-1;
     }
-    document.getElementById("spot").innerHTML = `<img src="../img/${diagramArray[diagramIndex]}" id="system-diagram">`;
+    document.getElementById("spot").innerHTML = `<img src="../img/${diagramArray[diagramIndex]}" id="system-diagram"><div class = "slideshow" id="slideshow-bar">
+                                                    <i class="fa-solid fa-circle" id="0"></i>
+                                                    <i class="fa-solid fa-circle" id="1"> </i>
+                                                    <i class="fa-solid fa-circle" id="2"></i>
+                                                    <i class="fa-solid fa-circle" id="3"></i>
+                                                    <i class="fa-solid fa-circle" id="4"></i>
+                                                    <i class="fa-solid fa-circle" id="5"></i>
+                                                </div>`;
+    document.getElementById(`${diagramIndex}`).className = "fa-solid fa-circle hit";
+    /**
+     * add here
+     */
+    directToDiagram();
     document.getElementById("system-diagram").addEventListener('click',()=>{
         window.location.href = `/api/zoom_picture/${diagramArray[diagramIndex]}`;
     })
@@ -316,11 +341,45 @@ document.getElementById("diagram-right").addEventListener('click',()=>{
     if(diagramIndex>=diagramLength){
         diagramIndex = 0;
     }
-    document.getElementById("spot").innerHTML = `<img src="../img/${diagramArray[diagramIndex]}" id="system-diagram">`;
+    document.getElementById("spot").innerHTML = `<img src="../img/${diagramArray[diagramIndex]}" id="system-diagram"><div class = "slideshow" id="slideshow-bar">
+                                                    <i class="fa-solid fa-circle" id="0"></i>
+                                                    <i class="fa-solid fa-circle" id="1"> </i>
+                                                    <i class="fa-solid fa-circle" id="2"></i>
+                                                    <i class="fa-solid fa-circle" id="3"></i>
+                                                    <i class="fa-solid fa-circle" id="4"></i>
+                                                    <i class="fa-solid fa-circle" id="5"></i>
+                                                </div>`;
+    document.getElementById(`${diagramIndex}`).className = "fa-solid fa-circle hit";
+    /**
+     * add here
+     */
+    directToDiagram();
     document.getElementById("system-diagram").addEventListener('click',()=>{
         window.location.href = `/api/zoom_picture/${diagramArray[diagramIndex]}`;
     })
 })
+
+function directToDiagram(){
+    try{
+        for(let i = 0;i<6;i++){
+            document.getElementById(`${i}`).addEventListener('click',()=>{
+                diagramIndex = i;
+                document.getElementById("spot").innerHTML = `<img src="../img/${diagramArray[diagramIndex]}" id="system-diagram"><div class = "slideshow" id="slideshow-bar">
+                                                    <i class="fa-solid fa-circle" id="0"></i>
+                                                    <i class="fa-solid fa-circle" id="1"> </i>
+                                                    <i class="fa-solid fa-circle" id="2"></i>
+                                                    <i class="fa-solid fa-circle" id="3"></i>
+                                                    <i class="fa-solid fa-circle" id="4"></i>
+                                                    <i class="fa-solid fa-circle" id="5"></i>
+                                                </div>`;
+                document.getElementById(`${diagramIndex}`).className = "fa-solid fa-circle hit";
+                directToDiagram();
+            })
+        }
+    }catch (err){
+        
+    }
+}
 
 let iconMutex =0;
 document.getElementById("plus").addEventListener(("click"),()=>{

@@ -91,7 +91,7 @@ body{
     position:absolute;
     border-radius: 15px;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     align-self: center;
     background-color: rgba(66, 63, 63, 0);
     margin-top: 135px;
@@ -489,12 +489,46 @@ body{
   color:#b114e0c9;
 }
 
+.slideshow{
+  display: flex;
+    flex-direction: row;
+    position:absolute;
+    border-radius: 15px;
+    align-self: center;
+    justify-content: center;
+    width:auto;
+    padding: 10px;
+    height:auto;
+    background-color: #423f3fcb;
+    margin-top: 50%;
+}
+
+.fa-solid.fa-circle{
+  color: #e4e4e4a8;
+  margin-left: 15px;
+  margin-right: 15px;
+  transition:0.2s ease-in-out;
+  
+}
+
+.fa-solid.fa-circle.hit{
+  color:#ffffff;
+  transition:0.2s ease-in-out;
+}
+
+.slideshow.off{
+  display: none;
+}
+
 #spot{
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .user_add_song.off{
@@ -758,8 +792,9 @@ body{
 }
 
 #system-diagram{
-  width:110%;
-  height: auto;
+  width: 100%;
+  height: 110%;
+  object-fit:contain;
   border-radius: 15px;
   padding:7px;
   background-color: #e4e4e4a8;
