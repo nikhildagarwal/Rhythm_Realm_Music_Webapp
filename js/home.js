@@ -1,4 +1,7 @@
-
+var diagramArray = ["system_diagram.png","login_system_diagram.png","signup_system_diagram.png","song_select_system_diagram.png","playlist_creation_system_diagram.png","media_player_system_diagram.png"];
+var diagramIndex = 0;
+var diagramLength = diagramArray.length;
+var diagramContainer = document.getElementById("diagram-box");
 
 class Node{
     constructor(audio,image,filename){
@@ -276,31 +279,48 @@ window.onload = function(){
         tabArray[2].addEventListener('click',()=>{
             alert("You must (Log In) / (Create An Account) before you can access LISTEN NOW");
         })
-                    document.querySelector(".container").innerHTML += `<div class = "logItem" id="signup" title="Sign Up">
-                    <span class="logText"><i class="fa-solid fa-user-plus" ></i><div class="signtext">Sign Up</div>
-                </div>
-                <div class="logItem" id="login" title="Log In">
-                    <span class="logText"><i class="fa-solid fa-right-to-bracket"></i><div class="signtext">Log In</div>
-                </div>`;
-                document.getElementById("signup").addEventListener(("click"),()=>{
-                    window.location.href="/api/signup";
-                })
-                document.getElementById("login").addEventListener(("click"),()=>{
-                    window.location.href="/api/login";
-                })
-                let testRef = document.getElementById("diagram-box");
-                let imgVar = "song_select_system_diagram.png";
-                testRef.innerHTML = "";
-                testRef.className = "diagram";
-                testRef.innerHTML = `<img src="../img/${imgVar}" id="system-diagram">`;
-                testRef.style.backgroundColor= "#00000000";
-                document.getElementById("system-diagram").addEventListener('click',()=>{
-                    window.location.href=`../api/zoom_picture/${imgVar}`;
-                })
+            document.querySelector(".container").innerHTML += `<div class = "logItem" id="signup" title="Sign Up">
+            <span class="logText"><i class="fa-solid fa-user-plus" ></i><div class="signtext">Sign Up</div>
+        </div>
+        <div class="logItem" id="login" title="Log In">
+            <span class="logText"><i class="fa-solid fa-right-to-bracket"></i><div class="signtext">Log In</div>
+        </div>`;
+        document.getElementById("signup").addEventListener(("click"),()=>{
+            window.location.href="/api/signup";
+        })
+        document.getElementById("login").addEventListener(("click"),()=>{
+            window.location.href="/api/login";
+        })
+        diagramContainer.className = "diagram";
+        document.getElementById("spot").innerHTML = `<img src="../img/system_diagram.png" id="system-diagram">`;
+        document.getElementById("system-diagram").addEventListener('click',()=>{
+            window.location.href = `/api/zoom_picture/system_diagram.png`;
+        })
     }
     document.getElementById("loading-display").className = "loading_display off";
-    
 }
+
+document.getElementById("diagram-left").addEventListener('click',()=>{
+    diagramIndex--;
+    if(diagramIndex<0){
+        diagramIndex = diagramLength-1;
+    }
+    document.getElementById("spot").innerHTML = `<img src="../img/${diagramArray[diagramIndex]}" id="system-diagram">`;
+    document.getElementById("system-diagram").addEventListener('click',()=>{
+        window.location.href = `/api/zoom_picture/${diagramArray[diagramIndex]}`;
+    })
+})
+
+document.getElementById("diagram-right").addEventListener('click',()=>{
+    diagramIndex++;
+    if(diagramIndex>=diagramLength){
+        diagramIndex = 0;
+    }
+    document.getElementById("spot").innerHTML = `<img src="../img/${diagramArray[diagramIndex]}" id="system-diagram">`;
+    document.getElementById("system-diagram").addEventListener('click',()=>{
+        window.location.href = `/api/zoom_picture/${diagramArray[diagramIndex]}`;
+    })
+})
 
 let iconMutex =0;
 document.getElementById("plus").addEventListener(("click"),()=>{

@@ -87,16 +87,31 @@ body{
 
   .diagram{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     position:absolute;
     border-radius: 15px;
     justify-content: center;
+    align-items: center;
     align-self: center;
-    background-color: #423f3fcb;
+    background-color: rgba(66, 63, 63, 0);
     margin-top: 135px;
-    width:55%;
+    width:62.5%;
     padding: 10px;
     height:450px;
+  }
+
+  .diagram_direction{
+    color: #e4e4e4a8;
+    font-size: 35px;
+    margin-left: 45px;
+    margin-right: 45px;
+    cursor: pointer;
+    transition:0.2s ease-in-out;
+  }
+
+  .diagram_direction:hover{
+    color: #ffffff;
+    transition:0.2s ease-in-out;
   }
 
   .diagram.off{
@@ -474,6 +489,13 @@ body{
   color:#b114e0c9;
 }
 
+#spot{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 
 .user_add_song.off{
   background-color: #5c5b5b;
@@ -736,7 +758,7 @@ body{
 }
 
 #system-diagram{
-  width:100%;
+  width:110%;
   height: auto;
   border-radius: 15px;
   padding:7px;
