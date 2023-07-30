@@ -11,10 +11,9 @@ Built from:
 
 Features:
 * Login / Sign-up Systems
+* RESTful API (Server side written in JavaScript as well)
+* Circular, Doubly Linked List data structure for song storage/access
 * Auto generated email notifications
-* RESTful API architecture
-* Ability tp remember a user's Liked Songs
-* Utilizes Circular, Doubly Linked List data structure for song access
 
 To run the project, download all the files provided in this repository (Must have Node js). Navigate to the directory in the command-prompt / terminal type: **node server.js**
 
